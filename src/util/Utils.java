@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.JOptionPane;
-import model.aventuriers.Aventurier;
+//import model.aventuriers.Aventurier;
 
 /**
  *
@@ -72,12 +72,12 @@ public class Utils {
         }
     }
 
-    public static ArrayList<Aventurier> melangerAventuriers(ArrayList<Aventurier> arrayList) {
+    /*public static ArrayList<Aventurier> melangerAventuriers(ArrayList<Aventurier> arrayList) {
         if (Parameters.ALEAS) {
             Collections.shuffle(arrayList);
         }
         return arrayList ;
-    }
+    }*/
     
     /**
      * Permet de poser une question à laquelle l'utilisateur répond par oui ou non
