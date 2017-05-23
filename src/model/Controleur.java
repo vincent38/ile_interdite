@@ -1,13 +1,14 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Controleur {
-	public Vector<Carte> _cartes = new Vector<Carte>();
-	public Vector<Aventurier> _joueurs = new Vector<Aventurier>();
-	public Grille _grille;
-	public Vector<Tresor> _tresors = new Vector<Tresor>();
-	public VueAventurier _vueAventurier;
+	public ArrayList<Carte> cartes = new ArrayList<>();
+	public ArrayList<Aventurier> joueurs = new ArrayList<>();
+	public Grille grille;
+	public ArrayList<Tresor> tresors = new ArrayList<>();
+	public VueAventurier vueAventurier;
 
 	public void ajouterAction() {
 		throw new UnsupportedOperationException();

@@ -1,13 +1,18 @@
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class Tuile {
-	private boolean _inonde;
-	public ArrayList<Aventurier> aventuriers = new ArrayList<Aventurier>();
-	public Tresor tresor;
-        private int inondee; //0 = case asséchée, 1 = case inondée, 2 = case coulée
+
+	private int etatTuile;
+        private static final int ETAT_TUILE_SECHE = 0;
+        private static final int ETAT_TUILE_INONDEE = 1;
+        private static final int ETAT_TUILE_COULEE = 2;
+	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
+	public Tresor _tresor;
 	private int x, y;
+
         public Tuile(int x, int y){
             this.x = x;
             this.y = y;
@@ -18,8 +23,8 @@ public class Tuile {
          * @param aFalse 
          */
 	public void setInondee(boolean aFalse) {
-		if (inondee == 0) {
-                    inondee = 1;
+		if (etatTuile == ETAT_TUILE_SECHE) {
+                    etatTuile = ETAT_TUILE_INONDEE;
                 }
 	}
         
@@ -28,8 +33,8 @@ public class Tuile {
          * @param aFalse 
          */
 	public void setCoulee(boolean aFalse) {
-		if (inondee == 1) {
-                    inondee = 2;
+		if (etatTuile == ETAT_TUILE_INONDEE) {
+                    etatTuile = ETAT_TUILE_COULEE;
                 }
 	}
         
@@ -37,8 +42,8 @@ public class Tuile {
          * Permet d'assécher une case
          */
         public void setAssechee() {
-            if (inondee == 1) {
-                inondee = 0;
+            if (etatTuile == ETAT_TUILE_INONDEE) {
+                etatTuile = ETAT_TUILE_SECHE;
             }
         }
         
