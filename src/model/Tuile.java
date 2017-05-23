@@ -11,6 +11,7 @@ public class Tuile {
         private static final int ETAT_TUILE_COULEE = 2;
 	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
 	public Tresor _tresor;
+	private int x, y;
 
         public Tuile(int x, int y){
             this.x = x;
