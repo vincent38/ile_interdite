@@ -8,35 +8,40 @@ public abstract class Aventurier {
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
 	public Tuile positionCourante;
 
-	public void deplacer(Object aDirection) {
-		throw new UnsupportedOperationException();
-	}
+    public Aventurier(Tuile position){}
 
-	public void assecher(Tuile aT) {
-		throw new UnsupportedOperationException();
-	}
 
-	public void donnerCarte() {
-		throw new UnsupportedOperationException();
-	}
 
-	public void getTuile() {
-		throw new UnsupportedOperationException();
-	}
+    public void assecher(Tuile t) {
+            throw new UnsupportedOperationException();
+    }
+
 
 	public ArrayList<Tuile> getTuilesPossibles(Grille aGrille) {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setTuile(Tuile aTuile) {
-		throw new UnsupportedOperationException();
-	}
+    public void donnerCarte() {
+            throw new UnsupportedOperationException();
+    }
 
-	public boolean getInondee() {
-		throw new UnsupportedOperationException();
-	}
+    public void getTuile() {
+            throw new UnsupportedOperationException();
+    }
 
-	public void getTuilesAssechables() {
-		throw new UnsupportedOperationException();
-	}
+    public ArrayList<Tuile> getTuilesPossibles(Grille aGrille) {
+            throw new UnsupportedOperationException();
+    }
+
+    public void setTuile(Tuile aTuile) {
+            throw new UnsupportedOperationException();
+    }
+
+    public boolean getInondee() {
+            throw new UnsupportedOperationException();
+    }
+
+    public void getTuilesAssechables() {
+            throw new UnsupportedOperationException();
+    }
 }
