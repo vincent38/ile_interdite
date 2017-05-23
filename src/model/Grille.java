@@ -1,11 +1,12 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Grille {
-	public Vector<Tuile> _tuiles = new Vector<Tuile>();
+	public ArrayList<Tuile> tuiles = new ArrayList<>();
 
-	public Collection<Tuile> getTuilesAdjacentes(Tuile aTuile) {
+	public ArrayList<Tuile> getTuilesAdjacentes(Tuile aTuile) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -13,15 +14,15 @@ public class Grille {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Tuile> getTuilesAdjEtDiag(Tuile aTuile) {
+	public ArrayList<Tuile> getTuilesAdjEtDiag(Tuile aTuile) {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Tuile> getToutesLesTuiles() {
+	public ArrayList<Tuile> getToutesLesTuiles() {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Tuile> getTuilesNonSeches() {
+	public ArrayList<Tuile> getTuilesNonSeches() {
 		throw new UnsupportedOperationException();
 	}
 }

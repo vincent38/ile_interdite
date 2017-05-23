@@ -1,10 +1,11 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Tuile {
-	private boolean _inonde;
-	public Vector<Aventurier> _aventuriers = new Vector<Aventurier>();
+	private boolean estInonde;
+	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
 	public Tresor _tresor;
 
 	public void setInondee(boolean aFalse) {

@@ -5,5 +5,5 @@ public enum typeTresor {
 	cristalArdent, 
 	caliceDeLOnde, 
 	pierreSacree;
-	public Tresor _unnamed_Tresor_;
+	public Tresor tresor;
 }

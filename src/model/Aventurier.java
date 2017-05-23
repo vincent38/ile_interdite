@@ -1,11 +1,12 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public abstract class Aventurier {
-	public Vector<Tresor> _tresorsObtenus = new Vector<Tresor>();
-	public Vector<CarteTresor> _cartes = new Vector<CarteTresor>();
-	public Tuile _positionCourante;
+	public ArrayList<Tresor> tresorsObtenus = new ArrayList<>();
+	public ArrayList<CarteTresor> cartes = new ArrayList<>();
+	public Tuile positionCourante;
 
 	public void deplacer(Object aDirection) {
 		throw new UnsupportedOperationException();
@@ -23,7 +24,7 @@ public abstract class Aventurier {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Tuile> getTuilesPossibles(Grille aGrille) {
+	public ArrayList<Tuile> getTuilesPossibles(Grille aGrille) {
 		throw new UnsupportedOperationException();
 	}
 
