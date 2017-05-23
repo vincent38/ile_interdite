@@ -9,6 +9,12 @@ public class Controleur {
 	public Grille grille;
 	public ArrayList<Tresor> tresors = new ArrayList<>();
 	public VueAventurier vueAventurier;
+        
+        public Controleur(){
+            this.grille = new Grille();
+            for(int i=1; i<=4; i++)
+                joueurs.add(new Aventurier(grille.getTuile(i, 3)));
+        }
 
 	public void ajouterAction() {
 		throw new UnsupportedOperationException();

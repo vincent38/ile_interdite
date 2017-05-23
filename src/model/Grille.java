@@ -29,8 +29,15 @@ public class Grille {
 		throw new UnsupportedOperationException();
 	}
 
-	public Tuile getTuile(String aNom) {
-		throw new UnsupportedOperationException();
+	public Tuile getTuile(int x, int y) {
+            Tuile r = new Tuile(0,0);
+            for(Tuile t : this.tuiles){
+                if(t.getX() == x && t.getY() == y){
+                    r = t;
+                    break;
+                }
+            }
+            return r;
 	}
 
 	public ArrayList<Tuile> getTuilesAdjEtDiag(Tuile aTuile) {

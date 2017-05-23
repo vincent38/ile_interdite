@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public abstract class Aventurier {
+public class Aventurier {
 	public ArrayList<Tresor> tresorsObtenus = new ArrayList<>();
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
 	public Tuile positionCourante;
