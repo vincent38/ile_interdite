@@ -3,9 +3,25 @@ package model;
 import java.util.ArrayList;
 
 public class Grille {
-	public ArrayList<Tuile> _tuiles = new ArrayList<Tuile>();
+	public ArrayList<Tuile> tuiles = new ArrayList<Tuile>();
         
         public Grille(){
+            for(int i = 3; i <= 4; i++)
+                tuiles.add(new Tuile(i, 1));
+            
+            for(int i = 2; i<=5; i++)
+                tuiles.add(new Tuile(i, 2));
+            
+            for (int i = 3; i<=4; i++){
+                for(int j = 1; j <= 6; j++)
+                    tuiles.add(new Tuile(j,i));
+            }
+            
+            for(int i = 2; i<=5; i++)
+                tuiles.add(new Tuile(i, 5));
+            
+            for(int i = 3; i <= 4; i++)
+                tuiles.add(new Tuile(i, 6));
             
         }
 
@@ -17,15 +33,15 @@ public class Grille {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Tuile> getTuilesAdjEtDiag(Tuile aTuile) {
+	public ArrayList<Tuile> getTuilesAdjEtDiag(Tuile aTuile) {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Tuile> getToutesLesTuiles() {
+	public ArrayList<Tuile> getToutesLesTuiles() {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Tuile> getTuilesNonSeches() {
+	public ArrayList<Tuile> getTuilesNonSeches() {
 		throw new UnsupportedOperationException();
 	}
 }

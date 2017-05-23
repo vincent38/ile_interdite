@@ -10,7 +10,7 @@ public class Tuile {
 	private int x, y;
         public Tuile(int x, int y){
             this.x = x;
-		this.y = y;
+            this.y = y;
         }
         
         /**
