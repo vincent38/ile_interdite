@@ -1,3 +1,5 @@
+package model;
+
 public class Pilote extends Aventurier {
 	private boolean _pouvoirDispo;
 
