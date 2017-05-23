@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class Tuile {
+
 	private int etatTuile;
         private static final int ETAT_TUILE_SECHE = 0;
         private static final int ETAT_TUILE_INONDEE = 1;
@@ -11,8 +12,9 @@ public class Tuile {
 	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
 	public Tresor _tresor;
 
-        public Tuile(){
-            
+        public Tuile(int x, int y){
+            this.x = x;
+            this.y = y;
         }
         
         /**

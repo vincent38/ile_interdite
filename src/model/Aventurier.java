@@ -8,10 +8,10 @@ public abstract class Aventurier {
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
 	public Tuile positionCourante;
 
-    public Aventurier(Tuile position){}
-
-
-
+    public Aventurier(Tuile tuile){
+        this.positionCourante = tuile;
+    }
+    
     public void assecher(Tuile t) {
             throw new UnsupportedOperationException();
     }
