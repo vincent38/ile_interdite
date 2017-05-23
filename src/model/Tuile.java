@@ -5,13 +5,17 @@ import java.util.Vector;
 
 public class Tuile {
 
+        // Coordonnées
+        private int x;
+        private int y;
+        // Etat Tuile
 	private int etatTuile;
         private static final int ETAT_TUILE_SECHE = 0;
         private static final int ETAT_TUILE_INONDEE = 1;
         private static final int ETAT_TUILE_COULEE = 2;
+        
 	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
 	public Tresor _tresor;
-	private int x, y;
 
         public Tuile(int x, int y){
             this.x = x;

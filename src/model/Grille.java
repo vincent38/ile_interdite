@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Grille {
-	public ArrayList<Tuile> tuiles = new ArrayList<Tuile>();
+	public ArrayList<Tuile> tuiles = new ArrayList<>();
         
         public Grille(){
             for(int i = 3; i <= 4; i++)

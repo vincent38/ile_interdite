@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Aventurier {
 	public ArrayList<Tresor> tresorsObtenus = new ArrayList<>();
