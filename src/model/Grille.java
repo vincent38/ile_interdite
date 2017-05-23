@@ -1,9 +1,9 @@
 package model;
 
-import java.util.Vector;
+import java.util.*;
 
 public class Grille {
-	public Vector<Tuile> _tuiles = new Vector<Tuile>();
+	public ArrayList<Tuile> tuiles = new ArrayList<Tuile>();
 
 	public Collection<Tuile> getTuilesAdjacentes(Tuile aTuile) {
 		throw new UnsupportedOperationException();
