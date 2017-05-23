@@ -29,10 +29,6 @@ public abstract class Aventurier {
             throw new UnsupportedOperationException();
     }
 
-    public ArrayList<Tuile> getTuilesPossibles(Grille aGrille) {
-            throw new UnsupportedOperationException();
-    }
-
     public void setTuile(Tuile aTuile) {
             throw new UnsupportedOperationException();
     }
