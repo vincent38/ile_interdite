@@ -7,9 +7,10 @@ public class Tuile {
 	public ArrayList<Aventurier> aventuriers = new ArrayList<Aventurier>();
 	public Tresor tresor;
         private int inondee; //0 = case asséchée, 1 = case inondée, 2 = case coulée
-
-        public Tuile(){
-            
+	private x, y;
+        public Tuile(int x, int y){
+            this.x = x;
+		this.y = y;
         }
         
         /**
