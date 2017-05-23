@@ -12,8 +12,14 @@ public class Controleur {
         
         public Controleur(){
             this.grille = new Grille();
-            for(int i=1; i<=4; i++)
+            for(int i=1; i<=4; i++){
                 joueurs.add(new Aventurier(grille.getTuile(i, 3)));
+            }
+            
+            for(Aventurier a : joueurs){
+                System.out.println(a.getTuile().getX());
+                System.out.println(a.getTuile().getY() + "\n");
+            }
         }
 
 	public void ajouterAction() {

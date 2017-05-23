@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Aventurier {
 	public ArrayList<Tresor> tresorsObtenus = new ArrayList<>();
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
-	public Tuile positionCourante;
+	public Tuile tuile;
 
     public Aventurier(Tuile tuile){
-        this.positionCourante = tuile;
+        this.tuile = tuile;
     }
     
     public void assecher(Tuile t) {
@@ -24,13 +24,19 @@ public class Aventurier {
             throw new UnsupportedOperationException();
     }
 
-    public void getTuile() {
-            throw new UnsupportedOperationException();
+    public Tuile getTuile() {
+        return tuile;
     }
 
-    public void setTuile(Tuile aTuile) {
-            throw new UnsupportedOperationException();
+    public void setTuile(Tuile tuile) {
+        this.tuile = tuile;
     }
+
+    public ArrayList<CarteTresor> getCartes() {
+        return cartes;
+    }
+
+    
 
     public boolean getInondee() {
             throw new UnsupportedOperationException();
