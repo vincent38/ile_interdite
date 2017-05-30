@@ -40,10 +40,6 @@ public class Controleur {
 		throw new UnsupportedOperationException();
 	}
 
-	public void joueurSuivant() {
-		throw new UnsupportedOperationException();
-	}
-
 	public void deplacerAventurier(String aNomTuile, Aventurier aAv) {
 		throw new UnsupportedOperationException();
 	}
@@ -80,12 +76,12 @@ public class Controleur {
         }
             
         public void finTour() {
-            passerJoueurSuivant();
+            JoueurSuivant();
         }
         
-        private void passerJoueurSuivant() {
+        private void JoueurSuivant() {
             int nbJoueurs = joueurs.size();
-            if (avCourant.equals(joueurs.get(joueurs.size()))) { // Si le joueur courant est le dernier de l'AL
+            if (avCourant.equals(joueurs.get(joueurs.size()-1))) { // Si le joueur courant est le dernier de l'AL
                 avCourant = joueurs.get(0);
             } else {
                 int i = 0;
@@ -99,7 +95,21 @@ public class Controleur {
                         i =+ 1;
                     }
                 }
-                avCourant = joueurs.get(i+1);
+                avCourant = joueurs.get(getNumJoueur(avCourant)+1);
             }
+	}
+        
+        public int getNumJoueur(Aventurier j) {
+            int i = 0;
+            boolean trouve = false;
+            while ((i < joueurs.size()) && !trouve ) { // Recherche du joueur dans l'AL
+                j = joueurs.get(i);
+                if (j.equals(avCourant)) {
+                    trouve = true;
+                } else {
+                    i =+ 1;
+                }
+            }
+            return i;
         }
 }
