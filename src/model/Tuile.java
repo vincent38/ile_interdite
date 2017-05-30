@@ -10,9 +10,9 @@ public class Tuile {
         private int y;
         // Etat Tuile
 	private int etatTuile;
-        private static final int ETAT_TUILE_SECHE = 0;
-        private static final int ETAT_TUILE_INONDEE = 1;
-        private static final int ETAT_TUILE_COULEE = 2;
+        public static final int ETAT_TUILE_SECHE = 0;
+        public static final int ETAT_TUILE_INONDEE = 1;
+        public static final int ETAT_TUILE_COULEE = 2;
         
 	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
 	public Tresor tresor;
@@ -56,9 +56,6 @@ public class Tuile {
          * @param aAventurier 
          */
 
-	public void addAventurier(Aventurier aAventurier) {
-		throw new UnsupportedOperationException();
-	}
 
     public int getX() {
         return x;
@@ -74,6 +71,22 @@ public class Tuile {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public ArrayList<Aventurier> getAventuriers() {
+        return aventuriers;
+    }
+    
+    public void addAventurier(Aventurier av){
+        this.aventuriers.add(av);
+    }
+    
+    public void rmAventurier(Aventurier av){
+        this.aventuriers.remove(av); 
+    }
+    
+    public int getEtatTuile(){
+        return this.etatTuile;
     }
         
         
