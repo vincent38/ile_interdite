@@ -71,7 +71,7 @@ public class VueAventurier  {
 
         this.btnAller = new JButton("Aller") ;
         this.btnAssecher = new JButton( "Assecher");
-        this.btnAutreAction = new JButton("AutreAction") ;
+        this.btnAutreAction = new JButton("Autre Action") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
         
         this.panelBoutons.add(btnAller);
