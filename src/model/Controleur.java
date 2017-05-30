@@ -8,12 +8,8 @@ public class Controleur {
 	public ArrayList<Aventurier> joueurs = new ArrayList<>();
 	public Grille grille;
 	public ArrayList<Tresor> tresors = new ArrayList<>();
-<<<<<<< HEAD
-	public VueAventurier vueAventurier;
         public Aventurier avCourant;
         public int action = 0;
-=======
->>>>>>> 5b89fd7b08d39018d96421a0f041db06923b0167
         
         public Controleur(){
             this.grille = new Grille();
