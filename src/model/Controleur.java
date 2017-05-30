@@ -8,7 +8,6 @@ public class Controleur {
 	public ArrayList<Aventurier> joueurs = new ArrayList<>();
 	public Grille grille;
 	public ArrayList<Tresor> tresors = new ArrayList<>();
-	public VueAventurier vueAventurier;
         public Aventurier avCourant;
         public int action = 0;
         
