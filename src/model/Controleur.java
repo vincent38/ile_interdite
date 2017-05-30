@@ -31,8 +31,9 @@ public class Controleur {
             avCourant = joueurs.get(1);
             assecherTuile(avCourant);
             }*/
-            //avCourant = joueurs.get(2);
-            //assecherTuile(avCourant);
+            avCourant = joueurs.get(2);
+            grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);
+            assecherTuile(avCourant);
         }
 
 	public void ajouterAction() {

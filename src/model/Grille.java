@@ -37,6 +37,22 @@ public class Grille {
             }
             return null;
 	}
+        
+        public void setTuile(int x, int y, int state) {
+            for(Tuile t : this.tuiles){
+                if(t.getX() == x && t.getY() == y){
+                    if (state == Tuile.ETAT_TUILE_INONDEE) {
+                        t.setInondee(true);
+                    }
+                    if (state == Tuile.ETAT_TUILE_COULEE) {
+                        t.setCoulee(true);
+                    }
+                    if (state == Tuile.ETAT_TUILE_SECHE) {
+                        t.setAssechee();
+                    }
+                }
+            }
+	}
 
 	public ArrayList<Tuile> getTuilesAdjEtDiag(Tuile aTuile) {
 		throw new UnsupportedOperationException();
@@ -51,7 +67,10 @@ public class Grille {
             for(int i = t.getX()-1; i <= t.getX()+1; i++){
                 for(int j = t.getY()-1; j <= t.getY()+1; j++){
                     if(!(i == t.getX()-1 && j == t.getY()-1 || i == t.getX()-1 && j == t.getY()+1 || i == t.getX()+1 && j == t.getY()-1 || i == t.getX()+1 && j == t.getY()+1)) {
-                        buffer.add(new Tuile(i, j));
+                        Tuile tuBuffer = getTuile(i, j);
+                        if (tuBuffer.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE) {
+                            buffer.add(tuBuffer);
+                        }
                     }
                 }
             }
