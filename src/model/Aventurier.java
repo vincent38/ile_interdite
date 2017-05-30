@@ -7,6 +7,10 @@ public class Aventurier {
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
 	public Tuile tuile;
         public ArrayList<Tuile> tuilesPossibles = new ArrayList();
+        
+    public Aventurier() {
+        
+    }
 
     public Aventurier(Tuile tuile){
         this.tuile = tuile;
