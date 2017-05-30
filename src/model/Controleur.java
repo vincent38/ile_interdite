@@ -1,7 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.Scanner;
 
 public class Controleur {
 	public ArrayList<Carte> cartes = new ArrayList<>();
@@ -21,10 +21,12 @@ public class Controleur {
                 System.out.println(a.getTuile().getX());
                 System.out.println(a.getTuile().getY() + "\n");
             }
+            avCourant = joueurs.get(2);
+            assecherTuile(avCourant);
         }
 
 	public void ajouterAction() {
-		throw new UnsupportedOperationException();
+            action += 1;
 	}
 
 	public void assecherTuileCourante() {
@@ -48,6 +50,27 @@ public class Controleur {
 	}
 
 	public void assecherTuile(Aventurier aAv) {
-		throw new UnsupportedOperationException();
+            Scanner input = new Scanner(System.in);
+            //On récupère les tuiles asséchables
+            ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables();
+            //On les affiche
+            for(Tuile t : tuilesAssechables) {
+                System.out.println(t.getX()+" - "+t.getY());
+            }
+            //On demande la tuile à assécher au joueur
+            System.out.println("X : ");
+            int x = input.nextInt();
+            System.out.println("Y : ");
+            int y = input.nextInt();
+            Tuile myTuile = new Tuile(x, y);
+            //On vérifie si elle existe. Existe -> on assèche la tuile
+            for(Tuile t : tuilesAssechables) {
+                if (t.getX() == myTuile.getX() && t.getY() == myTuile.getY()) {
+                    System.out.println("Tuile trouvée");
+                    avCourant.assecher(myTuile);
+                    ajouterAction();
+                    break;
+                }
+            }
 	}
 }

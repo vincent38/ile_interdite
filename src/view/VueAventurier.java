@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,6 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
+import model.Aventurier;
+import model.Controleur;
+import model.Tuile;
 import util.Utils.Pion;
 
  
@@ -29,7 +34,7 @@ public class VueAventurier  {
     private final JButton btnAutreAction;
     private final JButton btnTerminerTour;
     private final JTextField position;
-    
+            
     public VueAventurier (String nomJoueur, String nomAventurier, Color couleur){
 
         this.window = new JFrame();
