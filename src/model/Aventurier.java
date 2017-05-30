@@ -17,9 +17,7 @@ public class Aventurier {
     }
 
 
-	public ArrayList<Tuile> getTuilesPossibles(Grille aGrille) {
-		throw new UnsupportedOperationException();
-	}
+    
 
     public void donnerCarte() {
             throw new UnsupportedOperationException();

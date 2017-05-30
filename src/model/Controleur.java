@@ -56,9 +56,13 @@ public class Controleur {
 		throw new UnsupportedOperationException();
 	}
         
-        public ArrayList<Tuile> getTuilesAdjacentes(Aventurier av){
+        public void deplacerAventurierCourant(Tuile nvTuile){
+            avCourant.deplacement(nvTuile);
+        }
+        
+        public ArrayList<Tuile> getTuilesAdjacentes(){
             ArrayList<Tuile> r = new ArrayList();
-            Tuile tuileC = av.getTuile();
+            Tuile tuileC = avCourant.getTuile();
             
             if(grille.getTuile(tuileC.getX() - 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
                 r.add(grille.getTuile(tuileC.getX() - 1, tuileC.getY() - 1));
