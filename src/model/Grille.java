@@ -46,8 +46,17 @@ public class Grille {
 		throw new UnsupportedOperationException();
 	}
 
-	public ArrayList<Tuile> getTuilesNonSeches() {
-		throw new UnsupportedOperationException();
+	public ArrayList<Tuile> getTuilesNonSeches(Tuile t) {
+            ArrayList<Tuile> buffer = new ArrayList<Tuile>();
+            for(int i = t.getX()-1; i <= t.getX()+1; i++){
+                for(int j = t.getY()-1; j <= t.getY()+1; j++){
+                    if(!(i == t.getX()-1 && j == t.getY()-1 || i == t.getX()-1 && j == t.getY()+1 || i == t.getX()+1 && j == t.getY()-1 || i == t.getX()+1 && j == t.getY()+1)) {
+                        buffer.add(new Tuile(i, j));
+                    }
+                }
+            }
+            
+            return buffer;
 	}
         
 }

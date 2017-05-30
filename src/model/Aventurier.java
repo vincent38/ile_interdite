@@ -42,19 +42,6 @@ public class Aventurier {
     public boolean getInondee() {
             throw new UnsupportedOperationException();
     }
-
-    public ArrayList<Tuile> getTuilesAssechables() {
-            ArrayList<Tuile> buffer = new ArrayList<Tuile>();
-            for(int i = tuile.getX()-1; i <= tuile.getX()+1; i++){
-                for(int j = tuile.getY()-1; j <= tuile.getY()+1; j++){
-                    if(!(i == tuile.getX()-1 && j == tuile.getY()-1 || i == tuile.getX()-1 && j == tuile.getY()+1 || i == tuile.getX()+1 && j == tuile.getY()-1 || i == tuile.getX()+1 && j == tuile.getY()+1)) {
-                        buffer.add(new Tuile(i, j));
-                    }
-                }
-            }
-            
-            return buffer;
-    }
     
     public void deplacement(Tuile nvTuile){
         this.tuile.rmAventurier(this);

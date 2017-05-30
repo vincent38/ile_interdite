@@ -18,7 +18,6 @@ public class Controleur {
         public int action = 0;
 
         public Controleur(){
-            avCourant = joueurs.get(0);
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
                 joueurs.add(new Aventurier(grille.getTuile(i, 3)));
@@ -28,7 +27,7 @@ public class Controleur {
                 System.out.println(a.getTuile().getX());
                 System.out.println(a.getTuile().getY() + "\n");
             }
-            avCourant = joueurs.get(2);
+            avCourant = joueurs.get(1);
             assecherTuile(avCourant);
         }
 
@@ -58,8 +57,10 @@ public class Controleur {
 
 	public void assecherTuile(Aventurier aAv) {
             Scanner input = new Scanner(System.in);
+            //On récupère la tuile courante de l'aventurier
+            Tuile aTuile = avCourant.getTuile();
             //On récupère les tuiles asséchables
-            ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables();
+            ArrayList<Tuile> tuilesAssechables = grille.getTuilesNonSeches(aTuile);
             //On les affiche
             for(Tuile t : tuilesAssechables) {
                 System.out.println(t.getX()+" - "+t.getY());
