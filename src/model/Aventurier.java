@@ -6,6 +6,7 @@ public class Aventurier {
 	public ArrayList<Tresor> tresorsObtenus = new ArrayList<>();
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
 	public Tuile tuile;
+        public ArrayList<Tuile> tuilesPossibles = new ArrayList();
 
     public Aventurier(Tuile tuile){
         this.tuile = tuile;
@@ -16,9 +17,7 @@ public class Aventurier {
     }
 
 
-	public ArrayList<Tuile> getTuilesPossibles(Grille aGrille) {
-		throw new UnsupportedOperationException();
-	}
+    
 
     public void donnerCarte() {
             throw new UnsupportedOperationException();
@@ -30,6 +29,8 @@ public class Aventurier {
 
     public void setTuile(Tuile tuile) {
         this.tuile = tuile;
+        tuile.addAventurier(this);
+        
     }
 
     public ArrayList<CarteTresor> getCartes() {
@@ -44,5 +45,11 @@ public class Aventurier {
 
     public void getTuilesAssechables() {
             throw new UnsupportedOperationException();
+    }
+    
+    public void deplacement(Tuile nvTuile){
+        this.tuile.rmAventurier(this);
+        this.setTuile(nvTuile);
+        
     }
 }

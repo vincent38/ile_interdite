@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Vector;
+import view.*;
 import view.VueAventurier;
 
 public class Controleur {
@@ -8,9 +10,11 @@ public class Controleur {
 	public ArrayList<Aventurier> joueurs = new ArrayList<>();
 	public Grille grille;
 	public ArrayList<Tresor> tresors = new ArrayList<>();
+
+	public VueAventurier vueAventurier;
         public Aventurier avCourant;
         public int action = 0;
-        
+
         public Controleur(){
             avCourant = joueurs.get(0);
             this.grille = new Grille();
@@ -36,7 +40,46 @@ public class Controleur {
 		throw new UnsupportedOperationException();
 	}
 
-	public void joueurSuivant() {
+	public void deplacerAventurier(String aNomTuile, Aventurier aAv) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void getAventurierCourant() {
+		throw new UnsupportedOperationException();
+	}
+
+	public void assecherTuile(Aventurier aAv) {
+		throw new UnsupportedOperationException();
+	}
+        
+        public void deplacerAventurierCourant(Tuile nvTuile){
+            avCourant.deplacement(nvTuile);
+        }
+        
+        public ArrayList<Tuile> getTuilesAdjacentes(){
+            ArrayList<Tuile> r = new ArrayList();
+            Tuile tuileC = avCourant.getTuile();
+            
+            if(grille.getTuile(tuileC.getX() - 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX() - 1, tuileC.getY() - 1));
+            
+            if (grille.getTuile(tuileC.getX(), tuileC.getY() - 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX(), tuileC.getY() - 1));
+            
+            if (grille.getTuile(tuileC.getX() + 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX() + 1, tuileC.getY()));
+                
+            if (grille.getTuile(tuileC.getX(), tuileC.getY() + 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX(), tuileC.getY() + 1));
+            
+            return r;
+        }
+            
+        public void finTour() {
+            JoueurSuivant();
+        }
+        
+        private void JoueurSuivant() {
             int nbJoueurs = joueurs.size();
             if (avCourant.equals(joueurs.get(joueurs.size()-1))) { // Si le joueur courant est le dernier de l'AL
                 avCourant = joueurs.get(0);
@@ -68,25 +111,5 @@ public class Controleur {
                 }
             }
             return i;
-        }
-
-	public void deplacerAventurier(String aNomTuile, Aventurier aAv) {
-		throw new UnsupportedOperationException();
-	}
-
-	public Aventurier getAventurierCourant() {
-		return avCourant;
-	}
-        
-        public ArrayList getAventuriers() {
-            return joueurs;
-        }
-
-	public void assecherTuile(Aventurier aAv) {
-		throw new UnsupportedOperationException();
-	}
-        
-        public void finTour() {
-            joueurSuivant();
         }
 }
