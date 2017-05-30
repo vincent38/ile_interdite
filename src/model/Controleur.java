@@ -1,21 +1,19 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Vector;
+import view.VueAventurier;
 
 public class Controleur {
 	public ArrayList<Carte> cartes = new ArrayList<>();
 	public ArrayList<Aventurier> joueurs = new ArrayList<>();
 	public Grille grille;
 	public ArrayList<Tresor> tresors = new ArrayList<>();
-<<<<<<< HEAD
 	public VueAventurier vueAventurier;
         public Aventurier avCourant;
         public int action = 0;
-=======
->>>>>>> 5b89fd7b08d39018d96421a0f041db06923b0167
         
         public Controleur(){
+            avCourant = joueurs.get(0);
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
                 joueurs.add(new Aventurier(grille.getTuile(i, 3)));
@@ -54,4 +52,28 @@ public class Controleur {
 	public void assecherTuile(Aventurier aAv) {
 		throw new UnsupportedOperationException();
 	}
+        
+        public void finTour() {
+            passerJoueurSuivant();
+        }
+        
+        private void passerJoueurSuivant() {
+            int nbJoueurs = joueurs.size();
+            if (avCourant.equals(joueurs.get(joueurs.size()))) { // Si le joueur courant est le dernier de l'AL
+                avCourant = joueurs.get(0);
+            } else {
+                int i = 0;
+                boolean trouve = false;
+                Aventurier j;
+                while ((i < joueurs.size()) && !trouve ) { // Recherche du joueur dans l'AL
+                    j = joueurs.get(i);
+                    if (j.equals(avCourant)) {
+                        trouve = true;
+                    } else {
+                        i =+ 1;
+                    }
+                }
+                avCourant = joueurs.get(i+1);
+            }
+        }
 }
