@@ -21,19 +21,31 @@ public class Controleur implements Observateur{
         public Controleur(){
             
             
+            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
             
-            avCourant = joueurs.get(0);
+
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
                 joueurs.add(new Aventurier(grille.getTuile(i, 3)));
             }
+            avCourant = joueurs.get(0);
            
             avCourant = joueurs.get(2);
             assecherTuile(avCourant);
             
-            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
+            
             
             this.vueAventurier.setObservateur(this);
+            
+ /*           for(Aventurier a : joueurs){
+                System.out.println(a.getTuile().getX());
+                System.out.println(a.getTuile().getY() + "\n");
+            }
+            avCourant = joueurs.get(1);
+            assecherTuile(avCourant);
+            }*/
+            //avCourant = joueurs.get(2);
+            //assecherTuile(avCourant);
         }
 
 	public void ajouterAction() {
@@ -62,8 +74,10 @@ public class Controleur implements Observateur{
 
 	public void assecherTuile(Aventurier aAv) {
             Scanner input = new Scanner(System.in);
+            //On récupère la tuile courante de l'aventurier
+            Tuile aTuile = avCourant.getTuile();
             //On récupère les tuiles asséchables
-            ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables();
+            ArrayList<Tuile> tuilesAssechables = grille.getTuilesNonSeches(aTuile);
             //On les affiche
             for(Tuile t : tuilesAssechables) {
                 System.out.println(t.getX()+" - "+t.getY());
@@ -109,25 +123,13 @@ public class Controleur implements Observateur{
         }
             
         public void finTour() {
-            JoueurSuivant();
+            joueurSuivant();
         }
         
-        private void JoueurSuivant() {
-            int nbJoueurs = joueurs.size();
+        public void joueurSuivant() {
             if (avCourant.equals(joueurs.get(joueurs.size()-1))) { // Si le joueur courant est le dernier de l'AL
                 avCourant = joueurs.get(0);
             } else {
-                int i = 0;
-                boolean trouve = false;
-                Aventurier j;
-                while ((i < joueurs.size()) && !trouve ) { // Recherche du joueur dans l'AL
-                    j = joueurs.get(i);
-                    if (j.equals(avCourant)) {
-                        trouve = true;
-                    } else {
-                        i =+ 1;
-                    }
-                }
                 avCourant = joueurs.get(getNumJoueur(avCourant)+1);
             }
 	}
@@ -148,7 +150,7 @@ public class Controleur implements Observateur{
 
     @Override
     public void traiterMessage(Message m) {
-        switch(m){
+        /*switch(m){
             case CLIC_BTN_ALLER:
                 break;
             case CLIC_BTN_ASSECHER:
@@ -157,7 +159,7 @@ public class Controleur implements Observateur{
                 break;
             case CLIC_BTN_TERMINER_TOUR:
                 break;
-        }
+        }*/
         System.out.println('*');
     }
 }
