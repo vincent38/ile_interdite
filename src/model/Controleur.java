@@ -18,17 +18,21 @@ public class Controleur {
         public int action = 0;
 
         public Controleur(){
+
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
                 joueurs.add(new Aventurier(grille.getTuile(i, 3)));
             }
             
-            for(Aventurier a : joueurs){
+ /*           for(Aventurier a : joueurs){
                 System.out.println(a.getTuile().getX());
                 System.out.println(a.getTuile().getY() + "\n");
             }
             avCourant = joueurs.get(1);
             assecherTuile(avCourant);
+            }*/
+            //avCourant = joueurs.get(2);
+            //assecherTuile(avCourant);
         }
 
 	public void ajouterAction() {
@@ -106,25 +110,13 @@ public class Controleur {
         }
             
         public void finTour() {
-            JoueurSuivant();
+            joueurSuivant();
         }
         
-        private void JoueurSuivant() {
-            int nbJoueurs = joueurs.size();
+        public void joueurSuivant() {
             if (avCourant.equals(joueurs.get(joueurs.size()-1))) { // Si le joueur courant est le dernier de l'AL
                 avCourant = joueurs.get(0);
             } else {
-                int i = 0;
-                boolean trouve = false;
-                Aventurier j;
-                while ((i < joueurs.size()) && !trouve ) { // Recherche du joueur dans l'AL
-                    j = joueurs.get(i);
-                    if (j.equals(avCourant)) {
-                        trouve = true;
-                    } else {
-                        i =+ 1;
-                    }
-                }
                 avCourant = joueurs.get(getNumJoueur(avCourant)+1);
             }
 	}

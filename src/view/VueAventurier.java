@@ -16,9 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
-import model.Aventurier;
-import model.Controleur;
-import model.Tuile;
+import model.*;
 import util.Utils.Pion;
 
  
