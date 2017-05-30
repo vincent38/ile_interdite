@@ -48,9 +48,13 @@ public class Controleur {
 		throw new UnsupportedOperationException();
 	}
 
-	public void getAventurierCourant() {
-		throw new UnsupportedOperationException();
+	public Aventurier getAventurierCourant() {
+            return avCourant;
 	}
+        
+        public ArrayList getAventuriers() {
+            return joueurs;
+        }
 
 	public void assecherTuile(Aventurier aAv) {
             Scanner input = new Scanner(System.in);
