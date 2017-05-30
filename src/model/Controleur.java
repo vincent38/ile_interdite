@@ -2,18 +2,18 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Vector;
+import view.*;
 
 public class Controleur {
 	public ArrayList<Carte> cartes = new ArrayList<>();
 	public ArrayList<Aventurier> joueurs = new ArrayList<>();
 	public Grille grille;
 	public ArrayList<Tresor> tresors = new ArrayList<>();
-<<<<<<< HEAD
+
 	public VueAventurier vueAventurier;
         public Aventurier avCourant;
         public int action = 0;
-=======
->>>>>>> 5b89fd7b08d39018d96421a0f041db06923b0167
+
         
         public Controleur(){
             this.grille = new Grille();
@@ -54,4 +54,24 @@ public class Controleur {
 	public void assecherTuile(Aventurier aAv) {
 		throw new UnsupportedOperationException();
 	}
+        
+        public ArrayList<Tuile> getTuilesAdjacentes(Aventurier av){
+            ArrayList<Tuile> r = new ArrayList();
+            Tuile tuileC = av.getTuile();
+            
+            if(grille.getTuile(tuileC.getX() - 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX() - 1, tuileC.getY() - 1));
+            
+            if (grille.getTuile(tuileC.getX(), tuileC.getY() - 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX(), tuileC.getY() - 1));
+            
+            if (grille.getTuile(tuileC.getX() + 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX() + 1, tuileC.getY()));
+                
+            if (grille.getTuile(tuileC.getX(), tuileC.getY() + 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX(), tuileC.getY() + 1));
+            
+            return r;
+            
+        }
 }

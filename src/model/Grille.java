@@ -49,4 +49,5 @@ public class Grille {
 	public ArrayList<Tuile> getTuilesNonSeches() {
 		throw new UnsupportedOperationException();
 	}
+        
 }
