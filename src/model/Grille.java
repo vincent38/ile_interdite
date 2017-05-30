@@ -30,14 +30,12 @@ public class Grille {
 	}
 
 	public Tuile getTuile(int x, int y) {
-            Tuile r = new Tuile(0,0);
             for(Tuile t : this.tuiles){
                 if(t.getX() == x && t.getY() == y){
-                    r = t;
-                    break;
+                    return t;
                 }
             }
-            return r;
+            return null;
 	}
 
 	public ArrayList<Tuile> getTuilesAdjEtDiag(Tuile aTuile) {
