@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import java.util.Scanner;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 import view.VueAventurier;
 
 
-public class Controleur {
+public class Controleur implements Observateur{
 	public ArrayList<Carte> cartes = new ArrayList<>();
 	public ArrayList<Aventurier> joueurs = new ArrayList<>();
 	public Grille grille;
@@ -18,18 +19,21 @@ public class Controleur {
         public int action = 0;
 
         public Controleur(){
+            
+            
+            
             avCourant = joueurs.get(0);
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
                 joueurs.add(new Aventurier(grille.getTuile(i, 3)));
             }
-            
-            for(Aventurier a : joueurs){
-                System.out.println(a.getTuile().getX());
-                System.out.println(a.getTuile().getY() + "\n");
-            }
+           
             avCourant = joueurs.get(2);
             assecherTuile(avCourant);
+            
+            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
+            
+            this.vueAventurier.setObservateur(this);
         }
 
 	public void ajouterAction() {
@@ -141,4 +145,19 @@ public class Controleur {
             }
             return i;
         }
+
+    @Override
+    public void traiterMessage(Message m) {
+        switch(m){
+            case CLIC_BTN_ALLER:
+                break;
+            case CLIC_BTN_ASSECHER:
+                break;
+            case CLIC_BTN_AUTRE_ACTION:
+                break;
+            case CLIC_BTN_TERMINER_TOUR:
+                break;
+        }
+        System.out.println('*');
+    }
 }

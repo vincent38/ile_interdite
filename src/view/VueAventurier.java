@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -32,6 +34,7 @@ public class VueAventurier  {
     private final JButton btnAutreAction;
     private final JButton btnTerminerTour;
     private final JTextField position;
+    private Observateur observateur;
             
     public VueAventurier (String nomJoueur, String nomAventurier, Color couleur){
 
@@ -78,6 +81,34 @@ public class VueAventurier  {
         this.btnAutreAction = new JButton("Autre Action") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
         
+        btnAller.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                observateur.traiterMessage(Message.CLIC_BTN_ALLER);
+            }
+        });
+        
+        btnAssecher.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                observateur.traiterMessage(Message.CLIC_BTN_ASSECHER);
+            }
+        });
+        
+        btnAutreAction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                observateur.traiterMessage(Message.CLIC_BTN_AUTRE_ACTION);
+            }
+        });
+        
+        btnTerminerTour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                observateur.traiterMessage(Message.CLIC_BTN_TERMINER_TOUR);
+            }
+        });
+        
         this.panelBoutons.add(btnAller);
         this.panelBoutons.add(btnAssecher);
         this.panelBoutons.add(btnAutreAction);
@@ -113,6 +144,11 @@ public class VueAventurier  {
         // Instanciation de la fenêtre 
         VueAventurier vueAventurier = new VueAventurier ("Janot", "Explorateur",Pion.ROUGE.getCouleur() );
     }
+
+    public void setObservateur(Observateur observateur) {
+        this.observateur = observateur;
+    }
+     
 }
 
  
