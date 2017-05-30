@@ -10,5 +10,6 @@ package model;
  * @author sangj
  */
 public interface Observateur {
+    public void traiterMessage(Message m);
     
 }
