@@ -156,6 +156,18 @@ public class Controleur implements Observateur{
                     System.out.println("x : " + t.getX());
                     System.out.println("y : " + t.getY() + '\n');
                 }
+                Scanner clavier = new Scanner(System.in);
+                System.out.print("selectionner X : ");
+                int xVoulu = clavier.nextInt();
+                System.out.print("selectionner Y : ");
+                int yVoulu = clavier.nextInt();
+                Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
+                if (tuilesPossibles.contains(tuileV)){
+                    avCourant.deplacement(tuileV);
+                }
+                System.out.println("x avCourant : " + avCourant.getTuile().getX());
+                System.out.println("y avCourant : " + avCourant.getTuile().getY());
+                
                 break;
             case CLIC_BTN_ASSECHER:
                 assecherTuile(avCourant);
