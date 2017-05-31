@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import java.util.Scanner;
+import static util.Utils.*;
 
 import view.VueAventurier;
+
+
 
 
 public class Controleur implements Observateur{
@@ -21,7 +24,7 @@ public class Controleur implements Observateur{
         public Controleur(){
             
             
-            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
+            //this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
             
 
             this.grille = new Grille();
@@ -36,7 +39,7 @@ public class Controleur implements Observateur{
             
             this.vueAventurier.setObservateur(this);
             
- /*           for(Aventurier a : joueurs){
+ /*         for(Aventurier a : joueurs){
                 System.out.println(a.getTuile().getX());
                 System.out.println(a.getTuile().getY() + "\n");
             }
@@ -50,6 +53,10 @@ public class Controleur implements Observateur{
 	public void ajouterAction() {
             action += 1;
 	}
+        
+        public int getAction(){
+            return action;
+        }
 
 	public void assecherTuileCourante() {
 		throw new UnsupportedOperationException();
@@ -70,6 +77,10 @@ public class Controleur implements Observateur{
         public ArrayList getAventuriers() {
             return joueurs;
         }
+        
+        public void addAventurier(Aventurier av){
+            this.joueurs.add(av);
+        }
 
 	public void assecherTuile(Aventurier aAv) {
             Scanner input = new Scanner(System.in);
@@ -77,29 +88,33 @@ public class Controleur implements Observateur{
             Tuile aTuile = avCourant.getTuile();
             //On récupère les tuiles asséchables
             ArrayList<Tuile> tuilesAssechables = grille.getTuilesNonSeches(aTuile);
-            //On les affiche
-            for(Tuile t : tuilesAssechables) {
-                System.out.println(t.getX()+" - "+t.getY());
-                System.out.println(t.getEtatTuile());
-            }
-            //On demande la tuile à assécher au joueur - A EDITER
-            System.out.println("X : ");
-            int x = input.nextInt();
-            System.out.println("Y : ");
-            int y = input.nextInt();
-            //Fin d'edit
-            Tuile myTuile = new Tuile(x, y);
-            //On vérifie si elle existe. Existe -> on assèche la tuile
-            for(Tuile t : tuilesAssechables) {
-                if (t.getX() == myTuile.getX() && t.getY() == myTuile.getY()) {
-                    System.out.println("Tuile trouvée");
-                    avCourant.assecher(myTuile);
-                    grille.setTuile(myTuile.getX(), myTuile.getY(), Tuile.ETAT_TUILE_SECHE);
-                    System.out.println(myTuile.getEtatTuile());
-                    ajouterAction();
-                    break;
+            //On quitte si l'arraylist est vide, sinon on continue
+            if (!tuilesAssechables.isEmpty()) {
+                //On les affiche
+                for(Tuile t : tuilesAssechables) {
+                    System.out.println(t.getX()+" - "+t.getY());
+                    System.out.println(t.getEtatTuile());
                 }
+                //On demande la tuile à assécher au joueur - A EDITER
+                System.out.println("X : ");
+                int x = input.nextInt();
+                System.out.println("Y : ");
+                int y = input.nextInt();
+                //Fin d'edit
+                Tuile myTuile = new Tuile(x, y);
+                //On vérifie si elle existe. Existe -> on assèche la tuile
+                for(Tuile t : tuilesAssechables) {
+                    if (t.getX() == myTuile.getX() && t.getY() == myTuile.getY()) {
+                        avCourant.assecher(myTuile, grille);
+                        System.out.println(myTuile.getEtatTuile());
+                        ajouterAction();
+                        break;
+                    }
+                }
+            } else {
+                afficherInformation("Il n'y a aucune tuile à assécher.");
             }
+            
 	}
         
         public void deplacerAventurierCourant(Tuile nvTuile){
