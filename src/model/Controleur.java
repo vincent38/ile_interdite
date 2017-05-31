@@ -90,15 +90,16 @@ public class Controleur implements Observateur{
             //On quitte si l'arraylist est vide, sinon on continue
             if (!tuilesAssechables.isEmpty()) {
                 //On les affiche
-                for(Tuile t : tuilesAssechables) {
-                    System.out.println(t.getX()+" - "+t.getY());
-                    System.out.println(t.getEtatTuile());
+                //String tuilesAssechablesMessageGenerator = "Les tuiles suivantes sont asséchables : \n";
+                for(Tuile t : tuilesAssechables) { 
+                    //tuilesAssechablesMessageGenerator += t.getX()+" - "+t.getY()+"\n";
                 }
+                //vueAventurier.setPosition(tuilesAssechablesMessageGenerator);
                 //On demande la tuile à assécher au joueur - A EDITER
                 System.out.println("X : ");
-                int x = input.nextInt();
+                int x = 1 /*input.nextInt()*/;
                 System.out.println("Y : ");
-                int y = input.nextInt();
+                int y = 1 /*input.nextInt()*/;
                 //Fin d'edit
                 Tuile myTuile = new Tuile(x, y);
                 //On vérifie si elle existe. Existe -> on assèche la tuile
