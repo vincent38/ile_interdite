@@ -24,7 +24,7 @@ public class Controleur implements Observateur{
         public Controleur(){
             
             
-            //this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
+            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
             
 
             this.grille = new Grille();
@@ -33,8 +33,9 @@ public class Controleur implements Observateur{
             }
             //avCourant = joueurs.get(0);
            
-            avCourant = joueurs.get(2);            
-            
+            avCourant = joueurs.get(2);  
+            System.out.println("x avCourant : " + avCourant.getTuile().getX());
+            System.out.println("y avCourant : " + avCourant.getTuile().getY());
             
             this.vueAventurier.setObservateur(this);
             
@@ -120,25 +121,6 @@ public class Controleur implements Observateur{
         public void deplacerAventurierCourant(Tuile nvTuile){
             avCourant.deplacement(nvTuile);
         }
-        
-        public ArrayList<Tuile> getTuilesAdjacentes(){
-            ArrayList<Tuile> r = new ArrayList();
-            Tuile tuileC = avCourant.getTuile();
-            
-            if(grille.getTuile(tuileC.getX() - 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
-                r.add(grille.getTuile(tuileC.getX() - 1, tuileC.getY() - 1));
-            
-            if (grille.getTuile(tuileC.getX(), tuileC.getY() - 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
-                r.add(grille.getTuile(tuileC.getX(), tuileC.getY() - 1));
-            
-            if (grille.getTuile(tuileC.getX() + 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
-                r.add(grille.getTuile(tuileC.getX() + 1, tuileC.getY()));
-                
-            if (grille.getTuile(tuileC.getX(), tuileC.getY() + 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
-                r.add(grille.getTuile(tuileC.getX(), tuileC.getY() + 1));
-            
-            return r;
-        }
             
         public void finTour() {
             joueurSuivant();
@@ -170,6 +152,11 @@ public class Controleur implements Observateur{
     public void traiterMessage(Message m) {
         switch(m){
             case CLIC_BTN_ALLER:
+                ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
+                for (Tuile t : tuilesPossibles){
+                    System.out.println("x : " + t.getX());
+                    System.out.println("y : " + t.getY() + '\n');
+                }
                 break;
             case CLIC_BTN_ASSECHER:
                 assecherTuile(avCourant);
@@ -179,6 +166,5 @@ public class Controleur implements Observateur{
             case CLIC_BTN_TERMINER_TOUR:
                 break;
         }
-        System.out.println('*');
     }
 }
