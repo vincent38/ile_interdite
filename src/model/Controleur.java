@@ -36,6 +36,7 @@ public class Controleur implements Observateur{
             avCourant = joueurs.get(2);  
             System.out.println("x avCourant : " + avCourant.getTuile().getX());
             System.out.println("y avCourant : " + avCourant.getTuile().getY());
+            System.out.println("Actions : " + this.getAction());
             
             this.vueAventurier.setObservateur(this);
             
@@ -177,11 +178,13 @@ public class Controleur implements Observateur{
                 Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
                 if (tuilesPossibles.contains(tuileV)){
                     avCourant.deplacement(tuileV);
+                    this.ajouterAction();
                 }
                 else{
                     System.out.println("deplacement impossible, deso frr");
                 }
                 System.out.println("x avCourant : " + avCourant.getTuile().getX());
                 System.out.println("y avCourant : " + avCourant.getTuile().getY());
+                System.out.println("Actions : " + this.getAction());
     }
 }
