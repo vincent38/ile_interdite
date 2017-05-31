@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -16,8 +17,14 @@ public class Test {
     /**
      * @param args the command line arguments
      */
+    
+    
+    
+    
     public static void main(String[] args) {
-        Controleur janot = new Controleur();
+        
+        
+        
     }
     
 }
