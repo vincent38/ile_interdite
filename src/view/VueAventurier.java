@@ -134,7 +134,7 @@ public class VueAventurier  {
         btnAutreAction.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                observateur.traiterMessage(Message.CLIC_BTN_ALLER);
+                observateur.traiterMessage(Message.CLIC_BTN_AUTRE_ACTION);
             }
 
             @Override
@@ -159,7 +159,7 @@ public class VueAventurier  {
         btnTerminerTour.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                observateur.traiterMessage(Message.CLIC_BTN_ALLER);
+                observateur.traiterMessage(Message.CLIC_BTN_TERMINER_TOUR);
             }
 
             @Override
