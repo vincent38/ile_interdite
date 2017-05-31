@@ -7,13 +7,15 @@ public class Aventurier {
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
 	public Tuile tuile;
         public ArrayList<Tuile> tuilesPossibles = new ArrayList();
+        private String nom;
         
-    public Aventurier() {
-        
+    public Aventurier(String nom) {
+        this.nom = nom;
     }
 
-    public Aventurier(Tuile tuile){
+    public Aventurier(Tuile tuile, String nom){
         this.tuile = tuile;
+        this.nom = nom;
     }
     
     public void assecher(Tuile t, Grille g) {
@@ -61,5 +63,9 @@ public class Aventurier {
             
             
             
+    }
+
+    public String getNom() {
+        return nom;
     }
 }

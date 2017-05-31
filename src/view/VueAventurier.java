@@ -220,6 +220,10 @@ public class VueAventurier  {
     public void setObservateur(Observateur observateur) {
         this.observateur = observateur;
     }
+
+    public void setWindowTitle(String titre) {
+        this.window.setTitle(titre);
+    }
     
     
      
