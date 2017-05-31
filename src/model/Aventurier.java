@@ -53,4 +53,23 @@ public class Aventurier {
         this.setTuile(nvTuile);
         
     }
+
+    public ArrayList<Tuile> getDeplacementsPossibles(Grille grille) {
+        ArrayList<Tuile> r = new ArrayList();
+            Tuile tuileC = this.getTuile();
+            
+            if(grille.getTuile(tuileC.getX() - 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX() - 1, tuileC.getY()));
+            
+            if (grille.getTuile(tuileC.getX(), tuileC.getY() - 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX(), tuileC.getY() - 1));
+            
+            if (grille.getTuile(tuileC.getX() + 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX() + 1, tuileC.getY()));
+                
+            if (grille.getTuile(tuileC.getX(), tuileC.getY() + 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(grille.getTuile(tuileC.getX(), tuileC.getY() + 1));
+            
+            return r;
+    }
 }

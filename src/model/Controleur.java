@@ -30,8 +30,9 @@ public class Controleur implements Observateur{
             }
             //avCourant = joueurs.get(0);
            
-            avCourant = joueurs.get(2);            
-            
+            avCourant = joueurs.get(2);  
+            System.out.println("x avCourant : " + avCourant.getTuile().getX());
+            System.out.println("y avCourant : " + avCourant.getTuile().getY());
             
             this.vueAventurier.setObservateur(this);
             
@@ -154,6 +155,11 @@ public class Controleur implements Observateur{
     public void traiterMessage(Message m) {
         switch(m){
             case CLIC_BTN_ALLER:
+                ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
+                for (Tuile t : tuilesPossibles){
+                    System.out.println("x : " + t.getX());
+                    System.out.println("y : " + t.getY());
+                }
                 break;
             case CLIC_BTN_ASSECHER:
                 assecherTuile(avCourant);
@@ -163,6 +169,5 @@ public class Controleur implements Observateur{
             case CLIC_BTN_TERMINER_TOUR:
                 break;
         }
-        System.out.println('*');
     }
 }
