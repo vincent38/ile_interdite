@@ -28,11 +28,9 @@ public class Controleur implements Observateur{
             for(int i=1; i<=4; i++){
                 joueurs.add(new Aventurier(grille.getTuile(i, 3)));
             }
-            avCourant = joueurs.get(0);
+            //avCourant = joueurs.get(0);
            
-            avCourant = joueurs.get(2);
-            assecherTuile(avCourant);
-            
+            avCourant = joueurs.get(2);            
             
             
             this.vueAventurier.setObservateur(this);
@@ -44,9 +42,8 @@ public class Controleur implements Observateur{
             avCourant = joueurs.get(1);
             assecherTuile(avCourant);
             }*/
-            avCourant = joueurs.get(2);
             grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);
-            assecherTuile(avCourant);
+            //assecherTuile(avCourant);
         }
 
 	public void ajouterAction() {
@@ -82,18 +79,21 @@ public class Controleur implements Observateur{
             //On les affiche
             for(Tuile t : tuilesAssechables) {
                 System.out.println(t.getX()+" - "+t.getY());
+                System.out.println(t.getEtatTuile());
             }
-            //On demande la tuile à assécher au joueur
+            //On demande la tuile à assécher au joueur - A EDITER
             System.out.println("X : ");
             int x = input.nextInt();
             System.out.println("Y : ");
             int y = input.nextInt();
+            //Fin d'edit
             Tuile myTuile = new Tuile(x, y);
             //On vérifie si elle existe. Existe -> on assèche la tuile
             for(Tuile t : tuilesAssechables) {
                 if (t.getX() == myTuile.getX() && t.getY() == myTuile.getY()) {
                     System.out.println("Tuile trouvée");
                     avCourant.assecher(myTuile);
+                    System.out.println(myTuile.getEtatTuile());
                     ajouterAction();
                     break;
                 }
@@ -151,16 +151,17 @@ public class Controleur implements Observateur{
 
     @Override
     public void traiterMessage(Message m) {
-        /*switch(m){
+        switch(m){
             case CLIC_BTN_ALLER:
                 break;
             case CLIC_BTN_ASSECHER:
+                assecherTuile(avCourant);
                 break;
             case CLIC_BTN_AUTRE_ACTION:
                 break;
             case CLIC_BTN_TERMINER_TOUR:
                 break;
-        }*/
+        }
         System.out.println('*');
     }
 }
