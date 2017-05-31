@@ -101,6 +101,7 @@ public class Controleur implements Observateur{
                 if (t.getX() == myTuile.getX() && t.getY() == myTuile.getY()) {
                     System.out.println("Tuile trouvée");
                     avCourant.assecher(myTuile);
+                    grille.setTuile(myTuile.getX(), myTuile.getY(), Tuile.ETAT_TUILE_SECHE);
                     System.out.println(myTuile.getEtatTuile());
                     ajouterAction();
                     break;
