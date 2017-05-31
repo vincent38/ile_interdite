@@ -16,8 +16,8 @@ public class Aventurier {
         this.tuile = tuile;
     }
     
-    public void assecher(Tuile t) {
-        t.setAssechee();
+    public void assecher(Tuile t, Grille g) {
+        g.setTuile(t.getX(), t.getY(), Tuile.ETAT_TUILE_SECHE);
     }
 
 
