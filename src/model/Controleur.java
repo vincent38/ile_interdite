@@ -151,7 +151,20 @@ public class Controleur implements Observateur{
     public void traiterMessage(Message m) {
         switch(m){
             case CLIC_BTN_ALLER:
-                ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
+                this.traiterBoutonAller();
+                break;
+            case CLIC_BTN_ASSECHER:
+                assecherTuile(avCourant);
+                break;
+            case CLIC_BTN_AUTRE_ACTION:
+                break;
+            case CLIC_BTN_TERMINER_TOUR:
+                break;
+        }
+    }
+
+    private void traiterBoutonAller() {
+        ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
                 for (Tuile t : tuilesPossibles){
                     System.out.println("x : " + t.getX());
                     System.out.println("y : " + t.getY() + '\n');
@@ -165,17 +178,10 @@ public class Controleur implements Observateur{
                 if (tuilesPossibles.contains(tuileV)){
                     avCourant.deplacement(tuileV);
                 }
+                else{
+                    System.out.println("deplacement impossible, deso frr");
+                }
                 System.out.println("x avCourant : " + avCourant.getTuile().getX());
                 System.out.println("y avCourant : " + avCourant.getTuile().getY());
-                
-                break;
-            case CLIC_BTN_ASSECHER:
-                assecherTuile(avCourant);
-                break;
-            case CLIC_BTN_AUTRE_ACTION:
-                break;
-            case CLIC_BTN_TERMINER_TOUR:
-                break;
-        }
     }
 }

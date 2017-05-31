@@ -25,8 +25,23 @@ public class Grille {
             
         }
 
-	public ArrayList<Tuile> getTuilesAdjacentes(Tuile t) {
-		throw new UnsupportedOperationException();
+	public ArrayList<Tuile> getTuilesAdjacentes(Tuile tuileC) {
+		ArrayList<Tuile> r = new ArrayList();
+            
+            
+            if(this.getTuile(tuileC.getX() - 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(this.getTuile(tuileC.getX() - 1, tuileC.getY()));
+            
+            if (this.getTuile(tuileC.getX(), tuileC.getY() - 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(this.getTuile(tuileC.getX(), tuileC.getY() - 1));
+            
+            if (this.getTuile(tuileC.getX() + 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(this.getTuile(tuileC.getX() + 1, tuileC.getY()));
+                
+            if (this.getTuile(tuileC.getX(), tuileC.getY() + 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                r.add(this.getTuile(tuileC.getX(), tuileC.getY() + 1));
+            
+            return r;
 	}
 
 	public Tuile getTuile(int x, int y) {
@@ -77,5 +92,7 @@ public class Grille {
             
             return buffer;
 	}
+        
+        
         
 }
