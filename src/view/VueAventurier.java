@@ -81,31 +81,103 @@ public class VueAventurier  {
         this.btnAutreAction = new JButton("Autre Action") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
         
-        btnAller.addActionListener(new ActionListener() {
+        btnAller.addMouseListener(new MouseListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 observateur.traiterMessage(Message.CLIC_BTN_ALLER);
             }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+               
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
         });
         
-        btnAssecher.addActionListener(new ActionListener() {
+        btnAssecher.addMouseListener(new MouseListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 observateur.traiterMessage(Message.CLIC_BTN_ASSECHER);
             }
-        });
-        
-        btnAutreAction.addActionListener(new ActionListener() {
+
             @Override
-            public void actionPerformed(ActionEvent e) {
-                observateur.traiterMessage(Message.CLIC_BTN_AUTRE_ACTION);
+            public void mousePressed(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+               
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
             }
         });
         
-        btnTerminerTour.addActionListener(new ActionListener() {
+        btnAutreAction.addMouseListener(new MouseListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                observateur.traiterMessage(Message.CLIC_BTN_TERMINER_TOUR);
+            public void mouseClicked(MouseEvent e) {
+                observateur.traiterMessage(Message.CLIC_BTN_ALLER);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+               
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        
+        btnTerminerTour.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                observateur.traiterMessage(Message.CLIC_BTN_ALLER);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+               
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
             }
         });
         
