@@ -214,7 +214,7 @@ public class VueAventurier  {
     
      public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VueAventurier vueAventurier = new VueAventurier ("Janot", "Explorateur",Pion.ROUGE.getCouleur() );
+        //VueAventurier vueAventurier = new VueAventurier ("Janot", "Explorateur",Pion.ROUGE.getCouleur() );
     }
 
     public void setObservateur(Observateur observateur) {

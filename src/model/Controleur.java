@@ -24,7 +24,7 @@ public class Controleur implements Observateur{
         public Controleur(){
             
             
-            //this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
+            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
             
 
             this.grille = new Grille();
@@ -83,7 +83,7 @@ public class Controleur implements Observateur{
         }
 
 	public void assecherTuile(Aventurier aAv) {
-            //Scanner input = new Scanner(System.in);
+            Scanner input = new Scanner(System.in);
             //On récupère la tuile courante de l'aventurier
             Tuile aTuile = avCourant.getTuile();
             //On récupère les tuiles asséchables
@@ -91,17 +91,16 @@ public class Controleur implements Observateur{
             //On quitte si l'arraylist est vide, sinon on continue
             if (!tuilesAssechables.isEmpty()) {
                 //On les affiche
-                //String tuilesAssechablesMessageGenerator = "Les tuiles suivantes sont asséchables : \n";
+                String tuilesAssechablesMessageGenerator = "Les tuiles suivantes sont asséchables : \n";
                 for(Tuile t : tuilesAssechables) { 
-                    //tuilesAssechablesMessageGenerator += t.getX()+" - "+t.getY()+"\n";
-                    System.out.println("1");
+                    tuilesAssechablesMessageGenerator += t.getX()+" - "+t.getY()+"\n";
                 }
-                //vueAventurier.setPosition(tuilesAssechablesMessageGenerator);
+                vueAventurier.setPosition(tuilesAssechablesMessageGenerator);
                 //On demande la tuile à assécher au joueur - A EDITER
                 System.out.println("X : ");
-                int x = 1 /*input.nextInt()*/;
+                int x = input.nextInt();
                 System.out.println("Y : ");
-                int y = 1 /*input.nextInt()*/;
+                int y = input.nextInt();
                 //Fin d'edit
                 Tuile myTuile = new Tuile(x, y);
                 //On vérifie si elle existe. Existe -> on assèche la tuile
