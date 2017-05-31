@@ -24,7 +24,7 @@ public class Controleur implements Observateur{
         public Controleur(){
             
             
-            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
+            //this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
             
 
             this.grille = new Grille();
@@ -52,6 +52,10 @@ public class Controleur implements Observateur{
 	public void ajouterAction() {
             action += 1;
 	}
+        
+        public int getAction(){
+            return action;
+        }
 
 	public void assecherTuileCourante() {
 		throw new UnsupportedOperationException();
@@ -71,6 +75,10 @@ public class Controleur implements Observateur{
         
         public ArrayList getAventuriers() {
             return joueurs;
+        }
+        
+        public void addAventurier(Aventurier av){
+            this.joueurs.add(av);
         }
 
 	public void assecherTuile(Aventurier aAv) {
