@@ -220,6 +220,8 @@ public class VueAventurier  {
     public void setObservateur(Observateur observateur) {
         this.observateur = observateur;
     }
+    
+    
      
 }
 

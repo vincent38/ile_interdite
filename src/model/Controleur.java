@@ -37,6 +37,7 @@ public class Controleur implements Observateur{
             System.out.println("x avCourant : " + avCourant.getTuile().getX());
             System.out.println("y avCourant : " + avCourant.getTuile().getY());
             System.out.println("Actions : " + this.getAction());
+            vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY());
             
             this.vueAventurier.setObservateur(this);
             
@@ -186,5 +187,6 @@ public class Controleur implements Observateur{
                 System.out.println("x avCourant : " + avCourant.getTuile().getX());
                 System.out.println("y avCourant : " + avCourant.getTuile().getY());
                 System.out.println("Actions : " + this.getAction());
+                vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " \nY : " + this.avCourant.getTuile().getY());
     }
 }
