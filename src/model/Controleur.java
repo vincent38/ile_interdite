@@ -24,7 +24,7 @@ public class Controleur implements Observateur{
         public Controleur(){
             
             
-            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
+            //this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
             
 
             this.grille = new Grille();
@@ -83,7 +83,7 @@ public class Controleur implements Observateur{
         }
 
 	public void assecherTuile(Aventurier aAv) {
-            Scanner input = new Scanner(System.in);
+            //Scanner input = new Scanner(System.in);
             //On récupère la tuile courante de l'aventurier
             Tuile aTuile = avCourant.getTuile();
             //On récupère les tuiles asséchables
@@ -94,6 +94,7 @@ public class Controleur implements Observateur{
                 //String tuilesAssechablesMessageGenerator = "Les tuiles suivantes sont asséchables : \n";
                 for(Tuile t : tuilesAssechables) { 
                     //tuilesAssechablesMessageGenerator += t.getX()+" - "+t.getY()+"\n";
+                    System.out.println("1");
                 }
                 //vueAventurier.setPosition(tuilesAssechablesMessageGenerator);
                 //On demande la tuile à assécher au joueur - A EDITER
@@ -152,11 +153,11 @@ public class Controleur implements Observateur{
     public void traiterMessage(Message m) {
         switch(m){
             case CLIC_BTN_ALLER:
-                ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
+                /*ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
                 for (Tuile t : tuilesPossibles){
                     System.out.println("x : " + t.getX());
                     System.out.println("y : " + t.getY() + '\n');
-                }
+                }*/
                 break;
             case CLIC_BTN_ASSECHER:
                 assecherTuile(avCourant);
