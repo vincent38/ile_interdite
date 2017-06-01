@@ -131,6 +131,10 @@ public class Grille {
             
             return buffer;
 	}
+
+    ArrayList<Tuile> getDeplacementsPlongeur(Tuile tuile) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
         
         
         
