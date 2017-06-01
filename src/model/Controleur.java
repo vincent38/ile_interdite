@@ -35,8 +35,8 @@ public class Controleur implements Observateur{
             //avCourant = joueurs.get(0);
            
             avCourant = joueurs.get(2);  
-            System.out.println("x avCourant : " + avCourant.getTuile().getX());
-            System.out.println("y avCourant : " + avCourant.getTuile().getY());
+            //System.out.println("x avCourant : " + avCourant.getTuile().getX());
+            //System.out.println("y avCourant : " + avCourant.getTuile().getY());
             System.out.println("Actions : " + this.getAction());
             this.vueAventurier = new VueAventurier(this.avCourant.getNom(), "jano", Color.blue);
             this.vueAventurier.setObservateur(this);
@@ -65,10 +65,6 @@ public class Controleur implements Observateur{
         public int getAction(){
             return action;
         }
-
-	public void assecherTuileCourante() {
-		throw new UnsupportedOperationException();
-	}
 
 	public void actionAutre() {
 		throw new UnsupportedOperationException();
@@ -194,8 +190,8 @@ public class Controleur implements Observateur{
                 else{
                     System.out.println("deplacement impossible, deso frr");
                 }
-                System.out.println("x avCourant : " + avCourant.getTuile().getX());
-                System.out.println("y avCourant : " + avCourant.getTuile().getY());
+                //System.out.println("x avCourant : " + avCourant.getTuile().getX());
+                //System.out.println("y avCourant : " + avCourant.getTuile().getY());
                 System.out.println("Actions : " + this.getAction());
                 vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY());
     }
