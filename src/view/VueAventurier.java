@@ -19,7 +19,6 @@ import javax.swing.SwingConstants;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
 import model.*;
-import util.Utils.Pion;
 
  
 public class VueAventurier  {
@@ -41,6 +40,7 @@ public class VueAventurier  {
         this.window = new JFrame();
         this.window.setSize(600,300);
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.window.setAlwaysOnTop(true);
 
         window.setTitle(nomJoueur);
         mainPanel = new JPanel(new BorderLayout());
