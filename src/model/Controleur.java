@@ -84,7 +84,7 @@ public class Controleur implements Observateur{
             this.joueurs.add(av);
         }
 
-	public void assecherTuile(Aventurier aAv) {
+	public void assecherTuile() {
             Scanner input = new Scanner(System.in);
             //On récupère la tuile courante de l'aventurier
             Tuile aTuile = avCourant.getTuile();
@@ -157,7 +157,7 @@ public class Controleur implements Observateur{
                 this.traiterBoutonAller();
                 break;
             case CLIC_BTN_ASSECHER:
-                assecherTuile(avCourant);
+                assecherTuile();
                 break;
             case CLIC_BTN_AUTRE_ACTION:
                 break;
