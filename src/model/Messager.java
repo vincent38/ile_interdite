@@ -2,7 +2,11 @@ package model;
 
 public class Messager extends Aventurier {
 
-    public Messager(Tuile position) {
-        super(position);
+    public Messager(String nom) {
+        super(nom);
+    }
+
+    public Messager(Tuile tuile, String nom){
+        super(tuile, nom);
     }
 }

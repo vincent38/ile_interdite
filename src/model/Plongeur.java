@@ -2,8 +2,12 @@ package model;
 
 public class Plongeur extends Aventurier {
 
-    public Plongeur(Tuile position) {
-        super(position);
+    public Plongeur(String nom) {
+        super(nom);
+    }
+
+    public Plongeur(Tuile tuile, String nom){
+        super(tuile, nom);
     }
 
 	public void addTuilesPossibles(Tuile aCollec) {

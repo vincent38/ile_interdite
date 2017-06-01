@@ -2,7 +2,11 @@ package model;
 
 public class Explorateur extends Aventurier {
 
-    public Explorateur(Tuile position) {
-        super(position);
+    public Explorateur(String nom) {
+        super(nom);
+    }
+
+    public Explorateur(Tuile tuile, String nom){
+        super(tuile, nom);
     }
 }

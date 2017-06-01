@@ -20,16 +20,17 @@ public class Controleur implements Observateur{
 	public VueAventurier vueAventurier;
         public Aventurier avCourant;
         public int action = 0;
+        public static final int ACTION_NEXT_TOUR = 3;
 
         public Controleur(){
             
             
-            this.vueAventurier = new VueAventurier("janot", "jano", Color.blue);
+            
             
 
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
-                joueurs.add(new Aventurier(grille.getTuile(i, 3)));
+                joueurs.add(new Aventurier(grille.getTuile(i, 3), "Aventurier" + i));
             }
             //avCourant = joueurs.get(0);
            
@@ -37,9 +38,11 @@ public class Controleur implements Observateur{
             System.out.println("x avCourant : " + avCourant.getTuile().getX());
             System.out.println("y avCourant : " + avCourant.getTuile().getY());
             System.out.println("Actions : " + this.getAction());
+            this.vueAventurier = new VueAventurier(this.avCourant.getNom(), "jano", Color.blue);
+            this.vueAventurier.setObservateur(this);
             vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY());
             
-            this.vueAventurier.setObservateur(this);
+            
             
  /*         for(Aventurier a : joueurs){
                 System.out.println(a.getTuile().getX());
@@ -54,6 +57,9 @@ public class Controleur implements Observateur{
 
 	public void ajouterAction() {
             action += 1;
+            if(action == ACTION_NEXT_TOUR){
+                this.joueurSuivant();
+            }
 	}
         
         public int getAction(){
@@ -134,6 +140,8 @@ public class Controleur implements Observateur{
             } else {
                 avCourant = joueurs.get(getNumJoueur(avCourant)+1);
             }
+            this.action = 0;
+            this.vueAventurier.setWindowTitle(avCourant.getNom());
 	}
         
         public int getNumJoueur(Aventurier j) {
@@ -144,7 +152,7 @@ public class Controleur implements Observateur{
                 if (j.equals(avCourant)) {
                     trouve = true;
                 } else {
-                    i =+ 1;
+                    i += 1;
                 }
             }
             return i;
@@ -162,6 +170,7 @@ public class Controleur implements Observateur{
             case CLIC_BTN_AUTRE_ACTION:
                 break;
             case CLIC_BTN_TERMINER_TOUR:
+                this.finTour();
                 break;
         }
     }
@@ -188,6 +197,6 @@ public class Controleur implements Observateur{
                 System.out.println("x avCourant : " + avCourant.getTuile().getX());
                 System.out.println("y avCourant : " + avCourant.getTuile().getY());
                 System.out.println("Actions : " + this.getAction());
-                vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " \nY : " + this.avCourant.getTuile().getY());
+                vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY());
     }
 }
