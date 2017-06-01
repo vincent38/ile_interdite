@@ -68,4 +68,6 @@ public class Aventurier {
     public String getNom() {
         return nom;
     }
+    
+    public void traiterFinDeTour(){}
 }

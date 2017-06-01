@@ -30,7 +30,7 @@ public class Controleur implements Observateur{
 
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
-                joueurs.add(new Aventurier(grille.getTuile(i, 3), "Aventurier" + i));
+                joueurs.add(new Pilote(grille.getTuile(i, 3), "Aventurier" + i));
             }
             //avCourant = joueurs.get(0);
            
@@ -53,6 +53,7 @@ public class Controleur implements Observateur{
             }*/
             grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);
             //assecherTuile(avCourant);
+            
         }
 
 	public void ajouterAction() {
@@ -127,6 +128,7 @@ public class Controleur implements Observateur{
         }
             
         public void finTour() {
+            avCourant.traiterFinDeTour();
             joueurSuivant();
         }
         
@@ -172,27 +174,6 @@ public class Controleur implements Observateur{
     }
 
     private void traiterBoutonAller() {
-        ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
-                for (Tuile t : tuilesPossibles){
-                    System.out.println("x : " + t.getX());
-                    System.out.println("y : " + t.getY() + '\n');
-                }
-                Scanner clavier = new Scanner(System.in);
-                System.out.print("selectionner X : ");
-                int xVoulu = clavier.nextInt();
-                System.out.print("selectionner Y : ");
-                int yVoulu = clavier.nextInt();
-                Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
-                if (tuilesPossibles.contains(tuileV)){
-                    avCourant.deplacement(tuileV);
-                    this.ajouterAction();
-                }
-                else{
-                    System.out.println("deplacement impossible, deso frr");
-                }
-                //System.out.println("x avCourant : " + avCourant.getTuile().getX());
-                //System.out.println("y avCourant : " + avCourant.getTuile().getY());
-                System.out.println("Actions : " + this.getAction());
-                vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY());
+
     }
 }
