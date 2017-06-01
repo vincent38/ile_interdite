@@ -57,8 +57,9 @@ public class Aventurier {
     }
 
     public ArrayList<Tuile> getDeplacementsPossibles(Grille grille) {
-        ArrayList<Tuile> r = new ArrayList();
-            Tuile tuileC = this.getTuile();
+        //ArrayList<Tuile> r = new ArrayList();
+           // Tuile tuileC = this.getTuile();
+           System.out.println("Dbug");
             return grille.getTuilesAdjacentes(this.tuile);
             
             

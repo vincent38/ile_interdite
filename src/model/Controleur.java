@@ -30,7 +30,7 @@ public class Controleur implements Observateur{
 
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
-                joueurs.add(new Pilote(grille.getTuile(i, 3), "Aventurier" + i));
+                joueurs.add(new Messager(grille.getTuile(i, 3), "Aventurier" + i));
             }
             //avCourant = joueurs.get(0);
            
@@ -40,7 +40,7 @@ public class Controleur implements Observateur{
             System.out.println("Actions : " + this.getAction());
             this.vueAventurier = new VueAventurier(this.avCourant.getNom(), "jano", Color.blue);
             this.vueAventurier.setObservateur(this);
-            vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY());
+            vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY()+" - "+avCourant.getTuile().getNom());
             
             
             
@@ -52,6 +52,7 @@ public class Controleur implements Observateur{
             assecherTuile(avCourant);
             }*/
             grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);
+            //grille.setTuile(2, 3, Tuile.ETAT_TUILE_COULEE);
             //assecherTuile(avCourant);
             
         }
@@ -98,9 +99,9 @@ public class Controleur implements Observateur{
                 //On les affiche
                 String tuilesAssechablesMessageGenerator = "Les tuiles suivantes sont asséchables : \n";
                 for(Tuile t : tuilesAssechables) { 
-                    tuilesAssechablesMessageGenerator += t.getX()+" - "+t.getY()+"\n";
+                    tuilesAssechablesMessageGenerator += "X : "+t.getX()+" - Y : "+t.getY()+" - Nom : "+t.getNom()+"\n";
                 }
-                vueAventurier.setPosition(tuilesAssechablesMessageGenerator);
+                System.out.println(tuilesAssechablesMessageGenerator);
                 //On demande la tuile à assécher au joueur - A EDITER
                 System.out.println("X : ");
                 int x = input.nextInt();
@@ -140,6 +141,7 @@ public class Controleur implements Observateur{
             }
             this.action = 0;
             this.vueAventurier.setWindowTitle(avCourant.getNom());
+            vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY()+" - "+avCourant.getTuile().getNom());
 	}
         
         public int getNumJoueur(Aventurier j) {
@@ -174,6 +176,30 @@ public class Controleur implements Observateur{
     }
 
     private void traiterBoutonAller() {
+        ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
+        System.out.println("Main");
+        for (Tuile t : tuilesPossibles){
+            System.out.println("x : " + t.getX());
+            System.out.println("y : " + t.getY());
+            System.out.println(t.getNom() + '\n');
+        }
+        Scanner clavier = new Scanner(System.in);
+        System.out.print("selectionner X : ");
+        int xVoulu = clavier.nextInt();
+        System.out.print("selectionner Y : ");
+        int yVoulu = clavier.nextInt();
+        Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
+        if (tuilesPossibles.contains(tuileV)){
+            avCourant.deplacement(tuileV);
+            this.ajouterAction();
+        }
+        else{
+            System.out.println("deplacement impossible, deso frr");
+        }
+        System.out.println("x avCourant : " + avCourant.getTuile().getX());
+        System.out.println("y avCourant : " + avCourant.getTuile().getY());
+        System.out.println("Actions : " + this.getAction());
+        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY()+" - "+avCourant.getTuile().getNom());
 
     }
 }
