@@ -128,8 +128,35 @@ public class Grille {
             }
 	}
 
-	public ArrayList<Tuile> getTuilesAdjEtDiag(Tuile aTuile) {
-		throw new UnsupportedOperationException();
+	public ArrayList<Tuile> getTuilesAdjEtDiag(Tuile t) {
+            ArrayList<Tuile> r = this.getTuilesAdjacentes(t);
+            
+            Tuile tuileHG = this.getTuile(t.getX() - 1, t.getY() - 1);
+            Tuile tuileHD = this.getTuile(t.getX() + 1, t.getY() - 1);
+            Tuile tuileBG = this.getTuile(t.getX() - 1, t.getY() + 1);
+            Tuile tuileBD = this.getTuile(t.getX() + 1, t.getY() + 1);
+            
+            if (tuileHG != null){
+                if (tuileHG.getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                    r.add(tuileHG);
+            }
+            
+            if (tuileHD != null){
+                if (tuileHD.getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                    r.add(tuileHD);
+            }
+            
+            if (tuileBG != null){
+                if (tuileBG.getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                    r.add(tuileBG);
+            }
+            
+            if (tuileBD != null){
+                if (tuileBD.getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                    r.add(tuileBD);
+            }
+            
+            return r;
 	}
 
 	public ArrayList<Tuile> getToutesLesTuiles() {
@@ -157,6 +184,11 @@ public class Grille {
             
             return buffer;
 	}
+
+    ArrayList<Tuile> getDeplacementsPlongeur(Tuile tuile) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        
         
         
         

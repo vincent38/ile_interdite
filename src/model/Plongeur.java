@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Plongeur extends Aventurier {
 
     public Plongeur(String nom) {
@@ -10,7 +12,8 @@ public class Plongeur extends Aventurier {
         super(tuile, nom);
     }
 
-	public void addTuilesPossibles(Tuile aCollec) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public ArrayList<Tuile> getDeplacementsPossibles(Grille g){
+        return g.getDeplacementsPlongeur(this.tuile);
+    }
 }

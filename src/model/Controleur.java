@@ -23,14 +23,9 @@ public class Controleur implements Observateur{
         public static final int ACTION_NEXT_TOUR = 3;
 
         public Controleur(){
-            
-            
-            
-            
-
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
-                joueurs.add(new Messager(grille.getTuile(i, 3), "Aventurier" + i));
+                joueurs.add(new Explorateur(grille.getTuile(i, 3), "Aventurier" + i));
             }
             //avCourant = joueurs.get(0);
            
