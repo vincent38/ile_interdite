@@ -1,7 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Pilote extends Aventurier {
-	private boolean pouvoirDispo;
+	private boolean pouvoirDispo = true;
 
     public Pilote(String nom) {
         super(nom);
@@ -12,6 +14,21 @@ public class Pilote extends Aventurier {
     }
 
 	public void setPouvoirNonDispo() {
-		throw new UnsupportedOperationException();
-	}
+            this.pouvoirDispo = false;
+        }
+        
+    @Override
+    public ArrayList<Tuile> getDeplacementsPossibles(Grille g){
+        if (pouvoirDispo){
+            this.pouvoirDispo = false;
+            return g.getToutesLesTuiles();
+        }
+        else
+            return super.getDeplacementsPossibles(g);
+    }
+    
+    @Override
+    public void traiterFinDeTour(){
+        this.pouvoirDispo = true;
+    }
 }

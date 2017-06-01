@@ -26,20 +26,32 @@ public class Grille {
         }
 
 	public ArrayList<Tuile> getTuilesAdjacentes(Tuile tuileC) {
-		ArrayList<Tuile> r = new ArrayList();
+            ArrayList<Tuile> r = new ArrayList();
+            Tuile tuileGauche = this.getTuile(tuileC.getX() - 1, tuileC.getY());
+            Tuile tuileDroite = this.getTuile(tuileC.getX() + 1, tuileC.getY());
+            Tuile tuileHaut = this.getTuile(tuileC.getX(), tuileC.getY() + 1);
+            Tuile tuileBas = this.getTuile(tuileC.getX(), tuileC.getY() - 1);
             
             
-            if(this.getTuile(tuileC.getX() - 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
-                r.add(this.getTuile(tuileC.getX() - 1, tuileC.getY()));
+            if (tuileGauche != null){
+                if(tuileGauche.getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                    r.add(tuileGauche);
+            }
             
-            if (this.getTuile(tuileC.getX(), tuileC.getY() - 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
-                r.add(this.getTuile(tuileC.getX(), tuileC.getY() - 1));
+            if (tuileDroite != null){
+                if (tuileDroite.getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                    r.add(tuileDroite);
+            }
             
-            if (this.getTuile(tuileC.getX() + 1, tuileC.getY()).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
-                r.add(this.getTuile(tuileC.getX() + 1, tuileC.getY()));
+            if (tuileHaut != null){
+                if (tuileHaut.getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                    r.add(tuileHaut);
+            }
                 
-            if (this.getTuile(tuileC.getX(), tuileC.getY() + 1).getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
-                r.add(this.getTuile(tuileC.getX(), tuileC.getY() + 1));
+            if (tuileBas != null){
+                if (tuileBas.getEtatTuile() != Tuile.ETAT_TUILE_COULEE)
+                    r.add(tuileBas);
+            }
             
             return r;
 	}
@@ -74,7 +86,7 @@ public class Grille {
 	}
 
 	public ArrayList<Tuile> getToutesLesTuiles() {
-		throw new UnsupportedOperationException();
+		return this.tuiles;
 	}
 
 	public ArrayList<Tuile> getTuilesNonSeches(Tuile t) {
