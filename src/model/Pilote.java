@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 
 public class Pilote extends Aventurier {
-	private boolean pouvoirDispo = true;
 
     public Pilote(String nom) {
         super(nom);
@@ -20,11 +19,18 @@ public class Pilote extends Aventurier {
     @Override
     public ArrayList<Tuile> getDeplacementsPossibles(Grille g){
         if (pouvoirDispo){
-            this.pouvoirDispo = false;
             return g.getToutesLesTuiles();
         }
         else
             return super.getDeplacementsPossibles(g);
+    }
+    
+        @Override
+    public void deplacement(Tuile nvTuile, Grille g){
+        if (!super.getDeplacementsPossibles(g).contains(nvTuile)){
+            this.pouvoirDispo = false;
+        }
+        super.deplacement(nvTuile, g);
     }
     
     @Override

@@ -25,7 +25,7 @@ public class Controleur implements Observateur{
         public Controleur(){
             this.grille = new Grille();
             for(int i=1; i<=4; i++){
-                joueurs.add(new Explorateur(grille.getTuile(i, 3), "Aventurier" + i));
+                joueurs.add(new Plongeur(grille.getTuile(i, 3), "Aventurier" + i));
             }
             //avCourant = joueurs.get(0);
            
@@ -46,7 +46,8 @@ public class Controleur implements Observateur{
             avCourant = joueurs.get(1);
             assecherTuile(avCourant);
             }*/
-            grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);
+            grille.setTuile(4, 3, Tuile.ETAT_TUILE_INONDEE);
+            grille.setTuile(4, 2, Tuile.ETAT_TUILE_INONDEE);
             //assecherTuile(avCourant);
             
         }
@@ -123,7 +124,7 @@ public class Controleur implements Observateur{
 	}
         
         public void deplacerAventurierCourant(Tuile nvTuile){
-            avCourant.deplacement(nvTuile);
+            avCourant.deplacement(nvTuile, this.grille);
         }
             
         public void finTour() {
@@ -185,7 +186,7 @@ public class Controleur implements Observateur{
         int yVoulu = clavier.nextInt();
         Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
         if (tuilesPossibles.contains(tuileV)){
-            avCourant.deplacement(tuileV);
+            avCourant.deplacement(tuileV, this.grille);
             this.ajouterAction();
         }
         else{

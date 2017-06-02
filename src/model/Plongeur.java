@@ -14,6 +14,17 @@ public class Plongeur extends Aventurier {
 
     @Override
     public ArrayList<Tuile> getDeplacementsPossibles(Grille g){
-        return g.getDeplacementsPlongeur(this.tuile);
+        if(this.pouvoirDispo)
+            return g.getDeplacementsPlongeur(this.tuile);
+        else
+            return super.getDeplacementsPossibles(g);
+    }
+    
+        @Override
+    public void deplacement(Tuile nvTuile, Grille g){
+        if (!super.getDeplacementsPossibles(g).contains(nvTuile)){
+            this.pouvoirDispo = false;
+        }
+        super.deplacement(nvTuile, g);
     }
 }

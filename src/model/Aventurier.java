@@ -8,6 +8,7 @@ public class Aventurier {
 	public Tuile tuile;
         public ArrayList<Tuile> tuilesPossibles = new ArrayList();
         private String nom;
+        protected boolean pouvoirDispo = true;
         
     public Aventurier(String nom) {
         this.nom = nom;
@@ -50,10 +51,9 @@ public class Aventurier {
     }
 
     
-    public void deplacement(Tuile nvTuile){
+    public void deplacement(Tuile nvTuile, Grille g){
         this.tuile.rmAventurier(this);
         this.setTuile(nvTuile);
-        
     }
 
     public ArrayList<Tuile> getDeplacementsPossibles(Grille grille) {

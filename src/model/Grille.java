@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Grille {
 	public ArrayList<Tuile> tuiles = new ArrayList<>();
@@ -131,9 +132,99 @@ public class Grille {
             
             return buffer;
 	}
+        
+    ArrayList<Tuile> getTuilesAdjacentesEtSombrees(Tuile tuileC){
+        ArrayList<Tuile> r = new ArrayList();
+        Tuile tuileGauche = this.getTuile(tuileC.getX() - 1, tuileC.getY());
+        Tuile tuileDroite = this.getTuile(tuileC.getX() + 1, tuileC.getY());
+        Tuile tuileHaut = this.getTuile(tuileC.getX(), tuileC.getY() + 1);
+        Tuile tuileBas = this.getTuile(tuileC.getX(), tuileC.getY() - 1);
+            
+            
+            if (tuileGauche != null){
+                    r.add(tuileGauche);
+            }
+            
+            if (tuileDroite != null){
+                    r.add(tuileDroite);
+            }
+            
+            if (tuileHaut != null){
+                    r.add(tuileHaut);
+            }
+                
+            if (tuileBas != null){
+                    r.add(tuileBas);
+            }
+            
+            return r;
+    }
+    
+    public ArrayList<Tuile> getTuilesAdjacentesSombreesOuCoulees(Tuile tuileC) {
+            ArrayList<Tuile> r = new ArrayList();
+            Tuile tuileGauche = this.getTuile(tuileC.getX() - 1, tuileC.getY());
+            Tuile tuileDroite = this.getTuile(tuileC.getX() + 1, tuileC.getY());
+            Tuile tuileHaut = this.getTuile(tuileC.getX(), tuileC.getY() + 1);
+            Tuile tuileBas = this.getTuile(tuileC.getX(), tuileC.getY() - 1);
+            
+            
+            if (tuileGauche != null){
+                if(tuileGauche.getEtatTuile() != Tuile.ETAT_TUILE_SECHE)
+                    r.add(tuileGauche);
+            }
+            
+            if (tuileDroite != null){
+                if (tuileDroite.getEtatTuile() != Tuile.ETAT_TUILE_SECHE)
+                    r.add(tuileDroite);
+            }
+            
+            if (tuileHaut != null){
+                if (tuileHaut.getEtatTuile() != Tuile.ETAT_TUILE_SECHE)
+                    r.add(tuileHaut);
+            }
+                
+            if (tuileBas != null){
+                if (tuileBas.getEtatTuile() != Tuile.ETAT_TUILE_SECHE)
+                    r.add(tuileBas);
+            }
+            
+            return r;
+	}
+    
+    
 
-    ArrayList<Tuile> getDeplacementsPlongeur(Tuile tuile) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    ArrayList<Tuile> getDeplacementsPlongeur(Tuile tuileC) {
+        ArrayList<Tuile> tuilesPassage = getTuilesAdjacentesSombreesOuCoulees(tuileC);
+        ArrayList<Tuile> r = new ArrayList();
+        
+        tuilesPassage.add(tuileC);
+        
+        for (int i = 0; i < tuilesPassage.size(); i++){
+            Tuile t = tuilesPassage.get(i);
+                for (Tuile t2 : this.getTuilesAdjacentes(t)){
+                    if (!tuilesPassage.contains(t2) && !(t2.equals(tuileC)) && t2.getEtatTuile() != Tuile.ETAT_TUILE_SECHE){
+                        tuilesPassage.add(t2);
+                    }
+                }
+            
+        }
+        /*for(Tuile t : tuilesPassage){
+            System.out.println("x : " + t.getX());
+            System.out.println("y : " + t.getY());
+        }
+        System.out.println("\n\n\n\n");*/
+        
+        
+        for(Tuile t : tuilesPassage){
+            if (t.getEtatTuile() != Tuile.ETAT_TUILE_COULEE && !r.contains(t) && !(t.equals(tuileC))){
+                r.add(t);
+            }
+            for (Tuile t2 : this.getTuilesAdjacentes(t)){
+                if (!r.contains(t2) && !(t2.equals(tuileC)))
+                    r.add(t2);
+            }
+        }
+        return r;
     }
         
         

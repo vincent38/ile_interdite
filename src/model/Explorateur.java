@@ -14,6 +14,17 @@ public class Explorateur extends Aventurier {
     
     @Override
     public ArrayList<Tuile> getDeplacementsPossibles(Grille g){
-        return g.getTuilesAdjEtDiag(tuile);
+        if(this.pouvoirDispo)
+            return g.getTuilesAdjEtDiag(tuile);
+        else
+            return g.getTuilesAdjacentes(tuile);
+    }
+    
+        @Override
+    public void deplacement(Tuile nvTuile, Grille g){
+        if (!super.getDeplacementsPossibles(g).contains(nvTuile)){
+            this.pouvoirDispo = false;
+        }
+        super.deplacement(nvTuile, g);
     }
 }
