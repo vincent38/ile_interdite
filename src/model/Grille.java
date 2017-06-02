@@ -117,10 +117,10 @@ public class Grille {
             for(Tuile t : this.tuiles){
                 if(t.getX() == x && t.getY() == y){
                     if (state == Tuile.ETAT_TUILE_INONDEE) {
-                        t.setInondee(true);
+                        t.setInondee();
                     }
                     if (state == Tuile.ETAT_TUILE_COULEE) {
-                        t.setCoulee(true);
+                        t.setCoulee();
                     }
                     if (state == Tuile.ETAT_TUILE_SECHE) {
                         t.setAssechee();

@@ -1,103 +1,151 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Tuile {
 
-        // Coordonnées
-        private int x;
-        private int y;
-        // Etat Tuile
-	private int etatTuile;
-        public static final int ETAT_TUILE_SECHE = 0;
-        public static final int ETAT_TUILE_INONDEE = 1;
-        public static final int ETAT_TUILE_COULEE = 2;
-        
-	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
-	public Tresor tresor;
-        
-        public String nom;
+    // Coordonnées
+    private int x;
+    private int y;
+    // Etat Tuile
+    private int etatTuile;
+    public static final int ETAT_TUILE_SECHE = 0;
+    public static final int ETAT_TUILE_INONDEE = 1;
+    public static final int ETAT_TUILE_COULEE = 2;
 
+    public ArrayList<Aventurier> aventuriers = new ArrayList<>();
+    public Tresor tresor;
+
+    public String nom;
+
+    /**
+     * Définit une nouvelle tuile prenant des coordonnées x et y
+     * @param x integer
+     * @param y integer
+     */
+    public Tuile(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Définit le nom de la tuile
+     * @param nom String
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     * Récupère le nom de la tuile
+     * @return nom
+     */
     public String getNom() {
         return nom;
     }
 
-        public Tuile(int x, int y){
-            this.x = x;
-            this.y = y;
+    /**
+     * Permet d'inonder une case, a condition qu'elle soie sèche
+     */
+    public void setInondee() {
+        if (etatTuile == ETAT_TUILE_SECHE) {
+            etatTuile = ETAT_TUILE_INONDEE;
         }
-        
-        /**
-         * Permet d'inonder une case
-         * @param aFalse 
-         */
-	public void setInondee(boolean aFalse) {
-		if (etatTuile == ETAT_TUILE_SECHE) {
-                    etatTuile = ETAT_TUILE_INONDEE;
-                }
-	}
-        
-        /**
-         * Permet de couler une case
-         * @param aFalse 
-         */
-	public void setCoulee(boolean aFalse) {
-		if (etatTuile == ETAT_TUILE_INONDEE) {
-                    etatTuile = ETAT_TUILE_COULEE;
-                }
-	}
-        
-        /**
-         * Permet d'assécher une case
-         */
-        public void setAssechee() {
-            if (etatTuile == ETAT_TUILE_INONDEE) {
-                etatTuile = ETAT_TUILE_SECHE;
-            }
+    }
+
+    /**
+     * Permet de couler une case, a condition qu'elle soie inondée
+     */
+    public void setCoulee() {
+        if (etatTuile == ETAT_TUILE_INONDEE) {
+            etatTuile = ETAT_TUILE_COULEE;
         }
-        
-        /**
-         * 
-         * 
-         */
+    }
 
+    /**
+     * Permet d'assécher une case, a condition qu'elle soie sèche
+     */
+    public void setAssechee() {
+        if (etatTuile == ETAT_TUILE_INONDEE) {
+            etatTuile = ETAT_TUILE_SECHE;
+        }
+    }
 
+    /**
+     * Retourne la coordonnée x de la tuile
+     *
+     * @return x
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Définit la coordonnée x de la tuile, celle-ci prend la valeur x passée en
+     * paramètres
+     *
+     * @param x
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Retourne la coordonnée y de la tuile
+     *
+     * @return y
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Définit la coordonnée y de la tuile, celle-ci prend la valeur y passée en
+     * paramètres
+     *
+     * @param y
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Retourne une arrayList d'aventuriers présents sur la tuile
+     *
+     * @return aventuriers
+     */
     public ArrayList<Aventurier> getAventuriers() {
         return aventuriers;
     }
-    
-    public void addAventurier(Aventurier av){
+
+    /**
+     * Ajoute un aventurier sur la tuile
+     *
+     * @param av Aventurier
+     */
+    public void addAventurier(Aventurier av) {
         this.aventuriers.add(av);
     }
-    
-    public void rmAventurier(Aventurier av){
-        this.aventuriers.remove(av); 
+
+    /**
+     * Retire un aventurier de la tuile
+     *
+     * @param av Aventurier
+     */
+    public void rmAventurier(Aventurier av) {
+        this.aventuriers.remove(av);
     }
-    
-    public int getEtatTuile(){
+
+    /**
+     * Récupère l'état de la tuile (sèche, inondée, coulée)
+     *
+     * @return etatTuile
+     * @see ETAT_TUILE_SECHE
+     * @see ETAT_TUILE_INONDEE
+     * @see ETAT_TUILE_COULEE
+     */
+    public int getEtatTuile() {
         return this.etatTuile;
     }
-        
-        
+
 }
