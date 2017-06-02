@@ -197,7 +197,9 @@ public class Controleur implements Observateur {
         this.action = 0;
         this.vueAventurier.setWindowTitle(avCourant.getNom());
         this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
-        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom());
+        this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom());
+        this.vueAventurier.setColor(avCourant.getColor());
+        this.vueAventurier.setFontColor(avCourant.getFontColor());
     }
 
     /**
