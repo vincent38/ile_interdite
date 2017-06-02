@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -35,17 +36,23 @@ public class VueAventurier  {
     private final JTextField position;
     private Observateur observateur;
     private JLabel typeAv;
+    private Font font;
+    JLabel labelPosition;
             
     public VueAventurier (String nomJoueur, String nomAventurier, Color couleur){
+        font = new Font("Arial", Font.PLAIN, 16);
 
         this.window = new JFrame();
         this.window.setSize(600,300);
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setAlwaysOnTop(true);
 
+        
         window.setTitle(nomJoueur);
         mainPanel = new JPanel(new BorderLayout());
         this.window.add(mainPanel);
+        
+        
 
         mainPanel.setBackground(new Color(230, 230, 230));
         mainPanel.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
@@ -56,6 +63,8 @@ public class VueAventurier  {
         this.panelAventurier = new JPanel();
         panelAventurier.setBackground(couleur);
         typeAv = new JLabel(nomAventurier,SwingConstants.CENTER );
+        typeAv.setFont(font);
+        typeAv.setForeground(Color.WHITE);
         panelAventurier.add(typeAv);
         mainPanel.add(panelAventurier, BorderLayout.NORTH);
    
@@ -66,7 +75,10 @@ public class VueAventurier  {
         this.panelCentre.setBorder(new MatteBorder(0, 0, 2, 0, couleur));
         mainPanel.add(this.panelCentre, BorderLayout.CENTER);
         
-        panelCentre.add(new JLabel ("Position", SwingConstants.CENTER));
+        labelPosition = new JLabel ("Position", SwingConstants.CENTER);
+        labelPosition.setFont(font);
+        labelPosition.setForeground(Color.WHITE);
+        panelCentre.add(labelPosition);
         position = new  JTextField(30); 
         position.setHorizontalAlignment(CENTER);
         panelCentre.add(position);
@@ -229,6 +241,16 @@ public class VueAventurier  {
     
     public void setTypeAv(String t){
         this.typeAv.setText(t);
+    }
+
+    public void setColor(Color color) {
+        this.mainPanel.setBackground(color);
+        this.panelAventurier.setBackground(color);
+    }
+    
+    public void setFontColor(Color color){
+        this.typeAv.setForeground(color);
+        this.labelPosition.setForeground(color);
     }
     
     

@@ -25,8 +25,8 @@ public class Controleur implements Observateur{
         public Controleur(){
             this.grille = new Grille();
             joueurs.add(new Explorateur(grille.getTuile(3, 3), "Jano"));
-            joueurs.add(new Pilote(grille.getTuile(4, 3), "Jul"));
-            joueurs.add(new Aventurier(grille.getTuile(5, 3), "Vincent"));
+            joueurs.add(new Messager(grille.getTuile(4, 3), "Jul"));
+            joueurs.add(new Ingenieur(grille.getTuile(5, 3), "Vincent"));
             joueurs.add(new Plongeur(grille.getTuile(3, 4), "Clement"));
             joueurs.add(new Pilote(grille.getTuile(3, 4), "Et mille"));
             
@@ -39,7 +39,8 @@ public class Controleur implements Observateur{
             this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
             this.vueAventurier.setObservateur(this);
             vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY()+" - "+avCourant.getTuile().getNom());
-            
+            this.vueAventurier.setColor(avCourant.getColor());
+            this.vueAventurier.setFontColor(avCourant.getFontColor());
             
             
  /*         for(Aventurier a : joueurs){
@@ -142,7 +143,9 @@ public class Controleur implements Observateur{
             this.action = 0;
             this.vueAventurier.setWindowTitle(avCourant.getNom());
             this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
-            vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY()+" - "+avCourant.getTuile().getNom());
+            this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY()+" - "+avCourant.getTuile().getNom());
+            this.vueAventurier.setColor(avCourant.getColor());
+            this.vueAventurier.setFontColor(avCourant.getFontColor());
 	}
         
         public int getNumJoueur(Aventurier j) {

@@ -1,6 +1,8 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import util.Utils;
 
 public class Plongeur extends Aventurier {
 
@@ -26,5 +28,10 @@ public class Plongeur extends Aventurier {
             this.pouvoirDispo = false;
         }
         super.deplacement(nvTuile, g);
+    }
+
+    @Override
+    public Color getColor() {
+        return Utils.Pion.NOIR.getCouleur();
     }
 }
