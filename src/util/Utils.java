@@ -42,7 +42,10 @@ public class Utils {
         BLEU("Bleu", new Color(55,194,198)),
         ORANGE("Orange", new Color(255, 148, 0)),
         VIOLET("Violet", new Color(204, 94, 255)),
-        JAUNE("Jaune", new Color(255, 255, 0)) ;    
+        JAUNE("Jaune", new Color(255, 255, 0)) ,
+        NOIR("Noir", new Color(10,10,10)),
+        BLANC("Blanc", new Color(255,255,255,230));
+        
 
         private final String libelle ;
         private final Color couleur ;

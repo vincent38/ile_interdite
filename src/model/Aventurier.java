@@ -1,8 +1,9 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
-public class Aventurier {
+public abstract class Aventurier {
 	public ArrayList<Tresor> tresorsObtenus = new ArrayList<>();
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
 	public Tuile tuile;
@@ -62,6 +63,12 @@ public class Aventurier {
 
     public String getNom() {
         return nom;
+    }
+    
+    public abstract Color getColor();
+    
+    public Color getFontColor(){
+        return Color.WHITE;
     }
     
     public void traiterFinDeTour(){}

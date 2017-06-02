@@ -1,6 +1,8 @@
 package model;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import util.Utils;
 
 public class Pilote extends Aventurier {
 
@@ -36,5 +38,10 @@ public class Pilote extends Aventurier {
     @Override
     public void traiterFinDeTour(){
         this.pouvoirDispo = true;
+    }
+
+    @Override
+    public Color getColor() {
+        return Utils.Pion.BLEU.getCouleur();
     }
 }
