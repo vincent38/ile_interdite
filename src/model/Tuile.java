@@ -16,6 +16,16 @@ public class Tuile {
         
 	public ArrayList<Aventurier> aventuriers = new ArrayList<>();
 	public Tresor tresor;
+        
+        public String nom;
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getNom() {
+        return nom;
+    }
 
         public Tuile(int x, int y){
             this.x = x;
