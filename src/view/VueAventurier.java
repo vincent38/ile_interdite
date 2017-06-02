@@ -34,6 +34,7 @@ public class VueAventurier  {
     private final JButton btnTerminerTour;
     private final JTextField position;
     private Observateur observateur;
+    private JLabel typeAv;
             
     public VueAventurier (String nomJoueur, String nomAventurier, Color couleur){
 
@@ -54,7 +55,8 @@ public class VueAventurier  {
 
         this.panelAventurier = new JPanel();
         panelAventurier.setBackground(couleur);
-        panelAventurier.add(new JLabel(nomAventurier,SwingConstants.CENTER ));
+        typeAv = new JLabel(nomAventurier,SwingConstants.CENTER );
+        panelAventurier.add(typeAv);
         mainPanel.add(panelAventurier, BorderLayout.NORTH);
    
         // =================================================================================
@@ -223,6 +225,10 @@ public class VueAventurier  {
 
     public void setWindowTitle(String titre) {
         this.window.setTitle(titre);
+    }
+    
+    public void setTypeAv(String t){
+        this.typeAv.setText(t);
     }
     
     

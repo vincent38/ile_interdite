@@ -24,16 +24,19 @@ public class Controleur implements Observateur{
 
         public Controleur(){
             this.grille = new Grille();
-            for(int i=1; i<=4; i++){
-                joueurs.add(new Plongeur(grille.getTuile(i, 3), "Aventurier" + i));
-            }
+            joueurs.add(new Explorateur(grille.getTuile(3, 3), "Jano"));
+            joueurs.add(new Pilote(grille.getTuile(4, 3), "Jul"));
+            joueurs.add(new Aventurier(grille.getTuile(5, 3), "Vincent"));
+            joueurs.add(new Plongeur(grille.getTuile(3, 4), "Clement"));
+            joueurs.add(new Pilote(grille.getTuile(3, 4), "Et mille"));
+            
             //avCourant = joueurs.get(0);
            
             avCourant = joueurs.get(2);  
             //System.out.println("x avCourant : " + avCourant.getTuile().getX());
             //System.out.println("y avCourant : " + avCourant.getTuile().getY());
             System.out.println("Actions : " + this.getAction());
-            this.vueAventurier = new VueAventurier(this.avCourant.getNom(), "jano", Color.blue);
+            this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
             this.vueAventurier.setObservateur(this);
             vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY()+" - "+avCourant.getTuile().getNom());
             
@@ -46,13 +49,10 @@ public class Controleur implements Observateur{
             avCourant = joueurs.get(1);
             assecherTuile(avCourant);
             }*/
-<<<<<<< HEAD
             grille.setTuile(4, 3, Tuile.ETAT_TUILE_INONDEE);
             grille.setTuile(4, 2, Tuile.ETAT_TUILE_INONDEE);
-=======
             grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);
             //grille.setTuile(2, 3, Tuile.ETAT_TUILE_COULEE);
->>>>>>> a13145230e648cf530c2e78a29d805f9d928ddcb
             //assecherTuile(avCourant);
             
         }
@@ -141,6 +141,7 @@ public class Controleur implements Observateur{
             }
             this.action = 0;
             this.vueAventurier.setWindowTitle(avCourant.getNom());
+            this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
             vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY()+" - "+avCourant.getTuile().getNom());
 	}
         

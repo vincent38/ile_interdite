@@ -1,12 +1,9 @@
 package model;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Iterator;
-=======
 import java.util.Collections;
 import java.util.Random;
->>>>>>> a13145230e648cf530c2e78a29d805f9d928ddcb
 
 public class Grille {
     
