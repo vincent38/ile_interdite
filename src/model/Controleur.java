@@ -38,7 +38,7 @@ public class Controleur implements Observateur {
         joueurs.add(new Pilote(grille.getTuile(3, 4), "Et mille"));
 
         //avCourant = joueurs.get(0);
-        avCourant = joueurs.get(2);
+        avCourant = joueurs.get(3);
         //System.out.println("x avCourant : " + avCourant.getTuile().getX());
         //System.out.println("y avCourant : " + avCourant.getTuile().getY());
         System.out.println("Actions : " + this.getAction());
@@ -55,9 +55,10 @@ public class Controleur implements Observateur {
             avCourant = joueurs.get(1);
             assecherTuile(avCourant);
             }*/
-        grille.setTuile(4, 3, Tuile.ETAT_TUILE_INONDEE);
+        /*grille.setTuile(4, 3, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(4, 2, Tuile.ETAT_TUILE_INONDEE);
-        grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);*/
+        System.out.println(grille.getTuile(3, 3).getEtatTuile());
         //grille.setTuile(2, 3, Tuile.ETAT_TUILE_COULEE);
         //assecherTuile(avCourant);
 

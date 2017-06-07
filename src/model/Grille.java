@@ -6,6 +6,10 @@ import java.util.Random;
 
 public class Grille {
 
+    /**
+     * Stocke les noms des tuiles du jeu
+     */
+    
     private String[] NOMS_TUILES = {"Le Pont des Abimes",
         "La Porte de Bronze",
         "La Caverne des Ombres",
@@ -30,7 +34,7 @@ public class Grille {
         "Le Val du Crepuscule",
         "La Tour du Guet",
         "Le Jardin des Murmures"};
-
+    
     private ArrayList<String> remainingNames;
 
     public ArrayList<Tuile> tuiles = new ArrayList<>();
@@ -71,6 +75,7 @@ public class Grille {
         
     /** 
      * @deprecated It is not recommended to call this function for now. Please wait for the release of a newer version of this method.
+     * Inutile dans cette configuration : vérifie quelles tuiles ne sont pas encore placées dans le jeu
      */
     private void remainingTuilesNames() {
         ArrayList<String> allNames = new ArrayList<String>();
@@ -85,6 +90,13 @@ public class Grille {
             System.out.println(s);
         }
     }
+    
+    /**
+     * Retourne les tuiles adjacentes à tuileC
+     * tuileC = tuile courante de l'aventurier
+     * @param tuileC
+     * @return 
+     */
 
     public ArrayList<Tuile> getTuilesAdjacentes(Tuile tuileC) {
         ArrayList<Tuile> r = new ArrayList();
@@ -119,6 +131,13 @@ public class Grille {
 
         return r;
     }
+    
+    /**
+     * Retourne un objet Tuile en fonction des coordonées d'entrées
+     * @param x
+     * @param y
+     * @return 
+     */
 
     public Tuile getTuile(int x, int y) {
         for (Tuile t : this.tuiles) {
@@ -128,9 +147,16 @@ public class Grille {
         }
         return null;
     }
+    
+    /**
+     * Permet de changer l'état de la tuile (Normale, Coulée ou Innondée)
+     * @param x
+     * @param y
+     * @param state 
+     */
 
     public void setTuile(int x, int y, int state) {
-        for (Tuile t : this.tuiles) {
+        Tuile t = this.getTuile(x,y);
             if (t.getX() == x && t.getY() == y) {
                 if (state == Tuile.ETAT_TUILE_INONDEE) {
                     t.setInondee();
@@ -141,10 +167,15 @@ public class Grille {
                 if (state == Tuile.ETAT_TUILE_SECHE) {
                     t.setAssechee();
                 }
-            }
         }
     }
 
+    /**
+     * Retourne les tuiles adjacentes et diagonales à la tuile t (Explorateur)
+     * @param t
+     * @return 
+     */
+    
     public ArrayList<Tuile> getTuilesAdjEtDiag(Tuile t) {
         ArrayList<Tuile> r = this.getTuilesAdjacentes(t);
 
@@ -179,6 +210,11 @@ public class Grille {
 
         return r;
     }
+    
+    /**
+     * Retourne toutes les tuiles encore en jeu (non coulées) (Pilote)
+     * @return 
+     */
 
     public ArrayList<Tuile> getToutesLesTuiles() {
         ArrayList<Tuile> tuilesNonCoulees = new ArrayList<Tuile>();
@@ -189,14 +225,17 @@ public class Grille {
         }
         return tuilesNonCoulees;
     }
-
+    
+    /**
+     * @deprecated  
+     */
     public ArrayList<Tuile> getTuilesNonSeches(Tuile t) {
         ArrayList<Tuile> buffer = new ArrayList<Tuile>();
         for (int i = t.getX() - 1; i <= t.getX() + 1; i++) {
             for (int j = t.getY() - 1; j <= t.getY() + 1; j++) {
                 if (!(i == t.getX() - 1 && j == t.getY() - 1 || i == t.getX() - 1 && j == t.getY() + 1 || i == t.getX() + 1 && j == t.getY() - 1 || i == t.getX() + 1 && j == t.getY() + 1)) {
                     Tuile tuBuffer = getTuile(i, j);
-                    if (tuBuffer.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE) {
+                    if (tuBuffer != null && tuBuffer.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE) {
                         buffer.add(tuBuffer);
                     }
                 }
@@ -205,7 +244,12 @@ public class Grille {
 
         return buffer;
     }
-
+    
+ 
+    /**
+     * Méthode inutilisée actuellement. Gardée en prévision.
+     * Retourne les tuiles adjacentes à la tuileC incluant les tuiles coulées
+     */
     ArrayList<Tuile> getTuilesAdjacentesEtSombrees(Tuile tuileC) {
         ArrayList<Tuile> r = new ArrayList();
         Tuile tuileGauche = this.getTuile(tuileC.getX() - 1, tuileC.getY());
@@ -231,6 +275,12 @@ public class Grille {
 
         return r;
     }
+    
+    /**
+     * Retourne les tuiles adjacentes à la tuileC incluant les tuiles coulées ou innondées
+     * @param tuileC
+     * @return 
+     */
 
     public ArrayList<Tuile> getTuilesAdjacentesSombreesOuCoulees(Tuile tuileC) {
         ArrayList<Tuile> r = new ArrayList();
@@ -265,6 +315,12 @@ public class Grille {
 
         return r;
     }
+    
+    /**
+     * Retourne les déplacements possibles pour le plongeur
+     * @param tuileC
+     * @return 
+     */
 
     ArrayList<Tuile> getDeplacementsPlongeur(Tuile tuileC) {
         ArrayList<Tuile> tuilesPassage = getTuilesAdjacentesSombreesOuCoulees(tuileC);
