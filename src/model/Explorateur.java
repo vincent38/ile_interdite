@@ -53,3 +53,4 @@ public class Explorateur extends Aventurier {
         return buffer;
     }
 }
+

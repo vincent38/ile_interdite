@@ -33,6 +33,16 @@ public class Controleur implements Observateur {
     public Controleur() {
         //Initialisation de la grille
         this.grille = new Grille();
+<<<<<<< HEAD
+        joueurs.add(new Explorateur(grille.getTuile(3, 3), "Jano"));
+        joueurs.add(new Messager(grille.getTuile(4, 3), "Jul"));
+        joueurs.add(new Ingenieur(grille.getTuile(5, 3), "Vincent"));
+        joueurs.add(new Plongeur(grille.getTuile(3, 4), "Clement"));
+        joueurs.add(new Pilote(grille.getTuile(3, 4), "Et mille"));
+        joueurs.add (new Explorateur(grille.getTuile(4,4), "Chuck"));
+
+        //avCourant = joueurs.get(0);
+=======
         //Création et placement des joueurs
         joueurs.add(new Explorateur(grille.getTuile(5, 3), "Jano"));
         joueurs.add(new Messager(grille.getTuile(4, 2), "Jul"));
@@ -41,6 +51,7 @@ public class Controleur implements Observateur {
         joueurs.add(new Pilote(grille.getTuile(4, 3), "Et mille"));
         joueurs.add(new Navigateur(grille.getTuile(2, 3), "Henrie"));
         //Définition de l'aventurier courant
+>>>>>>> ed631d112881c325489aded3fcad48ab06c47f7b
         avCourant = joueurs.get(2);
         //Affichage des informations
         System.out.println("Actions : " + this.getAction());

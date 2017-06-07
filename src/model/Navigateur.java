@@ -22,6 +22,8 @@ public class Navigateur extends Aventurier {
     
     @Override
     public Color getFontColor(){
-        return Utils.Pion.JAUNE.getCouleur();
+        return Color.BLACK;
     }
+    
+    
 }
