@@ -11,15 +11,26 @@ public abstract class Aventurier {
         public ArrayList<Tuile> tuilesPossibles = new ArrayList();
         private String nom;
         protected boolean pouvoirDispo = true;
+        private String type;
         
     public Aventurier(String nom) {
         this.nom = nom;
+        setType("Aventurier");
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 
     public Aventurier(Tuile tuile, String nom){
         this.tuileCourante = tuile;
         this.nom = nom;
+        setType("Aventurier");
     }
 
     public void assecher(ArrayList<Tuile> tuilesAssechables, Grille g, int x, int y) {
@@ -36,7 +47,7 @@ public abstract class Aventurier {
 
     public ArrayList<Tuile> getAssechablesParJoueur(Grille g) {
         Tuile t = getTuile();
-        ArrayList<Tuile> buffer = new ArrayList<Tuile>();
+        ArrayList<Tuile> buffer = new ArrayList<>();
         for (int i = t.getX() - 1; i <= t.getX() + 1; i++) {
             for (int j = t.getY() - 1; j <= t.getY() + 1; j++) {
                 if (!(i == t.getX() - 1 && j == t.getY() - 1 || i == t.getX() - 1 && j == t.getY() + 1 || i == t.getX() + 1 && j == t.getY() - 1 || i == t.getX() + 1 && j == t.getY() + 1)) {
@@ -47,7 +58,6 @@ public abstract class Aventurier {
                 }
             }
         }
-
         return buffer;
     }
 

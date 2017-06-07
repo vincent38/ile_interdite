@@ -8,10 +8,12 @@ public class Plongeur extends Aventurier {
 
     public Plongeur(String nom) {
         super(nom);
+        setType("Plongeur");
     }
 
     public Plongeur(Tuile tuile, String nom){
         super(tuile, nom);
+        setType("Plongeur");
     }
 
     @Override

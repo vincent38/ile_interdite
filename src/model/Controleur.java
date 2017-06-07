@@ -24,6 +24,7 @@ public class Controleur implements Observateur {
     public Aventurier avCourant;
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
+    private boolean doubleAssechement = false;
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -153,10 +154,21 @@ public class Controleur implements Observateur {
             int y = input.nextInt();
             //Fin d'edit
             
-            //TODO - Assecher transféré dans aventurier
+            //TODO - Assecher transféré dans aventurier + ajout action
             avCourant.assecher(tuilesAssechables, grille, x, y);
-            //On ajoute une action au joueur
-            ajouterAction();
+            if (avCourant.getType().equalsIgnoreCase("Ingenieur")) {
+                //On teste si il en est à son premier ou deuxième asséchement
+                if (!doubleAssechement) {
+                    //Premier asséchement
+                    afficherInformation("Vous pouvez assécher une deuxième tuile sans frais.");
+                    ajouterAction();
+                    doubleAssechement = true;
+                } else {
+                    //Deuxième
+                    afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
+                    doubleAssechement = false;
+                }
+            }
         } else {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
@@ -177,6 +189,7 @@ public class Controleur implements Observateur {
      * Termine le tour de l'aventurier courant, et change d'aventurier
      */
     public void finTour() {
+        doubleAssechement = false;
         avCourant.traiterFinDeTour();
         joueurSuivant();
     }

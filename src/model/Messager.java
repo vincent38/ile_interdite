@@ -7,10 +7,12 @@ public class Messager extends Aventurier {
 
     public Messager(String nom) {
         super(nom);
+        setType("Messager");
     }
 
     public Messager(Tuile tuile, String nom){
         super(tuile, nom);
+        setType("Messager");
     }
 
     @Override

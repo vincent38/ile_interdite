@@ -7,10 +7,12 @@ public class Navigateur extends Aventurier {
 
     public Navigateur(String nom) {
         super(nom);
+        setType("Navigateur");
     }
 
     public Navigateur(Tuile tuile, String nom){
         super(tuile, nom);
+        setType("Navigateur");
     }
 
     @Override
