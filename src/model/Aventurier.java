@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public abstract class Aventurier {
 	public ArrayList<Tresor> tresorsObtenus = new ArrayList<>();
 	public ArrayList<CarteTresor> cartes = new ArrayList<>();
-	public Tuile tuile;
+	public Tuile tuileCourante;
         public ArrayList<Tuile> tuilesPossibles = new ArrayList();
         private String nom;
         protected boolean pouvoirDispo = true;
@@ -16,7 +16,7 @@ public abstract class Aventurier {
     }
 
     public Aventurier(Tuile tuile, String nom){
-        this.tuile = tuile;
+        this.tuileCourante = tuile;
         this.nom = nom;
     }
     
@@ -32,11 +32,11 @@ public abstract class Aventurier {
     }
 
     public Tuile getTuile() {
-        return tuile;
+        return tuileCourante;
     }
 
     public void setTuile(Tuile tuile) {
-        this.tuile = tuile;
+        this.tuileCourante = tuile;
         tuile.addAventurier(this);
         
     }
@@ -53,12 +53,12 @@ public abstract class Aventurier {
 
     
     public void deplacement(Tuile nvTuile, Grille g){
-        this.tuile.rmAventurier(this);
+        this.tuileCourante.rmAventurier(this);
         this.setTuile(nvTuile);
     }
 
     public ArrayList<Tuile> getDeplacementsPossibles(Grille grille) {
-        return grille.getTuilesAdjacentes(this.tuile);
+        return grille.getTuilesAdjacentes(this.tuileCourante);
     }
 
     public String getNom() {
