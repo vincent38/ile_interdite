@@ -24,43 +24,45 @@ public class Controleur implements Observateur {
     public Aventurier avCourant;
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
+    private boolean doubleAssechement = false;
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
      * jeu, ainsi que les appels aux vues.
      */
     public Controleur() {
+        //Initialisation de la grille
         this.grille = new Grille();
-        joueurs.add(new Explorateur(grille.getTuile(3, 3), "Jano"));
-        joueurs.add(new Messager(grille.getTuile(4, 3), "Jul"));
-        joueurs.add(new Ingenieur(grille.getTuile(5, 3), "Vincent"));
-        joueurs.add(new Plongeur(grille.getTuile(3, 4), "Clement"));
-        joueurs.add(new Pilote(grille.getTuile(3, 4), "Et mille"));
-
-        //avCourant = joueurs.get(0);
-        avCourant = joueurs.get(3);
-        //System.out.println("x avCourant : " + avCourant.getTuile().getX());
-        //System.out.println("y avCourant : " + avCourant.getTuile().getY());
+        //Création et placement des joueurs
+        joueurs.add(new Explorateur(grille.getTuile(5, 3), "Jano"));
+        joueurs.add(new Messager(grille.getTuile(4, 2), "Jul"));
+        joueurs.add(new Ingenieur(grille.getTuile(4, 1), "Vincent"));
+        joueurs.add(new Plongeur(grille.getTuile(3, 2), "Clement"));
+        joueurs.add(new Pilote(grille.getTuile(4, 3), "Et mille"));
+        joueurs.add(new Navigateur(grille.getTuile(2, 3), "Henrie"));
+        //Définition de l'aventurier courant
+        avCourant = joueurs.get(2);
+        //Affichage des informations
         System.out.println("Actions : " + this.getAction());
         this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
         this.vueAventurier.setObservateur(this);
         vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom());
         this.vueAventurier.setColor(avCourant.getColor());
         this.vueAventurier.setFontColor(avCourant.getFontColor());
-
-        /*         for(Aventurier a : joueurs){
-                System.out.println(a.getTuile().getX());
-                System.out.println(a.getTuile().getY() + "\n");
-            }
-            avCourant = joueurs.get(1);
-            assecherTuile(avCourant);
-            }*/
-        /*grille.setTuile(4, 3, Tuile.ETAT_TUILE_INONDEE);
-        grille.setTuile(4, 2, Tuile.ETAT_TUILE_INONDEE);
-        grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);*/
-        System.out.println(grille.getTuile(3, 3).getEtatTuile());
-        //grille.setTuile(2, 3, Tuile.ETAT_TUILE_COULEE);
-        //assecherTuile(avCourant);
+        //Définition des tuiles inondées et coulées en dur
+        grille.setTuile(4, 1, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 3, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 3, Tuile.ETAT_TUILE_COULEE);
+        grille.setTuile(2, 4, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 4, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 4, Tuile.ETAT_TUILE_COULEE);
+        grille.setTuile(4, 4, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(5, 4, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(5, 4, Tuile.ETAT_TUILE_COULEE);
+        grille.setTuile(6, 4, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 5, Tuile.ETAT_TUILE_COULEE);
+        grille.setTuile(4, 6, Tuile.ETAT_TUILE_INONDEE);
 
     }
 
@@ -132,32 +134,39 @@ public class Controleur implements Observateur {
      */
     public void assecherTuile() {
         Scanner input = new Scanner(System.in);
-        //On récupère la tuile courante de l'aventurier
-        Tuile aTuile = avCourant.getTuile();
-        //On récupère les tuiles asséchables
-        ArrayList<Tuile> tuilesAssechables = grille.getTuilesNonSeches(aTuile);
+
+        //On récupère les tuiles asséchables depuis le joueur
+        ArrayList<Tuile> tuilesAssechables = avCourant.getAssechablesParJoueur(grille);
         //On quitte si l'arraylist est vide, sinon on continue
         if (!tuilesAssechables.isEmpty()) {
+            
             //On les affiche
             String tuilesAssechablesMessageGenerator = "Les tuiles suivantes sont asséchables : \n";
             for (Tuile t : tuilesAssechables) {
                 tuilesAssechablesMessageGenerator += "X : " + t.getX() + " - Y : " + t.getY() + " - Nom : " + t.getNom() + "\n";
             }
             System.out.println(tuilesAssechablesMessageGenerator);
+            
             //On demande la tuile à assécher au joueur - A EDITER
             System.out.println("X : ");
             int x = input.nextInt();
             System.out.println("Y : ");
             int y = input.nextInt();
             //Fin d'edit
-            Tuile myTuile = new Tuile(x, y);
-            //On vérifie si elle existe. Existe -> on assèche la tuile
-            for (Tuile t : tuilesAssechables) {
-                if (t.getX() == myTuile.getX() && t.getY() == myTuile.getY()) {
-                    avCourant.assecher(myTuile, grille);
-                    System.out.println(myTuile.getEtatTuile());
+            
+            //TODO - Assecher transféré dans aventurier + ajout action
+            avCourant.assecher(tuilesAssechables, grille, x, y);
+            if (avCourant.getType().equalsIgnoreCase("Ingenieur")) {
+                //On teste si il en est à son premier ou deuxième asséchement
+                if (!doubleAssechement) {
+                    //Premier asséchement
+                    afficherInformation("Vous pouvez assécher une deuxième tuile sans frais.");
                     ajouterAction();
-                    break;
+                    doubleAssechement = true;
+                } else {
+                    //Deuxième
+                    afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
+                    doubleAssechement = false;
                 }
             }
         } else {
@@ -180,6 +189,7 @@ public class Controleur implements Observateur {
      * Termine le tour de l'aventurier courant, et change d'aventurier
      */
     public void finTour() {
+        doubleAssechement = false;
         avCourant.traiterFinDeTour();
         joueurSuivant();
     }
@@ -251,7 +261,6 @@ public class Controleur implements Observateur {
      */
     private void traiterBoutonAller() {
         ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
-        System.out.println("Main");
         for (Tuile t : tuilesPossibles) {
             System.out.println("x : " + t.getX());
             System.out.println("y : " + t.getY());
@@ -267,7 +276,7 @@ public class Controleur implements Observateur {
             avCourant.deplacement(tuileV, this.grille);
             this.ajouterAction();
         } else {
-            System.out.println("deplacement impossible, deso frr");
+            afficherInformation("Le déplacement demandé est impossible.");
         }
         System.out.println("x avCourant : " + avCourant.getTuile().getX());
         System.out.println("y avCourant : " + avCourant.getTuile().getY());

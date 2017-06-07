@@ -12,6 +12,7 @@ public class Messager extends Aventurier {
     
     public Messager(String nom) {
         super(nom);
+        setType("Messager");
     }
     
     /**
@@ -22,6 +23,7 @@ public class Messager extends Aventurier {
 
     public Messager(Tuile tuile, String nom){
         super(tuile, nom);
+        setType("Messager");
     }
 
     /**

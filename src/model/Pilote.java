@@ -13,6 +13,7 @@ public class Pilote extends Aventurier {
     
     public Pilote(String nom) {
         super(nom);
+        setType("Pilote");
     }
 
     /**
@@ -23,6 +24,7 @@ public class Pilote extends Aventurier {
     
     public Pilote(Tuile tuile, String nom){
         super(tuile, nom);
+        setType("Pilote");
     }
 
     /**

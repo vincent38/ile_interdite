@@ -5,6 +5,7 @@ import util.Utils;
 
 public class Ingenieur extends Aventurier {
 
+
     /**
      * Constructeur basique
      * @param nom 
@@ -12,6 +13,7 @@ public class Ingenieur extends Aventurier {
     
     public Ingenieur(String nom) {
         super(nom);
+        setType("Ingenieur");
     }
     
     /**
@@ -22,6 +24,7 @@ public class Ingenieur extends Aventurier {
 
     public Ingenieur(Tuile tuile, String nom){
         super(tuile, nom);
+        setType("Ingenieur");
     }
     
     /**
@@ -33,4 +36,5 @@ public class Ingenieur extends Aventurier {
     public Color getColor() {
         return Utils.Pion.ROUGE.getCouleur();
     }
+    
 }

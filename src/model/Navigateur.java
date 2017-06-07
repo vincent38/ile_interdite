@@ -12,6 +12,7 @@ public class Navigateur extends Aventurier {
     
     public Navigateur(String nom) {
         super(nom);
+        setType("Navigateur");
     }
     
     /**
@@ -22,6 +23,7 @@ public class Navigateur extends Aventurier {
 
     public Navigateur(Tuile tuile, String nom){
         super(tuile, nom);
+        setType("Navigateur");
     }
 
     /**
@@ -41,6 +43,8 @@ public class Navigateur extends Aventurier {
     
     @Override
     public Color getFontColor(){
-        return Utils.Pion.JAUNE.getCouleur();
+        return Color.BLACK;
     }
+    
+    
 }

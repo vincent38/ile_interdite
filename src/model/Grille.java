@@ -38,12 +38,10 @@ public class Grille {
     private ArrayList<String> remainingNames;
 
     public ArrayList<Tuile> tuiles = new ArrayList<>();
-    
+
     /**
-     * Constructeur
-     * génère la grille,  associe à chaque tuile un nom de la liste
+     * Constructeur génère la grille, associe à chaque tuile un nom de la liste
      */
-    
     public Grille() {
         //remainingTuilesNames();
         for (int i = 3; i <= 4; i++) {
@@ -72,6 +70,7 @@ public class Grille {
             tuiles.get(i).setNom(NOMS_TUILES[i]);
         }
     }
+
         
     /** 
      * @deprecated It is not recommended to call this function for now. Please wait for the release of a newer version of this method.
@@ -227,7 +226,9 @@ public class Grille {
     }
     
     /**
-     * @deprecated  
+     * @deprecated getAssechablesParJoueur
+     * @param t
+     * @return
      */
     public ArrayList<Tuile> getTuilesNonSeches(Tuile t) {
         ArrayList<Tuile> buffer = new ArrayList<Tuile>();
