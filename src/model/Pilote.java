@@ -6,19 +6,40 @@ import util.Utils;
 
 public class Pilote extends Aventurier {
 
+    /**
+     * Constructeur basique
+     * @param nom 
+     */
+    
     public Pilote(String nom) {
         super(nom);
         setType("Pilote");
     }
 
+    /**
+     * Constructeur assignant le nom ainsi que la tuile de départ 
+     * @param tuile
+     * @param nom 
+     */
+    
     public Pilote(Tuile tuile, String nom){
         super(tuile, nom);
         setType("Pilote");
     }
 
-	public void setPouvoirNonDispo() {
+    /**
+     * Rends le pouvoir de déplacmeent du pilote indisponible
+     */
+    
+    public void setPouvoirNonDispo() {
             this.pouvoirDispo = false;
-        }
+    }
+    
+    /**
+     * Permet de retourner toutes les tuiles encore en jeu pôur le pouvoir du pilote
+     * @param g
+     * @return 
+     */
         
     @Override
     public ArrayList<Tuile> getDeplacementsPossibles(Grille g){
@@ -29,6 +50,12 @@ public class Pilote extends Aventurier {
             return super.getDeplacementsPossibles(g);
     }
     
+    /**
+     * Vérifie que le pouvoir du pilote est disponible avant son déplacement
+     * @param nvTuile
+     * @param g 
+     */
+    
         @Override
     public void deplacement(Tuile nvTuile, Grille g){
         if (!super.getDeplacementsPossibles(g).contains(nvTuile)){
@@ -37,10 +64,19 @@ public class Pilote extends Aventurier {
         super.deplacement(nvTuile, g);
     }
     
+    /**
+     * Rends le pouvoir disponible pour le prochain tour
+     */
+    
     @Override
     public void traiterFinDeTour(){
         this.pouvoirDispo = true;
     }
+    
+    /**
+     * Retourne la couleur Bleu du pilote
+     * @return 
+     */
 
     @Override
     public Color getColor() {

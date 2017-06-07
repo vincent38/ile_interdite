@@ -5,17 +5,33 @@ import java.util.ArrayList;
 import util.Utils;
 
 public class Explorateur extends Aventurier {
-
+    
+    /**
+     * Constructeur basique
+     * @param nom 
+     */
+    
     public Explorateur(String nom) {
         super(nom);
         setType("Explorateur");
     }
+    
+    /**
+     * Constructeur assignant nom et tuile de départ
+     * @param tuile
+     * @param nom 
+     */
 
     public Explorateur(Tuile tuile, String nom) {
         super(tuile, nom);
         setType("Explorateur");
     }
-
+    
+    /**
+     * Retourne les déplacements possibles propre à l'explorateur
+     * @param g
+     * @return 
+     */
     @Override
     public ArrayList<Tuile> getDeplacementsPossibles(Grille g) {
         if (this.pouvoirDispo) {
@@ -24,14 +40,25 @@ public class Explorateur extends Aventurier {
             return g.getTuilesAdjacentes(tuileCourante);
         }
     }
-
+    
+    /**
+     * déplace l'explorateur
+     * @param nvTuile
+     * @param g 
+     */
+    
     @Override
-    public void deplacement(Tuile nvTuile, Grille g) {
-        if (!super.getDeplacementsPossibles(g).contains(nvTuile)) {
+    public void deplacement(Tuile nvTuile, Grille g){
+        if (!super.getDeplacementsPossibles(g).contains(nvTuile)){
             this.pouvoirDispo = false;
         }
         super.deplacement(nvTuile, g);
     }
+    
+    /**
+     * Retourne Vert (couleur de l'explorateur)
+     * @return 
+     */
 
     @Override
     public Color getColor() {

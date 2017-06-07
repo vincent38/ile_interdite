@@ -6,15 +6,33 @@ import util.Utils;
 
 public class Plongeur extends Aventurier {
 
+    /**
+     * constructeur basique
+     * @param nom 
+     */
+    
     public Plongeur(String nom) {
         super(nom);
         setType("Plongeur");
     }
 
+    
+    /**
+     * Constructeur assignant le nom ainsi que la tuile de départ
+     * @param tuile
+     * @param nom 
+     */
+    
     public Plongeur(Tuile tuile, String nom){
         super(tuile, nom);
         setType("Plongeur");
     }
+    
+    /**
+     * Demande les tuiles disponibles au déplacement du plongeur
+     * @param g
+     * @return 
+     */
 
     @Override
     public ArrayList<Tuile> getDeplacementsPossibles(Grille g){
@@ -23,15 +41,12 @@ public class Plongeur extends Aventurier {
         else
             return super.getDeplacementsPossibles(g);
     }
-    
-        @Override
-    public void deplacement(Tuile nvTuile, Grille g){
-        if (!super.getDeplacementsPossibles(g).contains(nvTuile)){
-            this.pouvoirDispo = false;
-        }
-        super.deplacement(nvTuile, g);
-    }
 
+    /**
+     * Retourne la couleur Noir du plongeur
+     * @return 
+     */
+    
     @Override
     public Color getColor() {
         return Utils.Pion.NOIR.getCouleur();
