@@ -34,4 +34,6 @@ public class Explorateur extends Aventurier {
     public Color getColor() {
         return Utils.Pion.VERT.getCouleur();
     }
+    
+    
 }

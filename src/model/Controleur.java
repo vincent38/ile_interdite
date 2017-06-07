@@ -36,6 +36,7 @@ public class Controleur implements Observateur {
         joueurs.add(new Ingenieur(grille.getTuile(5, 3), "Vincent"));
         joueurs.add(new Plongeur(grille.getTuile(3, 4), "Clement"));
         joueurs.add(new Pilote(grille.getTuile(3, 4), "Et mille"));
+        joueurs.add (new Explorateur(grille.getTuile(4,4), "Chuck"));
 
         //avCourant = joueurs.get(0);
         avCourant = joueurs.get(2);
