@@ -24,6 +24,7 @@ public class Controleur implements Observateur {
     public Aventurier avCourant;
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
+    private boolean doubleAssechement = false;
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -34,13 +35,13 @@ public class Controleur implements Observateur {
         this.grille = new Grille();
         //Création et placement des joueurs
         joueurs.add(new Explorateur(grille.getTuile(5, 3), "Jano"));
-        joueurs.add(new Messager(grille.getTuile(4, 2), "Jul"));
+        joueurs.add(new Messager(grille.getTuile(2, 3), "Jul"));
         joueurs.add(new Ingenieur(grille.getTuile(4, 1), "Vincent"));
         joueurs.add(new Plongeur(grille.getTuile(3, 2), "Clement"));
         joueurs.add(new Pilote(grille.getTuile(4, 3), "Et mille"));
-        joueurs.add(new Navigateur(grille.getTuile(2, 3), "Henrie"));
+        joueurs.add(new Navigateur(grille.getTuile(4, 2), "Henrie"));
         //Définition de l'aventurier courant
-        avCourant = joueurs.get(2);
+        avCourant = joueurs.get(0);
         //Affichage des informations
         System.out.println("Actions : " + this.getAction());
         this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
@@ -50,17 +51,25 @@ public class Controleur implements Observateur {
         this.vueAventurier.setFontColor(avCourant.getFontColor());
         //Définition des tuiles inondées et coulées en dur
         grille.setTuile(4, 1, Tuile.ETAT_TUILE_INONDEE);
+        
         grille.setTuile(3, 3, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(3, 3, Tuile.ETAT_TUILE_COULEE);
+        
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_INONDEE);
+        
         grille.setTuile(3, 4, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(3, 4, Tuile.ETAT_TUILE_COULEE);
+        
         grille.setTuile(4, 4, Tuile.ETAT_TUILE_INONDEE);
+        
         grille.setTuile(5, 4, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(5, 4, Tuile.ETAT_TUILE_COULEE);
+        
         grille.setTuile(6, 4, Tuile.ETAT_TUILE_INONDEE);
+        
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_COULEE);
+        
         grille.setTuile(4, 6, Tuile.ETAT_TUILE_INONDEE);
 
     }
@@ -153,10 +162,21 @@ public class Controleur implements Observateur {
             int y = input.nextInt();
             //Fin d'edit
             
-            //TODO - Assecher transféré dans aventurier
+            //TODO - Assecher transféré dans aventurier + ajout action
             avCourant.assecher(tuilesAssechables, grille, x, y);
-            //On ajoute une action au joueur
-            ajouterAction();
+            if (avCourant.getType().equalsIgnoreCase("Ingenieur")) {
+                //On teste si il en est à son premier ou deuxième asséchement
+                if (!doubleAssechement) {
+                    //Premier asséchement
+                    afficherInformation("Vous pouvez assécher une deuxième tuile sans frais.");
+                    ajouterAction();
+                    doubleAssechement = true;
+                } else {
+                    //Deuxième
+                    afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
+                    doubleAssechement = false;
+                }
+            }
         } else {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
@@ -177,6 +197,7 @@ public class Controleur implements Observateur {
      * Termine le tour de l'aventurier courant, et change d'aventurier
      */
     public void finTour() {
+        doubleAssechement = false;
         avCourant.traiterFinDeTour();
         joueurSuivant();
     }
