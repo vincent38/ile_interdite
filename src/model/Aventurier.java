@@ -56,19 +56,25 @@ public abstract class Aventurier {
 
     /**
      * 
-     * Méthode inutilisée actuellement. Gardée en prévision.
+     * Méthode d'asséchement.
+     * @param tuilesAssechables
+     * @param g
+     * @param x
+     * @param y
+     * @return 
      */     
 
-    public void assecher(ArrayList<Tuile> tuilesAssechables, Grille g, int x, int y) {
+    public boolean assecher(ArrayList<Tuile> tuilesAssechables, Grille g, int x, int y) {
         Tuile tuileVoulue = new Tuile(x, y);
         //On vérifie si elle existe. Existe -> on assèche la tuile
         for (Tuile t : tuilesAssechables) {
             if (t.getX() == tuileVoulue.getX() && t.getY() == tuileVoulue.getY()) {
                 g.setTuile(t.getX(), t.getY(), Tuile.ETAT_TUILE_SECHE);
                 System.out.println(tuileVoulue.getEtatTuile());
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     public ArrayList<Tuile> getAssechablesParJoueur(Grille g) {

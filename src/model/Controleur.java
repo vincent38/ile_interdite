@@ -26,12 +26,12 @@ public class Controleur implements Observateur {
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
     private boolean doubleAssechement = false;
-    private static final Point SPAWN_EXPLORATEUR = new Point(5,3);
-    private static final Point SPAWN_NAVIGATEUR = new Point(4,2);
-    private static final Point SPAWN_INGENIEUR = new Point(4,1);
-    private static final Point SPAWN_PLONGEUR = new Point(3,2);
-    private static final Point SPAWN_PILOTE = new Point(4,3);
-    private static final Point SPAWN_MESSAGER = new Point(2,3);
+    private static final Point SPAWN_EXPLORATEUR = new Point(5, 3);
+    private static final Point SPAWN_NAVIGATEUR = new Point(4, 2);
+    private static final Point SPAWN_INGENIEUR = new Point(4, 1);
+    private static final Point SPAWN_PLONGEUR = new Point(3, 2);
+    private static final Point SPAWN_PILOTE = new Point(4, 3);
+    private static final Point SPAWN_MESSAGER = new Point(2, 3);
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -42,13 +42,13 @@ public class Controleur implements Observateur {
         this.grille = new Grille();
 
         //Création et placement des joueurs
-        joueurs.add(new Explorateur(grille.getTuile((int)SPAWN_EXPLORATEUR.getX(), (int)SPAWN_EXPLORATEUR.getY()), "Jano"));
-        joueurs.add(new Messager(grille.getTuile((int)SPAWN_MESSAGER.getX(), (int)SPAWN_MESSAGER.getY()), "Jul"));
-        joueurs.add(new Ingenieur(grille.getTuile((int)SPAWN_INGENIEUR.getX(), (int)SPAWN_INGENIEUR.getY()), "Vincent"));
-        joueurs.add(new Plongeur(grille.getTuile((int)SPAWN_PLONGEUR.getX(), (int)SPAWN_PLONGEUR.getY()), "Clement"));
-        joueurs.add(new Pilote(grille.getTuile((int)SPAWN_PILOTE.getX(), (int)SPAWN_PILOTE.getY()), "Et mille"));
-        joueurs.add(new Navigateur(grille.getTuile((int)SPAWN_NAVIGATEUR.getX(), (int)SPAWN_NAVIGATEUR.getY()), "Henrie"));
-        
+        joueurs.add(new Explorateur(grille.getTuile((int) SPAWN_EXPLORATEUR.getX(), (int) SPAWN_EXPLORATEUR.getY()), "Jano"));
+        joueurs.add(new Messager(grille.getTuile((int) SPAWN_MESSAGER.getX(), (int) SPAWN_MESSAGER.getY()), "Jul"));
+        joueurs.add(new Ingenieur(grille.getTuile((int) SPAWN_INGENIEUR.getX(), (int) SPAWN_INGENIEUR.getY()), "Vincent"));
+        joueurs.add(new Plongeur(grille.getTuile((int) SPAWN_PLONGEUR.getX(), (int) SPAWN_PLONGEUR.getY()), "Clement"));
+        joueurs.add(new Pilote(grille.getTuile((int) SPAWN_PILOTE.getX(), (int) SPAWN_PILOTE.getY()), "Et mille"));
+        joueurs.add(new Navigateur(grille.getTuile((int) SPAWN_NAVIGATEUR.getX(), (int) SPAWN_NAVIGATEUR.getY()), "Henrie"));
+
         //Définition de l'aventurier courant
         avCourant = joueurs.get(0);
 
@@ -56,30 +56,30 @@ public class Controleur implements Observateur {
         System.out.println("Actions : " + this.getAction());
         this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
         this.vueAventurier.setObservateur(this);
-        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom()+ " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR()- getAction()));
+        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         this.vueAventurier.setColor(avCourant.getColor());
         this.vueAventurier.setFontColor(avCourant.getFontColor());
         //Définition des tuiles inondées et coulées en dur
         grille.setTuile(4, 1, Tuile.ETAT_TUILE_INONDEE);
-        
+
         grille.setTuile(3, 3, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(3, 3, Tuile.ETAT_TUILE_COULEE);
-        
+
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_INONDEE);
-        
+
         grille.setTuile(3, 4, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(3, 4, Tuile.ETAT_TUILE_COULEE);
-        
+
         grille.setTuile(4, 4, Tuile.ETAT_TUILE_INONDEE);
-        
+
         grille.setTuile(5, 4, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(5, 4, Tuile.ETAT_TUILE_COULEE);
-        
+
         grille.setTuile(6, 4, Tuile.ETAT_TUILE_INONDEE);
-        
+
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_COULEE);
-        
+
         grille.setTuile(4, 6, Tuile.ETAT_TUILE_INONDEE);
 
     }
@@ -106,14 +106,13 @@ public class Controleur implements Observateur {
 
     /**
      * Retourne le nombre d'actions par tour
+     *
      * @return ACTION_NEXT_TOUR
      */
     public static int getACTION_NEXT_TOUR() {
         return ACTION_NEXT_TOUR;
     }
 
-    
-    
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
@@ -167,40 +166,44 @@ public class Controleur implements Observateur {
         ArrayList<Tuile> tuilesAssechables = avCourant.getAssechablesParJoueur(grille);
         //On quitte si l'arraylist est vide, sinon on continue
         if (!tuilesAssechables.isEmpty()) {
-            
+
             //On les affiche
             String tuilesAssechablesMessageGenerator = "Les tuiles suivantes sont asséchables : \n";
             for (Tuile t : tuilesAssechables) {
                 tuilesAssechablesMessageGenerator += "X : " + t.getX() + " - Y : " + t.getY() + " - Nom : " + t.getNom() + "\n";
             }
             System.out.println(tuilesAssechablesMessageGenerator);
-            
+
             //On demande la tuile à assécher au joueur - A EDITER
             System.out.println("X : ");
             int x = input.nextInt();
             System.out.println("Y : ");
             int y = input.nextInt();
             //Fin d'edit
-            
+
             //TODO - Assecher transféré dans aventurier + ajout action
-            avCourant.assecher(tuilesAssechables, grille, x, y);
-            if (avCourant.getType().equalsIgnoreCase("Ingenieur")) {
-                //On teste si il en est à son premier ou deuxième asséchement
-                if (!doubleAssechement) {
-                    //Premier asséchement
-                    afficherInformation("Vous pouvez assécher une deuxième tuile sans consommer d'action.");
-                    ajouterAction();
-                    doubleAssechement = true;
+            boolean assechee = avCourant.assecher(tuilesAssechables, grille, x, y);
+            if (assechee) {
+                if (avCourant.getType().equalsIgnoreCase("Ingenieur")) {
+                    //On teste si il en est à son premier ou deuxième asséchement
+                    if (!doubleAssechement) {
+                        //Premier asséchement
+                        afficherInformation("Vous pouvez assécher une deuxième tuile sans consommer d'action.");
+                        ajouterAction();
+                        doubleAssechement = true;
+                    } else {
+                        //Deuxième
+                        afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
+                        doubleAssechement = false;
+                    }
                 } else {
-                    //Deuxième
-                    afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
-                    doubleAssechement = false;
+                    //Autre joueur, on ajoute une action
+                    ajouterAction();
                 }
             } else {
-                //Autre joueur, on ajoute une action
-                ajouterAction();
+                afficherInformation("Vous ne pouvez pas assécher cette tuile.");
             }
-            this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom()+ " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR()- getAction()));
+            this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         } else {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
@@ -240,7 +243,7 @@ public class Controleur implements Observateur {
         this.action = 0;
         this.vueAventurier.setWindowTitle(avCourant.getNom());
         this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
-        this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom()+ " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR()- getAction()));
+        this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         this.vueAventurier.setColor(avCourant.getColor());
         this.vueAventurier.setFontColor(avCourant.getFontColor());
     }
@@ -313,7 +316,7 @@ public class Controleur implements Observateur {
         System.out.println("x avCourant : " + avCourant.getTuile().getX());
         System.out.println("y avCourant : " + avCourant.getTuile().getY());
         System.out.println("Actions : " + this.getAction());
-        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom()+ " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR()- getAction()));
+        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
 
     }
 }
