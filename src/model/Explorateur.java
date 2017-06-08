@@ -34,11 +34,8 @@ public class Explorateur extends Aventurier {
      */
     @Override
     public ArrayList<Tuile> getDeplacementsPossibles(Grille g) {
-        if (this.pouvoirDispo) {
-            return g.getTuilesAdjEtDiag(tuileCourante);
-        } else {
-            return g.getTuilesAdjacentes(tuileCourante);
-        }
+        return g.getTuilesAdjEtDiag(tuileCourante);
+
     }
     
     /**
@@ -49,9 +46,6 @@ public class Explorateur extends Aventurier {
     
     @Override
     public void deplacement(Tuile nvTuile, Grille g){
-        if (!super.getDeplacementsPossibles(g).contains(nvTuile)){
-            this.pouvoirDispo = false;
-        }
         super.deplacement(nvTuile, g);
     }
     
