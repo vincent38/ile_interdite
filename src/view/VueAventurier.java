@@ -33,8 +33,8 @@ public class VueAventurier  {
     private final JButton btnTerminerTour;
     private final JTextField position;
     private Observateur observateur;
-    private JLabel typeAv;
-    private Font font;
+    private final JLabel typeAv;
+    private final Font font;
     JLabel labelPosition;
             
     public VueAventurier (String nomJoueur, String nomAventurier, Color couleur){
@@ -79,6 +79,7 @@ public class VueAventurier  {
         panelCentre.add(labelPosition);
         position = new  JTextField(30); 
         position.setHorizontalAlignment(CENTER);
+        position.setEditable(false);
         panelCentre.add(position);
 
 
@@ -224,10 +225,10 @@ public class VueAventurier  {
  
 
     
-     public static void main(String [] args) {
-        // Instanciation de la fenêtre 
-        //VueAventurier vueAventurier = new VueAventurier ("Janot", "Explorateur",Pion.ROUGE.getCouleur() );
-    }
+     /*public static void main(String [] args) {
+         Instanciation de la fenêtre 
+        VueAventurier vueAventurier = new VueAventurier ("Janot", "Explorateur",Pion.ROUGE.getCouleur() );
+    }*/
 
     public void setObservateur(Observateur observateur) {
         this.observateur = observateur;
@@ -254,6 +255,3 @@ public class VueAventurier  {
     
      
 }
-
- 
-
