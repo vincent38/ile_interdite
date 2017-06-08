@@ -326,18 +326,21 @@ public class Grille {
     ArrayList<Tuile> getDeplacementsPlongeur(Tuile tuileC) {
         ArrayList<Tuile> tuilesPassage = getTuilesAdjacentesSombreesOuCoulees(tuileC);
         ArrayList<Tuile> r = new ArrayList();
+        System.out.println(tuilesPassage.size());
 
         tuilesPassage.add(tuileC);
 
         for (int i = 0; i < tuilesPassage.size(); i++) {
             Tuile t = tuilesPassage.get(i);
-            for (Tuile t2 : this.getTuilesAdjacentes(t)) {
-                if (!tuilesPassage.contains(t2) && !(t2.equals(tuileC)) && t2.getEtatTuile() != Tuile.ETAT_TUILE_SECHE) {
+            for (Tuile t2 : this.getTuilesAdjacentesSombreesOuCoulees(t)) {
+                if (!tuilesPassage.contains(t2)) {
                     tuilesPassage.add(t2);
+                    System.out.println("Tuiles passage plongeur : \nNom : " + t2.getNom() + "\nX : " + t2.getX() + "\nY : " + t2.getY());
                 }
             }
 
         }
+        System.out.println(tuilesPassage.size() + '*');
         /*for(Tuile t : tuilesPassage){
             System.out.println("x : " + t.getX());
             System.out.println("y : " + t.getY());
