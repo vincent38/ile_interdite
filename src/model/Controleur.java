@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import java.util.Scanner;
@@ -25,6 +26,12 @@ public class Controleur implements Observateur {
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
     private boolean doubleAssechement = false;
+    private static final Point SPAWN_EXPLORATEUR = new Point(5,3);
+    private static final Point SPAWN_MESSAGER = new Point(2,3);
+    private static final Point SPAWN_INGENIEUR = new Point(4,1);
+    private static final Point SPAWN_PLONGEUR = new Point(3,2);
+    private static final Point SPAWN_PILOTE = new Point(4,3);
+    private static final Point SPAWN_NAVIGATEUR = new Point(4,2);
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -34,23 +41,17 @@ public class Controleur implements Observateur {
         //Initialisation de la grille
         this.grille = new Grille();
 
-<<<<<<< HEAD
         //avCourant = joueurs.get(0);
-=======
->>>>>>> ed1b8307a27a78fe21f1b1f429f3d0004ff74be2
         //Création et placement des joueurs
-        joueurs.add(new Explorateur(grille.getTuile(5, 3), "Jano"));
-        joueurs.add(new Messager(grille.getTuile(2, 3), "Jul"));
-        joueurs.add(new Ingenieur(grille.getTuile(4, 1), "Vincent"));
-        joueurs.add(new Plongeur(grille.getTuile(3, 2), "Clement"));
-        joueurs.add(new Pilote(grille.getTuile(4, 3), "Et mille"));
-        joueurs.add(new Navigateur(grille.getTuile(4, 2), "Henrie"));
+        joueurs.add(new Explorateur(grille.getTuile((int)SPAWN_EXPLORATEUR.getX(), (int)SPAWN_EXPLORATEUR.getY()), "Jano"));
+        joueurs.add(new Messager(grille.getTuile((int)SPAWN_MESSAGER.getX(), (int)SPAWN_MESSAGER.getY()), "Jul"));
+        joueurs.add(new Ingenieur(grille.getTuile((int)SPAWN_INGENIEUR.getX(), (int)SPAWN_INGENIEUR.getY()), "Vincent"));
+        joueurs.add(new Plongeur(grille.getTuile((int)SPAWN_PLONGEUR.getX(), (int)SPAWN_PLONGEUR.getY()), "Clement"));
+        joueurs.add(new Pilote(grille.getTuile((int)SPAWN_PILOTE.getX(), (int)SPAWN_PILOTE.getY()), "Et mille"));
+        joueurs.add(new Navigateur(grille.getTuile((int)SPAWN_NAVIGATEUR.getX(), (int)SPAWN_NAVIGATEUR.getY()), "Henrie"));
         //Définition de l'aventurier courant
-<<<<<<< HEAD
         avCourant = joueurs.get(0);
-=======
         avCourant = joueurs.get(2);
->>>>>>> ed1b8307a27a78fe21f1b1f429f3d0004ff74be2
         //Affichage des informations
         System.out.println("Actions : " + this.getAction());
         this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
