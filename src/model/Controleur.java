@@ -27,11 +27,11 @@ public class Controleur implements Observateur {
     public static final int ACTION_NEXT_TOUR = 3;
     private boolean doubleAssechement = false;
     private static final Point SPAWN_EXPLORATEUR = new Point(5,3);
-    private static final Point SPAWN_MESSAGER = new Point(2,3);
+    private static final Point SPAWN_NAVIGATEUR = new Point(2,3);
     private static final Point SPAWN_INGENIEUR = new Point(4,1);
     private static final Point SPAWN_PLONGEUR = new Point(3,2);
     private static final Point SPAWN_PILOTE = new Point(4,3);
-    private static final Point SPAWN_NAVIGATEUR = new Point(4,2);
+    private static final Point SPAWN_MESSAGER = new Point(4,2);
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
