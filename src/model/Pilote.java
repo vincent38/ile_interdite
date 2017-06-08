@@ -11,10 +11,6 @@ public class Pilote extends Aventurier {
      * @param nom 
      */
     
-    public Pilote(String nom) {
-        super(nom);
-        setType("Pilote");
-    }
 
     /**
      * Constructeur assignant le nom ainsi que la tuile de départ 
@@ -31,9 +27,7 @@ public class Pilote extends Aventurier {
      * Rends le pouvoir de déplacmeent du pilote indisponible
      */
     
-    public void setPouvoirNonDispo() {
-            this.pouvoirDispo = false;
-    }
+
     
     /**
      * Permet de retourner toutes les tuiles encore en jeu pôur le pouvoir du pilote
@@ -67,11 +61,6 @@ public class Pilote extends Aventurier {
     /**
      * Rends le pouvoir disponible pour le prochain tour
      */
-    
-    @Override
-    public void traiterFinDeTour(){
-        this.pouvoirDispo = true;
-    }
     
     /**
      * Retourne la couleur Bleu du pilote

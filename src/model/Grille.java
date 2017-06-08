@@ -72,11 +72,11 @@ public class Grille {
     }
 
         
-    /** 
+    /*
      * @deprecated It is not recommended to call this function for now. Please wait for the release of a newer version of this method.
      * Inutile dans cette configuration : vérifie quelles tuiles ne sont pas encore placées dans le jeu
      */
-    private void remainingTuilesNames() {
+    /*private void remainingTuilesNames() {
         ArrayList<String> allNames = new ArrayList<String>();
         //On add tous les noms dans une arraylist
         for (int i = 0; i < NOMS_TUILES.length; i++) {
@@ -88,7 +88,7 @@ public class Grille {
         for (String s : allNames) {
             System.out.println(s);
         }
-    }
+    }*/
     
     /**
      * Retourne les tuiles adjacentes à tuileC
@@ -225,12 +225,12 @@ public class Grille {
         return tuilesNonCoulees;
     }
     
-    /**
+    /*
      * @deprecated getAssechablesParJoueur
      * @param t
      * @return
      */
-    public ArrayList<Tuile> getTuilesNonSeches(Tuile t) {
+    /*public ArrayList<Tuile> getTuilesNonSeches(Tuile t) {
         ArrayList<Tuile> buffer = new ArrayList<Tuile>();
         for (int i = t.getX() - 1; i <= t.getX() + 1; i++) {
             for (int j = t.getY() - 1; j <= t.getY() + 1; j++) {
@@ -244,38 +244,14 @@ public class Grille {
         }
 
         return buffer;
-    }
+    }*/
     
  
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
      * Retourne les tuiles adjacentes à la tuileC incluant les tuiles coulées
      */
-    ArrayList<Tuile> getTuilesAdjacentesEtSombrees(Tuile tuileC) {
-        ArrayList<Tuile> r = new ArrayList();
-        Tuile tuileGauche = this.getTuile(tuileC.getX() - 1, tuileC.getY());
-        Tuile tuileDroite = this.getTuile(tuileC.getX() + 1, tuileC.getY());
-        Tuile tuileHaut = this.getTuile(tuileC.getX(), tuileC.getY() + 1);
-        Tuile tuileBas = this.getTuile(tuileC.getX(), tuileC.getY() - 1);
-
-        if (tuileGauche != null) {
-            r.add(tuileGauche);
-        }
-
-        if (tuileDroite != null) {
-            r.add(tuileDroite);
-        }
-
-        if (tuileHaut != null) {
-            r.add(tuileHaut);
-        }
-
-        if (tuileBas != null) {
-            r.add(tuileBas);
-        }
-
-        return r;
-    }
+    
     
     /**
      * Retourne les tuiles adjacentes à la tuileC incluant les tuiles coulées ou innondées

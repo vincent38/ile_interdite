@@ -77,7 +77,7 @@ public abstract class Aventurier {
         return false;
     }
 
-    public ArrayList<Tuile> getAssechablesParJoueur(Grille g) {
+    public ArrayList<Tuile> getTuilesAssechables(Grille g) {
         Tuile t = getTuile();
         ArrayList<Tuile> buffer = new ArrayList<>();
         for (int i = t.getX() - 1; i <= t.getX() + 1; i++) {
@@ -91,10 +91,6 @@ public abstract class Aventurier {
             }
         }
         return buffer;
-    }
-
-    public void donnerCarte() {
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -169,6 +165,5 @@ public abstract class Aventurier {
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
     
-    public void traiterFinDeTour(){}
 }
 

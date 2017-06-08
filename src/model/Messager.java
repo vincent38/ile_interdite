@@ -9,11 +9,7 @@ public class Messager extends Aventurier {
      * Constructeur basique 
      * @param nom 
      */
-    
-    public Messager(String nom) {
-        super(nom);
-        setType("Messager");
-    }
+   
     
     /**
      * Constructeur assignant le nom ainsi que la tuile de départ

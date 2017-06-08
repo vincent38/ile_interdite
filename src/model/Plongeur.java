@@ -6,17 +6,7 @@ import util.Utils;
 
 public class Plongeur extends Aventurier {
 
-    /**
-     * constructeur basique
-     * @param nom 
-     */
-    
-    public Plongeur(String nom) {
-        super(nom);
-        setType("Plongeur");
-    }
 
-    
     /**
      * Constructeur assignant le nom ainsi que la tuile de départ
      * @param tuile

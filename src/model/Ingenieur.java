@@ -11,11 +11,6 @@ public class Ingenieur extends Aventurier {
      * @param nom 
      */
     
-    public Ingenieur(String nom) {
-        super(nom);
-        setType("Ingenieur");
-    }
-    
     /**
      * Constructeur assignant le nom ainsi que la tuile de départ
      * @param tuile
