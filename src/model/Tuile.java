@@ -1,5 +1,6 @@
 package model;
 
+import model.aventurier.Aventurier;
 import java.util.ArrayList;
 
 public class Tuile {

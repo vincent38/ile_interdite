@@ -1,7 +1,11 @@
-package model;
+package model.aventurier;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import model.carte.CarteTresor;
+import model.Grille;
+import model.Tresor;
+import model.Tuile;
 
 public abstract class Aventurier {
 
@@ -70,7 +74,7 @@ public abstract class Aventurier {
         for (Tuile t : tuilesAssechables) {
             if (t.getX() == tuileVoulue.getX() && t.getY() == tuileVoulue.getY()) {
                 g.setTuile(t.getX(), t.getY(), Tuile.ETAT_TUILE_SECHE);
-                System.out.println(tuileVoulue.getEtatTuile());
+                //System.out.println(tuileVoulue.getEtatTuile());
                 return true;
             }
         }

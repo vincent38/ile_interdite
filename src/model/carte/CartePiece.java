@@ -1,4 +1,4 @@
-package model;
+package model.carte;
 
 public class CartePiece extends CarteTresor {
 }

@@ -1,7 +1,10 @@
-package model;
+package model.aventurier;
 
+import model.aventurier.Aventurier;
 import java.awt.Color;
 import java.util.ArrayList;
+import model.Grille;
+import model.Tuile;
 import util.Utils;
 
 public class Plongeur extends Aventurier {

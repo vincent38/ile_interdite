@@ -251,7 +251,7 @@ public class Grille {
      * Méthode inutilisée actuellement. Gardée en prévision.
      * Retourne les tuiles adjacentes à la tuileC incluant les tuiles coulées
      */
-    ArrayList<Tuile> getTuilesAdjacentesEtSombrees(Tuile tuileC) {
+    public ArrayList<Tuile> getTuilesAdjacentesEtSombrees(Tuile tuileC) {
         ArrayList<Tuile> r = new ArrayList();
         Tuile tuileGauche = this.getTuile(tuileC.getX() - 1, tuileC.getY());
         Tuile tuileDroite = this.getTuile(tuileC.getX() + 1, tuileC.getY());
@@ -323,7 +323,7 @@ public class Grille {
      * @return 
      */
 
-    ArrayList<Tuile> getDeplacementsPlongeur(Tuile tuileC) {
+    public ArrayList<Tuile> getDeplacementsPlongeur(Tuile tuileC) {
         ArrayList<Tuile> tuilesPassage = getTuilesAdjacentesSombreesOuCoulees(tuileC);
         ArrayList<Tuile> r = new ArrayList();
         System.out.println(tuilesPassage.size());

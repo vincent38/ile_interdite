@@ -1,18 +1,20 @@
-package model;
+package model.aventurier;
 
+import model.aventurier.Aventurier;
 import java.awt.Color;
+import model.Tuile;
 import util.Utils;
 
-public class Navigateur extends Aventurier {
+public class Messager extends Aventurier {
 
     /**
-     * Constructeur basique
+     * Constructeur basique 
      * @param nom 
      */
     
-    public Navigateur(String nom) {
+    public Messager(String nom) {
         super(nom);
-        setType("Navigateur");
+        setType("Messager");
     }
     
     /**
@@ -21,23 +23,23 @@ public class Navigateur extends Aventurier {
      * @param nom 
      */
 
-    public Navigateur(Tuile tuile, String nom){
+    public Messager(Tuile tuile, String nom){
         super(tuile, nom);
-        setType("Navigateur");
+        setType("Messager");
     }
 
     /**
-     * Retourne la couleur Jaune du naviguateur
+     * Retourne la couleur Blanc du Messager
      * @return 
      */
     
     @Override
     public Color getColor() {
-        return Color.YELLOW;
+        return Utils.Pion.BLANC.getCouleur();
     }
     
     /**
-     * Retourne la couleur de police noire
+     * Retourne la couleur Noire pour l'affiche sur l'IHM
      * @return 
      */
     
@@ -45,6 +47,4 @@ public class Navigateur extends Aventurier {
     public Color getFontColor(){
         return Color.BLACK;
     }
-    
-    
 }

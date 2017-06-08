@@ -1,10 +1,23 @@
-package model;
+package controller;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 
 import java.util.Scanner;
+import model.aventurier.Aventurier;
+import model.carte.Carte;
+import model.aventurier.Explorateur;
+import model.Grille;
+import model.aventurier.Ingenieur;
+import model.Message;
+import model.aventurier.Messager;
+import model.aventurier.Navigateur;
+import model.Observateur;
+import model.aventurier.Pilote;
+import model.aventurier.Plongeur;
+import model.Tresor;
+import model.Tuile;
 import static util.Utils.*;
 
 import view.VueAventurier;
@@ -53,7 +66,6 @@ public class Controleur implements Observateur {
         avCourant = joueurs.get(0);
 
         //Affichage des informations
-        System.out.println("Actions : " + this.getAction());
         this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
         this.vueAventurier.setObservateur(this);
         vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
@@ -168,11 +180,12 @@ public class Controleur implements Observateur {
         if (!tuilesAssechables.isEmpty()) {
 
             //On les affiche
-            String tuilesAssechablesMessageGenerator = "Les tuiles suivantes sont asséchables : \n";
+            System.out.println("Les tuiles suivantes sont asséchables : ");
             for (Tuile t : tuilesAssechables) {
-                tuilesAssechablesMessageGenerator += "X : " + t.getX() + " - Y : " + t.getY() + " - Nom : " + t.getNom() + "\n";
+                System.out.println("x : " + t.getX());
+                System.out.println("y : " + t.getY());
+                System.out.println(t.getNom() + '\n');
             }
-            System.out.println(tuilesAssechablesMessageGenerator);
 
             //On demande la tuile à assécher au joueur - A EDITER
             System.out.println("X : ");
@@ -284,6 +297,7 @@ public class Controleur implements Observateur {
                 assecherTuile();
                 break;
             case CLIC_BTN_AUTRE_ACTION:
+                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 break;
             case CLIC_BTN_TERMINER_TOUR:
                 this.finTour();
@@ -306,6 +320,7 @@ public class Controleur implements Observateur {
         int xVoulu = clavier.nextInt();
         System.out.print("selectionner Y : ");
         int yVoulu = clavier.nextInt();
+        System.out.println("");
         Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
         if (tuilesPossibles.contains(tuileV)) {
             avCourant.deplacement(tuileV, this.grille);
@@ -313,9 +328,9 @@ public class Controleur implements Observateur {
         } else {
             afficherInformation("Le déplacement demandé est impossible.");
         }
-        System.out.println("x avCourant : " + avCourant.getTuile().getX());
-        System.out.println("y avCourant : " + avCourant.getTuile().getY());
-        System.out.println("Actions : " + this.getAction());
+        //System.out.println("x avCourant : " + avCourant.getTuile().getX());
+        //System.out.println("y avCourant : " + avCourant.getTuile().getY());
+        //System.out.println("Actions : " + this.getAction());
         vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
 
     }
