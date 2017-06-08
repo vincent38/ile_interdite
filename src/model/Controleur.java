@@ -40,8 +40,11 @@ public class Controleur implements Observateur {
     public Controleur() {
         //Initialisation de la grille
         this.grille = new Grille();
+<<<<<<< HEAD
 
         //avCourant = joueurs.get(0);
+=======
+>>>>>>> e92a4c60c786bf844694885b88973cf74423e898
         //Création et placement des joueurs
         joueurs.add(new Explorateur(grille.getTuile((int)SPAWN_EXPLORATEUR.getX(), (int)SPAWN_EXPLORATEUR.getY()), "Jano"));
         joueurs.add(new Messager(grille.getTuile((int)SPAWN_MESSAGER.getX(), (int)SPAWN_MESSAGER.getY()), "Jul"));
@@ -51,7 +54,10 @@ public class Controleur implements Observateur {
         joueurs.add(new Navigateur(grille.getTuile((int)SPAWN_NAVIGATEUR.getX(), (int)SPAWN_NAVIGATEUR.getY()), "Henrie"));
         //Définition de l'aventurier courant
         avCourant = joueurs.get(0);
+<<<<<<< HEAD
         avCourant = joueurs.get(2);
+=======
+>>>>>>> e92a4c60c786bf844694885b88973cf74423e898
         //Affichage des informations
         System.out.println("Actions : " + this.getAction());
         this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
