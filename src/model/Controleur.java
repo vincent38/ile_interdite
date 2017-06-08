@@ -27,11 +27,11 @@ public class Controleur implements Observateur {
     public static final int ACTION_NEXT_TOUR = 3;
     private boolean doubleAssechement = false;
     private static final Point SPAWN_EXPLORATEUR = new Point(5,3);
-    private static final Point SPAWN_NAVIGATEUR = new Point(2,3);
+    private static final Point SPAWN_NAVIGATEUR = new Point(4,2);
     private static final Point SPAWN_INGENIEUR = new Point(4,1);
     private static final Point SPAWN_PLONGEUR = new Point(3,2);
     private static final Point SPAWN_PILOTE = new Point(4,3);
-    private static final Point SPAWN_MESSAGER = new Point(4,2);
+    private static final Point SPAWN_MESSAGER = new Point(2,3);
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -56,7 +56,7 @@ public class Controleur implements Observateur {
         System.out.println("Actions : " + this.getAction());
         this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
         this.vueAventurier.setObservateur(this);
-        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom());
+        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom()+ " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR()- getAction()));
         this.vueAventurier.setColor(avCourant.getColor());
         this.vueAventurier.setFontColor(avCourant.getFontColor());
         //Définition des tuiles inondées et coulées en dur
@@ -104,6 +104,16 @@ public class Controleur implements Observateur {
         return action;
     }
 
+    /**
+     * Retourne le nombre d'actions par tour
+     * @return ACTION_NEXT_TOUR
+     */
+    public static int getACTION_NEXT_TOUR() {
+        return ACTION_NEXT_TOUR;
+    }
+
+    
+    
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
@@ -186,7 +196,11 @@ public class Controleur implements Observateur {
                     afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
                     doubleAssechement = false;
                 }
+            } else {
+                //Autre joueur, on ajoute une action
+                ajouterAction();
             }
+            this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom()+ " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR()- getAction()));
         } else {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
@@ -226,7 +240,7 @@ public class Controleur implements Observateur {
         this.action = 0;
         this.vueAventurier.setWindowTitle(avCourant.getNom());
         this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
-        this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom());
+        this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom()+ " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR()- getAction()));
         this.vueAventurier.setColor(avCourant.getColor());
         this.vueAventurier.setFontColor(avCourant.getFontColor());
     }
@@ -299,7 +313,7 @@ public class Controleur implements Observateur {
         System.out.println("x avCourant : " + avCourant.getTuile().getX());
         System.out.println("y avCourant : " + avCourant.getTuile().getY());
         System.out.println("Actions : " + this.getAction());
-        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom());
+        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom()+ " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR()- getAction()));
 
     }
 }
