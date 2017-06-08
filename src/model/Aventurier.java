@@ -23,12 +23,12 @@ public abstract class Aventurier {
     }
 
     public void assecher(ArrayList<Tuile> tuilesAssechables, Grille g, int x, int y) {
-        Tuile myTuile = new Tuile(x, y);
+        Tuile tuileVoulue = new Tuile(x, y);
         //On vérifie si elle existe. Existe -> on assèche la tuile
         for (Tuile t : tuilesAssechables) {
-            if (t.getX() == myTuile.getX() && t.getY() == myTuile.getY()) {
+            if (t.getX() == tuileVoulue.getX() && t.getY() == tuileVoulue.getY()) {
                 g.setTuile(t.getX(), t.getY(), Tuile.ETAT_TUILE_SECHE);
-                System.out.println(myTuile.getEtatTuile());
+                System.out.println(tuileVoulue.getEtatTuile());
                 break;
             }
         }
