@@ -11,16 +11,53 @@ public abstract class Aventurier {
         public ArrayList<Tuile> tuilesPossibles = new ArrayList();
         private String nom;
         protected boolean pouvoirDispo = true;
-        
+        private String type;
+
+    
+     /**
+      * Constructeur
+      * @param nom 
+      */       
     public Aventurier(String nom) {
         this.nom = nom;
+        setType("Aventurier");
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    /**
+     * Constructeur
+     * @param tuile
+     * @param nom 
+     */
 
 
     public Aventurier(Tuile tuile, String nom){
         this.tuileCourante = tuile;
         this.nom = nom;
+        setType("Aventurier");
     }
+    
+    /**
+     * Assèche la tuile t dans la grille
+     * @param t
+     * @param g 
+     */
+    
+    public void assecher(Tuile t, Grille g) {
+        g.setTuile(t.getX(), t.getY(), Tuile.ETAT_TUILE_SECHE);
+    }
+
+    /**
+     * 
+     * Méthode inutilisée actuellement. Gardée en prévision.
+     */     
 
     public void assecher(ArrayList<Tuile> tuilesAssechables, Grille g, int x, int y) {
         Tuile myTuile = new Tuile(x, y);
@@ -36,7 +73,7 @@ public abstract class Aventurier {
 
     public ArrayList<Tuile> getAssechablesParJoueur(Grille g) {
         Tuile t = getTuile();
-        ArrayList<Tuile> buffer = new ArrayList<Tuile>();
+        ArrayList<Tuile> buffer = new ArrayList<>();
         for (int i = t.getX() - 1; i <= t.getX() + 1; i++) {
             for (int j = t.getY() - 1; j <= t.getY() + 1; j++) {
                 if (!(i == t.getX() - 1 && j == t.getY() - 1 || i == t.getX() - 1 && j == t.getY() + 1 || i == t.getX() + 1 && j == t.getY() - 1 || i == t.getX() + 1 && j == t.getY() + 1)) {
@@ -47,7 +84,6 @@ public abstract class Aventurier {
                 }
             }
         }
-
         return buffer;
     }
 
@@ -55,44 +91,78 @@ public abstract class Aventurier {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Retourne la tuile courante de l'aventurier
+     * @return tuileCourante 
+     */
+    
     public Tuile getTuile() {
         return tuileCourante;
     }
+    
+    /**
+     * Assigne la nouvelle tuileCourante de l'aventurier
+     * @param tuile 
+     */
 
     public void setTuile(Tuile tuile) {
         this.tuileCourante = tuile;
         tuile.addAventurier(this);
 
     }
+    
+    /**
+     * Méthode inutilisée actuellement. Gardée en prévision.
+     */
 
     public ArrayList<CarteTresor> getCartes() {
         return cartes;
     }
 
-    public boolean getInondee() {
-        throw new UnsupportedOperationException();
-    }
-
-   
     public void deplacement(Tuile nvTuile, Grille g){
         this.tuileCourante.rmAventurier(this);
         this.setTuile(nvTuile);
     }
+    
+    /**
+     * Retourne tous les déplacments possibles de l'aventurier
+     * @param grille
+     * @return 
+     */
 
     public ArrayList<Tuile> getDeplacementsPossibles(Grille grille) {
         return grille.getTuilesAdjacentes(this.tuileCourante);
     }
+    
+    /**
+     * Retourne le nom de l'aventurier
+     * @return 
+     */
 
     public String getNom() {
         return nom;
     }
-
+    
+    /**<<<<<<< HEAD
+     * Méthode abstraite définie dans les spécialisations
+     * @return 
+     */
+    
     public abstract Color getColor();
-
-    public Color getFontColor() {
+    
+    /**
+     * Retourne la couleur de la police d'écriture
+     * @return 
+     */
+    
+    public Color getFontColor(){
         return Color.WHITE;
     }
-
-    public void traiterFinDeTour() {
-    }
+    
+    /**
+     * Méthode inutilisée actuellement. Gardée en prévision.
+     */
+    
+    public void traiterFinDeTour(){}
 }
+

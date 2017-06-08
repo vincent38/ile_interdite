@@ -3,20 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package view;
+
+import javax.swing.*;
 
 /**
  *
- * @author sangj
- */
-
-/**
- * Type de bouton appuyé sur l'IHM
  * @author baeijsj
  */
-public enum Message {
-    CLIC_BTN_ALLER,
-    CLIC_BTN_ASSECHER,
-    CLIC_BTN_AUTRE_ACTION,
-    CLIC_BTN_TERMINER_TOUR;
+
+
+
+public class VueGrille extends JFrame{
+    
+    public VueGrille(){
+        
+    }
+    
 }
+
+
+
