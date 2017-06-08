@@ -27,11 +27,11 @@ public class Controleur implements Observateur {
     public static final int ACTION_NEXT_TOUR = 3;
     private boolean doubleAssechement = false;
     private static final Point SPAWN_EXPLORATEUR = new Point(5,3);
-    private static final Point SPAWN_MESSAGER = new Point(2,3);
+    private static final Point SPAWN_NAVIGATEUR = new Point(2,3);
     private static final Point SPAWN_INGENIEUR = new Point(4,1);
     private static final Point SPAWN_PLONGEUR = new Point(3,2);
     private static final Point SPAWN_PILOTE = new Point(4,3);
-    private static final Point SPAWN_NAVIGATEUR = new Point(4,2);
+    private static final Point SPAWN_MESSAGER = new Point(4,2);
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -41,7 +41,10 @@ public class Controleur implements Observateur {
         //Initialisation de la grille
         this.grille = new Grille();
 
+<<<<<<< HEAD
         //avCourant = joueurs.get(0);
+=======
+>>>>>>> 6a49305e3f762eae90ed8909ca4cbfef7e225dac
         //Création et placement des joueurs
         joueurs.add(new Explorateur(grille.getTuile((int)SPAWN_EXPLORATEUR.getX(), (int)SPAWN_EXPLORATEUR.getY()), "Jano"));
         joueurs.add(new Messager(grille.getTuile((int)SPAWN_MESSAGER.getX(), (int)SPAWN_MESSAGER.getY()), "Jul"));
@@ -49,9 +52,14 @@ public class Controleur implements Observateur {
         joueurs.add(new Plongeur(grille.getTuile((int)SPAWN_PLONGEUR.getX(), (int)SPAWN_PLONGEUR.getY()), "Clement"));
         joueurs.add(new Pilote(grille.getTuile((int)SPAWN_PILOTE.getX(), (int)SPAWN_PILOTE.getY()), "Et mille"));
         joueurs.add(new Navigateur(grille.getTuile((int)SPAWN_NAVIGATEUR.getX(), (int)SPAWN_NAVIGATEUR.getY()), "Henrie"));
+        
         //Définition de l'aventurier courant
         avCourant = joueurs.get(0);
+<<<<<<< HEAD
         avCourant = joueurs.get(2);
+=======
+
+>>>>>>> 6a49305e3f762eae90ed8909ca4cbfef7e225dac
         //Affichage des informations
         System.out.println("Actions : " + this.getAction());
         this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);

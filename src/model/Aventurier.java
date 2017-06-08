@@ -23,15 +23,7 @@ public abstract class Aventurier {
         setType("Aventurier");
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-    
-    /**
+        /**
      * Constructeur
      * @param tuile
      * @param nom 
@@ -42,6 +34,14 @@ public abstract class Aventurier {
         this.tuileCourante = tuile;
         this.nom = nom;
         setType("Aventurier");
+    }
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
     /**
