@@ -128,16 +128,10 @@ public class Controleur implements Observateur {
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
-    public void actionAutre() {
-        throw new UnsupportedOperationException();
-    }
 
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
-    public void deplacerAventurier(String aNomTuile, Aventurier aAv) {
-        throw new UnsupportedOperationException();
-    }
 
     /**
      * Retourne l'aventurier courant
@@ -160,12 +154,10 @@ public class Controleur implements Observateur {
     /**
      * Ajoute un aventurier à l'arrayList d'aventuriers, et l'intègre dans la
      * boucle de jeu.
-     *
-     * @param av Aventurier à ajouter
-     */
-    public void addAventurier(Aventurier av) {
-        this.joueurs.add(av);
+    public void deplacerAventurier(String aNomTuile, Aventurier aAv) {
+        throw new UnsupportedOperationException();
     }
+
 
     /**
      * Propose au joueur une liste de tuiles à assécher, et assèche la tuile
@@ -175,7 +167,7 @@ public class Controleur implements Observateur {
         Scanner input = new Scanner(System.in);
 
         //On récupère les tuiles asséchables depuis le joueur
-        ArrayList<Tuile> tuilesAssechables = avCourant.getAssechablesParJoueur(grille);
+        ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(grille);
         //On quitte si l'arraylist est vide, sinon on continue
         if (!tuilesAssechables.isEmpty()) {
 
@@ -238,7 +230,6 @@ public class Controleur implements Observateur {
      */
     public void finTour() {
         doubleAssechement = false;
-        avCourant.traiterFinDeTour();
         joueurSuivant();
     }
 
