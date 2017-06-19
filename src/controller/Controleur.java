@@ -111,12 +111,9 @@ public class Controleur implements Observateur {
                 CarteTresor c = cartesTresor.tirerCarte();
                 if ("montee_eaux".equals(c.getTypeCarte())) {
                     //Sélectionner une autre carte et replacer la carte précédente
-                    System.out.println(c.getTypeCarte());
                     CarteTresor d = cartesTresor.tirerCarte();
-                    System.out.println(d.getTypeCarte());
                     while ("montee_eaux".equals(d.getTypeCarte())) {
                         CarteTresor e = cartesTresor.tirerCarte();
-                        System.out.println(e.getTypeCarte());
                         cartesTresor.replacerDansLaPile(d);
                         d = e;
                     } 
@@ -125,7 +122,6 @@ public class Controleur implements Observateur {
                     cartesTresor.shuffleCards();
                 } else {
                     //Ajout de la carte au deck du joueur
-                    System.out.println(c.getTypeCarte());
                     a.ajouterCarte(c);
                 }
             }
