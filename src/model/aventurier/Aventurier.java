@@ -1,7 +1,11 @@
-package model;
+package model.aventurier;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import model.carte.CarteTresor;
+import model.Grille;
+import model.Tresor;
+import model.Tuile;
 
 public abstract class Aventurier {
 
@@ -56,22 +60,28 @@ public abstract class Aventurier {
 
     /**
      * 
-     * Méthode inutilisée actuellement. Gardée en prévision.
+     * Méthode d'asséchement.
+     * @param tuilesAssechables
+     * @param g
+     * @param x
+     * @param y
+     * @return 
      */     
 
-    public void assecher(ArrayList<Tuile> tuilesAssechables, Grille g, int x, int y) {
+    public boolean assecher(ArrayList<Tuile> tuilesAssechables, Grille g, int x, int y) {
         Tuile tuileVoulue = new Tuile(x, y);
         //On vérifie si elle existe. Existe -> on assèche la tuile
         for (Tuile t : tuilesAssechables) {
             if (t.getX() == tuileVoulue.getX() && t.getY() == tuileVoulue.getY()) {
                 g.setTuile(t.getX(), t.getY(), Tuile.ETAT_TUILE_SECHE);
-                System.out.println(tuileVoulue.getEtatTuile());
-                break;
+                //System.out.println(tuileVoulue.getEtatTuile());
+                return true;
             }
         }
+        return false;
     }
 
-    public ArrayList<Tuile> getAssechablesParJoueur(Grille g) {
+    public ArrayList<Tuile> getTuilesAssechables(Grille g) {
         Tuile t = getTuile();
         ArrayList<Tuile> buffer = new ArrayList<>();
         for (int i = t.getX() - 1; i <= t.getX() + 1; i++) {
@@ -85,10 +95,6 @@ public abstract class Aventurier {
             }
         }
         return buffer;
-    }
-
-    public void donnerCarte() {
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -163,6 +169,5 @@ public abstract class Aventurier {
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
     
-    public void traiterFinDeTour(){}
 }
 
