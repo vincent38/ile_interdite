@@ -3,14 +3,17 @@ package controller;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import java.util.Scanner;
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.aventurier.Explorateur;
 import model.Grille;
-import model.aventurier.Ingenieur;
 import model.Message;
+import model.aventurier.Ingenieur;
+import model.TypeMessage;
 import model.aventurier.Messager;
 import model.aventurier.Navigateur;
 import model.Observateur;
@@ -31,7 +34,7 @@ JavaDoc provided
 
 V0.1
  */
-public class Controleur implements Observateur {
+public class Controleur implements Observer {
 
     public ArrayList<Carte> cartes = new ArrayList<>();
     public ArrayList<Aventurier> joueurs = new ArrayList<>();
@@ -74,7 +77,8 @@ public class Controleur implements Observateur {
         avCourant = joueurs.get(0);
 
         //Affichage des informations
-        this.vueAventurier = new IHMBonne(this, joueurs.get(0), 3);
+        this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
+        this.vueAventurier.addObserver(this);
         //this.vueAventurier.setObservateur(this);
         //vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         //this.vueAventurier.setColor(avCourant.getColor());
@@ -307,9 +311,9 @@ public class Controleur implements Observateur {
      * @param m Message reçu
      * @see Observateur
      */
-    @Override
-    public void traiterMessage(Message m) {
-        switch (m) {
+    /*@Override
+    public void traiterMessage(Object m) {
+        switch (m.type) {
             case CLIC_BTN_ALLER:
                 this.traiterBoutonAller();
                 break;
@@ -323,7 +327,7 @@ public class Controleur implements Observateur {
                 this.finTour();
                 break;
         }
-    }
+    }*/
 
     /**
      * Logique gérant le déplacement d'un aventurier sur la grille
@@ -367,6 +371,25 @@ public class Controleur implements Observateur {
                 //Ajout de la carte au deck du joueur
                 avCourant.ajouterCarte(c);
             }
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Message m = (Message)arg;
+        switch (m.type) {
+            case CLIC_BTN_ALLER:
+                this.traiterBoutonAller();
+                break;
+            case CLIC_BTN_ASSECHER:
+                assecherTuile();
+                break;
+            case CLIC_BTN_AUTRE_ACTION:
+                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                break;
+            case CLIC_BTN_TERMINER_TOUR:
+                this.finTour();
+                break;
         }
     }
 }

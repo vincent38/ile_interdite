@@ -9,7 +9,14 @@ package model;
  *
  * @author sangj
  */
-public interface Observateur {
-    public void traiterMessage(TypeMessage m);
-    
+
+/**
+ * Type de bouton appuyé sur l'IHM
+ * @author baeijsj
+ */
+public enum TypeMessage {
+    CLIC_BTN_ALLER,
+    CLIC_BTN_ASSECHER,
+    CLIC_BTN_AUTRE_ACTION,
+    CLIC_BTN_TERMINER_TOUR;
 }
