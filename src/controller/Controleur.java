@@ -105,6 +105,7 @@ public class Controleur implements Observateur {
         //Définition du marqueur de niveau
         cranMarqueurNiveau = 0;
 
+        //Distribution cartes
     }
 
     /**
@@ -233,6 +234,7 @@ public class Controleur implements Observateur {
      */
     public void finTour() {
         doubleAssechement = false;
+        tirerCartesTresor();
         joueurSuivant();
     }
 
@@ -335,6 +337,7 @@ public class Controleur implements Observateur {
             CarteTresor c = cartesTresor.tirerCarte();
             if ("montee_eaux".equals(c.getTypeCarte())) {
                 //Actions montée des eaux
+                cranMarqueurNiveau++;
                 cartesTresor.defausserCarte(c);
             } else {
                 //Ajout de la carte au deck du joueur
