@@ -19,6 +19,6 @@ public class Main {
      */
     
     public static void main(String[] args){
-        Controleur janot = new Controleur();
+        Controleur controleur = new Controleur();
     }
 }

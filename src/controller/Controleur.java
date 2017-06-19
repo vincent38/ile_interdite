@@ -21,6 +21,8 @@ import model.Tuile;
 import model.carte.CarteTresor;
 import model.carte.DeckCartesTresor;
 import static util.Utils.*;
+import view.IHM;
+import view.IHMBonne;
 
 import view.VueAventurier;
 
@@ -40,7 +42,7 @@ public class Controleur implements Observateur {
     
     public int cranMarqueurNiveau;
 
-    public VueAventurier vueAventurier;
+    public IHMBonne vueAventurier;
     public Aventurier avCourant;
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
@@ -72,11 +74,11 @@ public class Controleur implements Observateur {
         avCourant = joueurs.get(0);
 
         //Affichage des informations
-        this.vueAventurier = new VueAventurier(this.avCourant.getNom(), avCourant.getClass().getSimpleName(), Color.blue);
-        this.vueAventurier.setObservateur(this);
-        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
-        this.vueAventurier.setColor(avCourant.getColor());
-        this.vueAventurier.setFontColor(avCourant.getFontColor());
+        this.vueAventurier = new IHMBonne();
+        //this.vueAventurier.setObservateur(this);
+        //vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
+        //this.vueAventurier.setColor(avCourant.getColor());
+        //this.vueAventurier.setFontColor(avCourant.getFontColor());
         //Définition des tuiles inondées et coulées en dur
         grille.setTuile(4, 1, Tuile.ETAT_TUILE_INONDEE);
 
@@ -209,7 +211,7 @@ public class Controleur implements Observateur {
             } else {
                 afficherInformation("Vous ne pouvez pas assécher cette tuile.");
             }
-            this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
+//            this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         } else {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
@@ -246,11 +248,11 @@ public class Controleur implements Observateur {
             avCourant = joueurs.get(getNumJoueur(avCourant) + 1);
         }
         this.action = 0;
-        this.vueAventurier.setWindowTitle(avCourant.getNom());
-        this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
-        this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
-        this.vueAventurier.setColor(avCourant.getColor());
-        this.vueAventurier.setFontColor(avCourant.getFontColor());
+//        this.vueAventurier.setWindowTitle(avCourant.getNom());
+//        this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
+ //       this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
+//        this.vueAventurier.setColor(avCourant.getColor());
+//        this.vueAventurier.setFontColor(avCourant.getFontColor());
     }
 
     /**
@@ -323,7 +325,7 @@ public class Controleur implements Observateur {
         //System.out.println("x avCourant : " + avCourant.getTuile().getX());
         //System.out.println("y avCourant : " + avCourant.getTuile().getY());
         //System.out.println("Actions : " + this.getAction());
-        vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
+//       vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
 
     }
     
