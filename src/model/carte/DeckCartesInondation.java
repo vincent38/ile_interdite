@@ -61,6 +61,14 @@ public class DeckCartesInondation {
         //}
     }
     
+    public void shuffleDefausseCards() {
+        //if (Parameters.ALEAS) {
+            Collections.shuffle(defausseCartes);
+            Collections.shuffle(defausseCartes);
+            Collections.shuffle(defausseCartes);
+        //}
+    }
+    
     public CarteInondation tirerCarte(){
         return deckCartes.remove(0);
     }
@@ -71,5 +79,14 @@ public class DeckCartesInondation {
     
     public void replacerDansLaPile(CarteInondation c){
         deckCartes.add(0, c);
+    }
+    
+    public void fusionDecks(){
+        ArrayList<CarteInondation> buffer = new ArrayList<>();
+        buffer.addAll(defausseCartes);
+        buffer.addAll(deckCartes);
+        deckCartes.clear();
+        defausseCartes.clear();
+        deckCartes.addAll(buffer);
     }
 }

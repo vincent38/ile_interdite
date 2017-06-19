@@ -381,6 +381,8 @@ public class Controleur implements Observer {
             if ("montee_eaux".equals(c.getTypeCarte())) {
                 //Actions montée des eaux
                 cranMarqueurNiveau++;
+                cartesInondation.shuffleDefausseCards();
+                cartesInondation.fusionDecks();
                 cartesTresor.defausserCarte(c);
             } else {
                 //Ajout de la carte au deck du joueur
