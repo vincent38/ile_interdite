@@ -8,22 +8,31 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import model.Observateur;
+import model.aventurier.Aventurier;
 
 /**
  *
  * @author sangj
  */
 public class IHMBonne extends JFrame{
+    private Fenetre fenetre;
+    private Observateur observateur;
+    
     private JPanel content;
     private JPanel casesPane;
     private JPanel choixActionPane;
+    private JPanel joueurPane;
     
     private JPanel[][] cases;
     private JButton[][] boutonsCases;
@@ -33,16 +42,27 @@ public class IHMBonne extends JFrame{
     private JButton boutonAutreAction;
     private JButton boutonFinTour;
     
-    private String nomJoueur;
-    private String classeJoueur;
+    private Aventurier joueur;
     private int nbActRestantes;
+    private JLabel nomJoueur;
+    private JLabel classeJoueur;
+    private JLabel nbAct;
     
-    public IHMBonne(){
+    public IHMBonne(Observateur o, Aventurier firstJoueur, int nbActRestantes){
         super("l'Île interdite");
+        
+        fenetre = new Fenetre(o, firstJoueur, nbActRestantes);
+        
         this.setSize(1000,1000);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setAlwaysOnTop(true);
         this.setLocationRelativeTo(null);
+        
+        
+        this.observateur = o;
+        joueur = firstJoueur;
+        this.nbActRestantes = nbActRestantes;
+        
         
         content = new JPanel();
         this.setContentPane(content);
@@ -152,6 +172,29 @@ public class IHMBonne extends JFrame{
             }
         });
         
+        joueurPane = new JPanel(new GridLayout(1,3));
+        content.add(joueurPane, BorderLayout.NORTH);
+        this.nomJoueur = new JLabel();
+        this.classeJoueur = new JLabel();
+        this.nbAct = new JLabel();
+        
+        
+        joueurPane.add(nomJoueur);
+        joueurPane.add(classeJoueur);
+        joueurPane.add(nbAct);
+        
+        nomJoueur.setFont(new Font("Arial", Font.PLAIN, 30));
+        classeJoueur.setFont(new Font("Arial", Font.PLAIN, 30));
+        nbAct.setFont(new Font("Arial", Font.PLAIN, 30));
+        
+        nomJoueur.setHorizontalAlignment(SwingConstants.CENTER);
+        classeJoueur.setHorizontalAlignment(SwingConstants.CENTER);
+        nbAct.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        
+        
+        this.afficherJoueur();
+        
         
         
         this.setVisible(true);
@@ -176,6 +219,12 @@ public class IHMBonne extends JFrame{
     
     private void traiterClicFinTour(){
         System.out.println("clic fin de tour");
+    }
+
+    private void afficherJoueur() {
+        nomJoueur.setText(joueur.getNom());
+        classeJoueur.setText(joueur.getType());
+        nbAct.setText("" + nbActRestantes);
     }
     
 }

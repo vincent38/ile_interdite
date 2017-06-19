@@ -74,7 +74,7 @@ public class Controleur implements Observateur {
         avCourant = joueurs.get(0);
 
         //Affichage des informations
-        this.vueAventurier = new IHMBonne();
+        this.vueAventurier = new IHMBonne(this, joueurs.get(0), 3);
         //this.vueAventurier.setObservateur(this);
         //vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         //this.vueAventurier.setColor(avCourant.getColor());
