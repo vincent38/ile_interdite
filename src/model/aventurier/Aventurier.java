@@ -50,8 +50,8 @@ public abstract class Aventurier {
     
     /**
      * Assèche la tuile t dans la grille
-     * @param t
-     * @param g 
+     * @param t Tuile
+     * @param g Grille
      */
     
     public void assecher(Tuile t, Grille g) {
@@ -61,11 +61,11 @@ public abstract class Aventurier {
     /**
      * 
      * Méthode d'asséchement.
-     * @param tuilesAssechables
-     * @param g
-     * @param x
-     * @param y
-     * @return 
+     * @param tuilesAssechables ArrayList<Tuile> 
+     * @param g Grille
+     * @param x int
+     * @param y int
+     * @return boolean
      */     
 
     public boolean assecher(ArrayList<Tuile> tuilesAssechables, Grille g, int x, int y) {
@@ -108,7 +108,7 @@ public abstract class Aventurier {
     
     /**
      * Assigne la nouvelle tuileCourante de l'aventurier
-     * @param tuile 
+     * @param tuile Tuile
      */
 
     public void setTuile(Tuile tuile) {
@@ -157,7 +157,7 @@ public abstract class Aventurier {
         return nom;
     }
     
-    /**<<<<<<< HEAD
+    /**
      * Méthode abstraite définie dans les spécialisations
      * @return 
      */

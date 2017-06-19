@@ -21,6 +21,7 @@ import model.aventurier.Pilote;
 import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
+import model.carte.CarteInondation;
 import model.carte.CarteTresor;
 import model.carte.DeckCartesInondation;
 import model.carte.DeckCartesTresor;
@@ -41,10 +42,10 @@ public class Controleur implements Observer {
     public ArrayList<Aventurier> joueurs = new ArrayList<>();
     public Grille grille;
     public ArrayList<Tresor> tresors = new ArrayList<>();
-    
+
     public DeckCartesTresor cartesTresor = new DeckCartesTresor();
     public DeckCartesInondation cartesInondation = new DeckCartesInondation();
-    
+
     public int cranMarqueurNiveau;
     public int banane;
 
@@ -123,7 +124,7 @@ public class Controleur implements Observer {
                         CarteTresor e = cartesTresor.tirerCarte();
                         cartesTresor.replacerDansLaPile(d);
                         d = e;
-                    } 
+                    }
                     a.ajouterCarte(d);
                     cartesTresor.replacerDansLaPile(c);
                     cartesTresor.shuffleCards();
@@ -165,7 +166,7 @@ public class Controleur implements Observer {
     public static int getACTION_NEXT_TOUR() {
         return ACTION_NEXT_TOUR;
     }
-    
+
     /**
      * Retourne l'aventurier courant
      *
@@ -186,13 +187,11 @@ public class Controleur implements Observer {
 
     /**
      * Ajoute un aventurier à l'arrayList d'aventuriers, et l'intègre dans la
-     * boucle de jeu.
-    public void deplacerAventurier(String aNomTuile, Aventurier aAv) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    /**
+     * boucle de jeu. public void deplacerAventurier(String aNomTuile,
+     * Aventurier aAv) { throw new UnsupportedOperationException(); }
+     *
+     *
+     * /**
      * Propose au joueur une liste de tuiles à assécher, et assèche la tuile
      * choisie. Retourne un message d'erreur si la fonction n'est pas possible.
      */
@@ -281,11 +280,11 @@ public class Controleur implements Observer {
         }
         this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
-//        this.vueAventurier.setWindowTitle(avCourant.getNom());
-//        this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
- //       this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
-//        this.vueAventurier.setColor(avCourant.getColor());
-//        this.vueAventurier.setFontColor(avCourant.getFontColor());
+        //this.vueAventurier.setWindowTitle(avCourant.getNom());
+        //this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
+        //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
+        //this.vueAventurier.setColor(avCourant.getColor());
+        //this.vueAventurier.setFontColor(avCourant.getFontColor());
     }
 
     /**
@@ -334,7 +333,6 @@ public class Controleur implements Observer {
                 break;
         }
     }*/
-
     /**
      * Logique gérant le déplacement d'un aventurier sur la grille
      */
@@ -367,16 +365,16 @@ public class Controleur implements Observer {
 //       vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
 
     }
-    
+
     private void traiterBoutonDonnerCarte() {
         Tuile tuileCourante = avCourant.getTuile();
         ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
         ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
         IHMBonne.choisirDestinataireEtCarte(aventuriersMemeTuile, cartesPossedees);
     }
-    
+
     //Tirer 2 cartes trésor à la fin du tour
-    private void tirerCartesTresor(){
+    private void tirerCartesTresor() {
         for (int i = 1; i <= 2; i++) {
             CarteTresor c = cartesTresor.tirerCarte();
             if ("montee_eaux".equals(c.getTypeCarte())) {
@@ -392,7 +390,7 @@ public class Controleur implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Message m = (Message)arg;
+        Message m = (Message) arg;
         switch (m.type) {
             case CLIC_BTN_ALLER:
                 this.traiterBoutonAller();
@@ -408,9 +406,33 @@ public class Controleur implements Observer {
                 break;
         }
     }
-    
-    //Tirer des cartes inondation
-    private void tirerCartesInondation(){
-        
+
+    private void tirerCartesInondation() {   
+        int nbCartes = nbCartesInondation();
+        for (int i = 1; i <= nbCartes; i++) {
+            CarteInondation c = cartesInondation.tirerCarte();
+            Tuile t = grille.getTuile(c.getCaseConcernee());
+            t.setEtatTuile();
+        }
+    }
+
+    //Calcul nombre de cartes inondation à tirer en fonction du cran de la règle
+    private int nbCartesInondation() {
+        switch (cranMarqueurNiveau) {
+            case 1:
+            case 2:
+                return 2;
+            case 3:
+            case 4:
+            case 5:
+                return 3;
+            case 6:
+            case 7:
+                return 4;
+            case 8:
+            case 9:
+                return 5;
+        }
+        return 2;
     }
 }

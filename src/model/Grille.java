@@ -148,6 +148,21 @@ public class Grille {
     }
     
     /**
+     * Retourne un objet Tuile en fonction des coordonées d'entrées
+     * @param nomTuile
+     * @return 
+     */
+
+    public Tuile getTuile(String nomTuile) {
+        for (Tuile t : this.tuiles) {
+            if (t.getNom().equals(nomTuile)) {
+                return t;
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Permet de changer l'état de la tuile (Normale, Coulée ou Innondée)
      * @param x
      * @param y

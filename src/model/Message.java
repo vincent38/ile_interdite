@@ -14,9 +14,4 @@ public class Message {
     public Message(TypeMessage type){
         this.type = type;
     }
-
-/**
- * Type de bouton appuyé sur l'IHM
- * @author baeijsj
- */
 }
