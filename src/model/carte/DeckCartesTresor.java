@@ -63,7 +63,9 @@ public class DeckCartesTresor {
     }
     
     public CarteTresor tirerCarte(){
-        return deckCartes.remove(0);
+        CarteTresor c = deckCartes.remove(0);
+        refillDeck();
+        return c;
     }
     
     public void defausserCarte(CarteTresor c){
@@ -72,6 +74,14 @@ public class DeckCartesTresor {
     
     public void replacerDansLaPile(CarteTresor c){
         deckCartes.add(0, c);
+    }
+    
+    private void refillDeck(){
+        if (deckCartes.isEmpty()) {
+            deckCartes.addAll(defausseCartes);
+            defausseCartes.clear();
+            shuffleCards();
+        }
     }
 }
 
