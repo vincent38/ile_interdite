@@ -60,7 +60,7 @@ public class Fenetre extends JFrame{
         
         this.joueur = firstJoueur;
         
-        this.setSize(1000,1000);
+        this.setSize(500,500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setAlwaysOnTop(true);
         this.setLocationRelativeTo(null);

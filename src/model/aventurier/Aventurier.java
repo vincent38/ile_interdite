@@ -176,6 +176,10 @@ public abstract class Aventurier {
     public ArrayList<CarteTresor> getCartesPossedees() {
         return cartes;
     }
+
+    public void setPouvoirDispo(boolean b) {
+        this.pouvoirDispo = true;
+    }
     
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.

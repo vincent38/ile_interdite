@@ -276,8 +276,11 @@ public class Controleur implements Observer {
     public void finTour() {
         doubleAssechement = false;
         tirerCartesTresor();
+        
         tirerCartesInondation();
+        
         joueurSuivant();
+        avCourant.setPouvoirDispo(true);
     }
 
     /**
