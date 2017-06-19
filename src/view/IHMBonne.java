@@ -48,20 +48,14 @@ public class IHMBonne extends Observable{
         System.out.println(y);
     }
     
-<<<<<<< HEAD
     public void traiterClicDeplacer(){
         this.setChanged();
         this.notifyObservers(new Message(TypeMessage.CLIC_BTN_ALLER));
         this.clearChanged();
-=======
+    }
 
     public static void choisirDestinataireEtCarte(ArrayList<Aventurier> aventuriersMemeTuile, ArrayList<CarteTresor> cartesPossedees) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void traiterClicDeplacer(){
-        System.out.println("clic deplacer");
->>>>>>> 0265a907460c8a3379298772c7be820a9a9b91fa
     }
     
     public void traiterClicAssecher(){

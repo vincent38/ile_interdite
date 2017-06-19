@@ -44,26 +44,26 @@ public class Grille {
      */
     public Grille() {
         //remainingTuilesNames();
-        for (int i = 3; i <= 4; i++) {
+        for (int i = 2; i <= 3; i++) {
+            tuiles.add(new Tuile(i, 0));
+        }
+
+        for (int i = 1; i <= 4; i++) {
             tuiles.add(new Tuile(i, 1));
         }
 
-        for (int i = 2; i <= 5; i++) {
-            tuiles.add(new Tuile(i, 2));
-        }
-
-        for (int i = 3; i <= 4; i++) {
-            for (int j = 1; j <= 6; j++) {
+        for (int i = 2; i <= 3; i++) {
+            for (int j = 0; j <= 5; j++) {
                 tuiles.add(new Tuile(j, i));
             }
         }
 
-        for (int i = 2; i <= 5; i++) {
-            tuiles.add(new Tuile(i, 5));
+        for (int i = 1; i <= 4; i++) {
+            tuiles.add(new Tuile(i, 4));
         }
 
-        for (int i = 3; i <= 4; i++) {
-            tuiles.add(new Tuile(i, 6));
+        for (int i = 2; i <= 3; i++) {
+            tuiles.add(new Tuile(i, 5));
         }
 
         for (int i = 0; i < tuiles.size(); i++) {
