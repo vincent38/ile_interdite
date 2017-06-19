@@ -33,11 +33,14 @@ public class DeckCartesTresor {
         for (int i = 1; i <= 2; i++){
             deckCartes.add(new CarteBonus("Sacs de Sable"));
         }
-        for (int i = 1; i <= 3; i++){
+        for (int i = 1; i <= 2; i++){
             deckCartes.add(new CarteMonteeDesEaux());
         }
         shuffleCards();
+<<<<<<< HEAD
         //dispArray(deckCartes);
+=======
+>>>>>>> 0265a907460c8a3379298772c7be820a9a9b91fa
     }
     
     public void shuffleCards() {

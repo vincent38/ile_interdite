@@ -22,6 +22,7 @@ import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
 import model.carte.CarteTresor;
+import model.carte.DeckCartesInondation;
 import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHM;
@@ -42,8 +43,10 @@ public class Controleur implements Observer {
     public ArrayList<Tresor> tresors = new ArrayList<>();
     
     public DeckCartesTresor cartesTresor = new DeckCartesTresor();
+    public DeckCartesInondation cartesInondation = new DeckCartesInondation();
     
     public int cranMarqueurNiveau;
+    public int banane;
 
     public IHMBonne vueAventurier;
     public Aventurier avCourant;
@@ -115,12 +118,9 @@ public class Controleur implements Observer {
                 CarteTresor c = cartesTresor.tirerCarte();
                 if ("montee_eaux".equals(c.getTypeCarte())) {
                     //Sélectionner une autre carte et replacer la carte précédente
-                    System.out.println(c.getTypeCarte());
                     CarteTresor d = cartesTresor.tirerCarte();
-                    System.out.println(d.getTypeCarte());
                     while ("montee_eaux".equals(d.getTypeCarte())) {
                         CarteTresor e = cartesTresor.tirerCarte();
-                        System.out.println(e.getTypeCarte());
                         cartesTresor.replacerDansLaPile(d);
                         d = e;
                     } 
@@ -129,7 +129,6 @@ public class Controleur implements Observer {
                     cartesTresor.shuffleCards();
                 } else {
                     //Ajout de la carte au deck du joueur
-                    System.out.println(c.getTypeCarte());
                     a.ajouterCarte(c);
                 }
             }
@@ -263,6 +262,7 @@ public class Controleur implements Observer {
     public void finTour() {
         doubleAssechement = false;
         tirerCartesTresor();
+        tirerCartesInondation();
         joueurSuivant();
     }
 
@@ -326,6 +326,9 @@ public class Controleur implements Observer {
             case CLIC_BTN_TERMINER_TOUR:
                 this.finTour();
                 break;
+            case CLIC_BTN_DONNER_CARTE:
+                this.traiterBoutonDonnerCarte();
+                break;
         }
     }*/
 
@@ -359,6 +362,13 @@ public class Controleur implements Observer {
 
     }
     
+    private void traiterBoutonDonnerCarte() {
+        Tuile tuileCourante = avCourant.getTuile();
+        ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
+        ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
+        IHMBonne.choisirDestinataireEtCarte(aventuriersMemeTuile, cartesPossedees);
+    }
+    
     //Tirer 2 cartes trésor à la fin du tour
     private void tirerCartesTresor(){
         for (int i = 1; i <= 2; i++) {
@@ -373,6 +383,7 @@ public class Controleur implements Observer {
             }
         }
     }
+<<<<<<< HEAD
 
     @Override
     public void update(Observable o, Object arg) {
@@ -391,5 +402,11 @@ public class Controleur implements Observer {
                 this.finTour();
                 break;
         }
+=======
+    
+    //Tirer des cartes inondation
+    private void tirerCartesInondation(){
+        
+>>>>>>> 0265a907460c8a3379298772c7be820a9a9b91fa
     }
 }
