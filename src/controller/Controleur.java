@@ -19,6 +19,7 @@ import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
 import model.carte.CarteTresor;
+import model.carte.DeckCartesInondation;
 import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHM;
@@ -39,6 +40,7 @@ public class Controleur implements Observateur {
     public ArrayList<Tresor> tresors = new ArrayList<>();
     
     public DeckCartesTresor cartesTresor = new DeckCartesTresor();
+    public DeckCartesInondation cartesInondation = new DeckCartesInondation();
     
     public int cranMarqueurNiveau;
 

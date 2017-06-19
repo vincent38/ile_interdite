@@ -37,10 +37,6 @@ public class DeckCartesTresor {
             deckCartes.add(new CarteMonteeDesEaux());
         }
         shuffleCards();
-<<<<<<< HEAD
-        //dispArray(deckCartes);
-=======
->>>>>>> da2382a26db5ef09a2b4b0ce30fb5e610163500e
     }
     
     public void shuffleCards() {
