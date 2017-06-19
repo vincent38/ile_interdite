@@ -123,13 +123,13 @@ public class Fenetre extends JFrame{
                     });
                     switch(this.ihm.getGrille().getTuile(i, j).getEtatTuile()){
                         case Tuile.ETAT_TUILE_COULEE:
-                            boutonsCases[j][i].setBackground(Color.BLUE);
+                            boutonsCases[j][i].setBackground(Color.cyan);
                             break;
                         case Tuile.ETAT_TUILE_INONDEE:
                             boutonsCases[j][i].setBackground(Color.YELLOW);
                             break;
                         default:
-                            boutonsCases[j][i].setBackground(Color.orange);
+                            boutonsCases[j][i].setBackground(Color.ORANGE);
                             break;
                     }
                 }
@@ -253,7 +253,7 @@ public class Fenetre extends JFrame{
     }
 
     void deplacement(Aventurier av, int xa, int ya, int xn, int yn) {
-        this.boutonsCases[ya][xa].setBackground(null);
+        this.setEtatTuile(this.ihm.getGrille().getTuile(xa, ya).getEtatTuile(), xa, ya);
         this.boutonsCases[yn][xn].setBackground(av.getColor());
         
     }
@@ -278,6 +278,22 @@ public class Fenetre extends JFrame{
                    j.setEnabled(false);
             }
         }
+    }
+
+
+    void setEtatTuile(int etatTuile, int x, int y) {
+        switch(etatTuile){
+            case Tuile.ETAT_TUILE_COULEE:
+                this.boutonsCases[y][x].setBackground(Color.cyan);
+                break;
+            case Tuile.ETAT_TUILE_INONDEE:
+                this.boutonsCases[y][x].setBackground(Color.YELLOW);
+                break;
+            default:
+                this.boutonsCases[y][x].setBackground(Color.ORANGE);
+                break;
+        }
+        
     }
     
 }

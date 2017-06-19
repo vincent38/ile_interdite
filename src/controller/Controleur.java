@@ -417,7 +417,7 @@ public class Controleur implements Observer {
             System.out.println("Carte tirée : "+c.getCaseConcernee());
             Tuile t = grille.getTuile(c.getCaseConcernee());
             t.mouillerTuile();
-            vueAventurier.mouillerTuile(t.getX(), t.getY());
+            vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
         }
     }
