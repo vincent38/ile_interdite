@@ -11,16 +11,21 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import model.aventurier.Aventurier;
+import model.carte.CarteTresor;
 
 /**
  *
  * @author sangj
  */
 public class IHMBonne extends JFrame{
+
+    
     private JPanel content;
     private JPanel casesPane;
     private JPanel choixActionPane;
@@ -120,6 +125,10 @@ public class IHMBonne extends JFrame{
     private void traiterClicCase(int x, int y){
         System.out.println(x);
         System.out.println(y);
+    }
+    
+    public static void choisirDestinataireEtCarte(ArrayList<Aventurier> aventuriersMemeTuile, ArrayList<CarteTresor> cartesPossedees) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -172,6 +172,10 @@ public abstract class Aventurier {
     public Color getFontColor(){
         return Color.WHITE;
     }
+
+    public ArrayList<CarteTresor> getCartesPossedees() {
+        return cartes;
+    }
     
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.

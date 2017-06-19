@@ -296,6 +296,9 @@ public class Controleur implements Observateur {
             case CLIC_BTN_TERMINER_TOUR:
                 this.finTour();
                 break;
+            case CLIC_BTN_DONNER_CARTE:
+                this.traiterBoutonDonnerCarte();
+                break;
         }
     }
 
@@ -327,6 +330,10 @@ public class Controleur implements Observateur {
         //System.out.println("Actions : " + this.getAction());
 //       vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
 
+    }
+    
+    private void traiterBoutonDonnerCarte() {
+        
     }
     
     //Tirer 2 cartes trésor à la fin du tour
