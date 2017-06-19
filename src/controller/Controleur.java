@@ -143,7 +143,9 @@ public class Controleur implements Observer {
         action += 1;
         if (action == ACTION_NEXT_TOUR) {
             this.joueurSuivant();
+            
         }
+        this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
     }
 
     /**
@@ -277,6 +279,7 @@ public class Controleur implements Observer {
         } else {
             avCourant = joueurs.get(getNumJoueur(avCourant) + 1);
         }
+        this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
 //        this.vueAventurier.setWindowTitle(avCourant.getNom());
 //        this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
@@ -350,7 +353,10 @@ public class Controleur implements Observer {
         System.out.println("");
         Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
         if (tuilesPossibles.contains(tuileV)) {
+            int xAncien = avCourant.getTuile().getX();
+            int yAncien = avCourant.getTuile().getY();
             avCourant.deplacement(tuileV, this.grille);
+            this.vueAventurier.deplacement(avCourant, xAncien, yAncien, xVoulu, yVoulu);
             this.ajouterAction();
         } else {
             afficherInformation("Le déplacement demandé est impossible.");
