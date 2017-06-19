@@ -124,6 +124,14 @@ public abstract class Aventurier {
     public ArrayList<CarteTresor> getCartes() {
         return cartes;
     }
+    
+    public int countCartes() {
+        return cartes.size();
+    }
+    
+    public void ajouterCarte(CarteTresor c){
+        cartes.add(c);
+    }
 
     public void deplacement(Tuile nvTuile, Grille g){
         this.tuileCourante.rmAventurier(this);

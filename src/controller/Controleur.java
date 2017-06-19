@@ -18,6 +18,8 @@ import model.aventurier.Pilote;
 import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
+import model.carte.CarteTresor;
+import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 
 import view.VueAventurier;
@@ -33,6 +35,10 @@ public class Controleur implements Observateur {
     public ArrayList<Aventurier> joueurs = new ArrayList<>();
     public Grille grille;
     public ArrayList<Tresor> tresors = new ArrayList<>();
+    
+    public DeckCartesTresor cartesTresor = new DeckCartesTresor();
+    
+    public int cranMarqueurNiveau;
 
     public VueAventurier vueAventurier;
     public Aventurier avCourant;
@@ -93,6 +99,9 @@ public class Controleur implements Observateur {
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_COULEE);
 
         grille.setTuile(4, 6, Tuile.ETAT_TUILE_INONDEE);
+        
+        //Définition du marqueur de niveau
+        cranMarqueurNiveau = 0;
 
     }
 
@@ -124,15 +133,7 @@ public class Controleur implements Observateur {
     public static int getACTION_NEXT_TOUR() {
         return ACTION_NEXT_TOUR;
     }
-
-    /**
-     * Méthode inutilisée actuellement. Gardée en prévision.
-     */
-
-    /**
-     * Méthode inutilisée actuellement. Gardée en prévision.
-     */
-
+    
     /**
      * Retourne l'aventurier courant
      *
@@ -324,5 +325,19 @@ public class Controleur implements Observateur {
         //System.out.println("Actions : " + this.getAction());
         vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
 
+    }
+    
+    //Tirer 2 cartes trésor à la fin du tour
+    private void tirerCartesTresor(){
+        for (int i = 1; i <= 2; i++) {
+            CarteTresor c = cartesTresor.tirerCarte();
+            if ("montee_eaux".equals(c.getTypeCarte())) {
+                //Actions montée des eaux
+                cartesTresor.defausserCarte(c);
+            } else {
+                //Ajout de la carte au deck du joueur
+                avCourant.ajouterCarte(c);
+            }
+        }
     }
 }
