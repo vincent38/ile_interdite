@@ -81,24 +81,24 @@ public class Fenetre extends JFrame{
         
         
         for(int i = 2; i <= 3; i++){
-            cases[0][i] = new JPanel();
-            cases[5][i] = new JPanel();
-            boutonsCases[0][i] = new JButton();
-            boutonsCases[5][i] = new JButton();
+            cases[i][0] = new JPanel();
+            cases[i][5] = new JPanel();
+            boutonsCases[i][0] = new JButton();
+            boutonsCases[i][5] = new JButton();
         }
         for(int i = 1; i <= 4; i++){
-            cases[1][i] = new JPanel();
-            cases[4][i] = new JPanel();
+            cases[i][1] = new JPanel();
+            cases[i][4] = new JPanel();
             
-            boutonsCases[1][i] = new JButton();
-            boutonsCases[4][i] = new JButton();
+            boutonsCases[i][1] = new JButton();
+            boutonsCases[i][4] = new JButton();
         }
         for(int i = 0; i <= 5; i++){
-            cases[2][i] = new JPanel();
-            cases[3][i] = new JPanel();
+            cases[i][2] = new JPanel();
+            cases[i][3] = new JPanel();
             
-            boutonsCases[2][i] = new JButton();
-            boutonsCases[3][i] = new JButton();
+            boutonsCases[i][2] = new JButton();
+            boutonsCases[i][3] = new JButton();
         }
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 6; j++){
@@ -225,14 +225,15 @@ public class Fenetre extends JFrame{
     }
 
     void afficherAventuriers(ArrayList<Aventurier> aventuriers, Grille g) {
-        int x, y;
         for(Aventurier a : aventuriers){
             Tuile t = a.getTuile();
-            for(int i = 1; i <= 6; i++){
-                for(int j = 1; j <= 6; j++){
+            for(int i = 0; i <= 6; i++){
+                for(int j = 0; j <= 6; j++){
                     if (t == g.getTuile(i, j)){
-                        this.boutonsCases[i][j].setBackground(Color.red);
+                        this.boutonsCases[j][i].setBackground(a.getColor());
                     }
+                    if(g.getTuile(i,j) != null)
+                    this.boutonsCases[j][i].setText(g.getTuile(i,j).getNom());
                 }
             }
             //afficher l'aventurier en x, 

@@ -54,12 +54,12 @@ public class Controleur implements Observer {
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
     private boolean doubleAssechement = false;
-    private static final Point SPAWN_EXPLORATEUR = new Point(5, 3);
-    private static final Point SPAWN_NAVIGATEUR = new Point(4, 2);
-    private static final Point SPAWN_INGENIEUR = new Point(4, 1);
-    private static final Point SPAWN_PLONGEUR = new Point(3, 2);
-    private static final Point SPAWN_PILOTE = new Point(4, 3);
-    private static final Point SPAWN_MESSAGER = new Point(2, 3);
+    private static final Point SPAWN_EXPLORATEUR = new Point(4, 2);
+    private static final Point SPAWN_NAVIGATEUR = new Point(3, 1);
+    private static final Point SPAWN_INGENIEUR = new Point(3, 0);
+    private static final Point SPAWN_PLONGEUR = new Point(2, 1);
+    private static final Point SPAWN_PILOTE = new Point(3, 2);
+    private static final Point SPAWN_MESSAGER = new Point(1, 2);
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -88,28 +88,28 @@ public class Controleur implements Observer {
         //this.vueAventurier.setColor(avCourant.getColor());
         //this.vueAventurier.setFontColor(avCourant.getFontColor());
         //Définition des tuiles inondées et coulées en dur
-        grille.setTuile(4, 1, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 0, Tuile.ETAT_TUILE_INONDEE);
+
+        grille.setTuile(2, 2, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(2, 2, Tuile.ETAT_TUILE_COULEE);
+
+        grille.setTuile(1, 3, Tuile.ETAT_TUILE_INONDEE);
+
+        grille.setTuile(2, 3, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(2, 3, Tuile.ETAT_TUILE_COULEE);
 
         grille.setTuile(3, 3, Tuile.ETAT_TUILE_INONDEE);
-        grille.setTuile(3, 3, Tuile.ETAT_TUILE_COULEE);
+
+        grille.setTuile(4, 3, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(4, 3, Tuile.ETAT_TUILE_COULEE);
+
+        grille.setTuile(5, 3, Tuile.ETAT_TUILE_INONDEE);
 
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_INONDEE);
-
-        grille.setTuile(3, 4, Tuile.ETAT_TUILE_INONDEE);
-        grille.setTuile(3, 4, Tuile.ETAT_TUILE_COULEE);
-
-        grille.setTuile(4, 4, Tuile.ETAT_TUILE_INONDEE);
-
-        grille.setTuile(5, 4, Tuile.ETAT_TUILE_INONDEE);
-        grille.setTuile(5, 4, Tuile.ETAT_TUILE_COULEE);
-
-        grille.setTuile(6, 4, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(2, 4, Tuile.ETAT_TUILE_COULEE);
 
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);
-        grille.setTuile(3, 5, Tuile.ETAT_TUILE_COULEE);
-
-        grille.setTuile(4, 6, Tuile.ETAT_TUILE_INONDEE);
-
+        
         //Définition du marqueur de niveau
         cranMarqueurNiveau = 0;
 
