@@ -43,6 +43,7 @@ public class Controleur implements Observateur {
     public DeckCartesInondation cartesInondation = new DeckCartesInondation();
     
     public int cranMarqueurNiveau;
+    public int banane;
 
     public IHMBonne vueAventurier;
     public Aventurier avCourant;
