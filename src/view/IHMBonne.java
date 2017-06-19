@@ -31,6 +31,11 @@ public class IHMBonne extends JFrame{
     private JButton boutonDeplacer;
     private JButton boutonAssecher;
     private JButton boutonAutreAction;
+    private JButton boutonFinTour;
+    
+    private String nomJoueur;
+    private String classeJoueur;
+    private int nbActRestantes;
     
     public IHMBonne(){
         super("l'Île interdite");
@@ -112,6 +117,41 @@ public class IHMBonne extends JFrame{
         boutonDeplacer = new JButton("Se deplacer");
         boutonAssecher = new JButton("Assecher");
         boutonAutreAction = new JButton("Autre action");
+        boutonFinTour = new JButton("Fin de tour");
+        
+        choixActionPane.add(boutonDeplacer);
+        choixActionPane.add(boutonAssecher);
+        choixActionPane.add(boutonAutreAction);
+        choixActionPane.add(boutonFinTour);
+        
+        boutonDeplacer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicDeplacer();
+            }
+        });
+        
+        boutonAssecher.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicAssecher();
+            }
+        });
+        
+        boutonAutreAction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicAutreAction();
+            }
+        });
+        
+        boutonFinTour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicFinTour();
+            }
+        });
+        
         
         
         this.setVisible(true);
@@ -120,6 +160,22 @@ public class IHMBonne extends JFrame{
     private void traiterClicCase(int x, int y){
         System.out.println(x);
         System.out.println(y);
+    }
+    
+    private void traiterClicDeplacer(){
+        System.out.println("clic deplacer");
+    }
+    
+    private void traiterClicAssecher(){
+        System.out.println("clic assecher");
+    }
+    
+    private void traiterClicAutreAction(){
+        System.out.println("clic autre action");
+    }
+    
+    private void traiterClicFinTour(){
+        System.out.println("clic fin de tour");
     }
     
 }
