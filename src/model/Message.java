@@ -9,15 +9,9 @@ package model;
  *
  * @author sangj
  */
-
-/**
- * Type de bouton appuyé sur l'IHM
- * @author baeijsj
- */
-public enum Message {
-    CLIC_BTN_ALLER,
-    CLIC_BTN_ASSECHER,
-    CLIC_BTN_AUTRE_ACTION,
-    CLIC_BTN_TERMINER_TOUR,
-    CLIC_BTN_DONNER_CARTE;
+public class Message {
+    public TypeMessage type;
+    public Message(TypeMessage type){
+        this.type = type;
+    }
 }

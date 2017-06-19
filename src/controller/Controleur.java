@@ -3,14 +3,17 @@ package controller;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import java.util.Scanner;
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.aventurier.Explorateur;
 import model.Grille;
-import model.aventurier.Ingenieur;
 import model.Message;
+import model.aventurier.Ingenieur;
+import model.TypeMessage;
 import model.aventurier.Messager;
 import model.aventurier.Navigateur;
 import model.Observateur;
@@ -33,17 +36,18 @@ JavaDoc provided
 
 V0.1
  */
-public class Controleur implements Observateur {
+public class Controleur implements Observer {
 
     public ArrayList<Carte> cartes = new ArrayList<>();
     public ArrayList<Aventurier> joueurs = new ArrayList<>();
     public Grille grille;
     public ArrayList<Tresor> tresors = new ArrayList<>();
-    
+
     public DeckCartesTresor cartesTresor = new DeckCartesTresor();
     public DeckCartesInondation cartesInondation = new DeckCartesInondation();
-    
+
     public int cranMarqueurNiveau;
+    public int banane;
 
     public IHMBonne vueAventurier;
     public Aventurier avCourant;
@@ -77,7 +81,8 @@ public class Controleur implements Observateur {
         avCourant = joueurs.get(0);
 
         //Affichage des informations
-        this.vueAventurier = new IHMBonne(this, joueurs.get(0), 3);
+        this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
+        this.vueAventurier.addObserver(this);
         //this.vueAventurier.setObservateur(this);
         //vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         //this.vueAventurier.setColor(avCourant.getColor());
@@ -104,7 +109,7 @@ public class Controleur implements Observateur {
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_COULEE);
 
         grille.setTuile(4, 6, Tuile.ETAT_TUILE_INONDEE);
-        
+
         //Définition du marqueur de niveau
         cranMarqueurNiveau = 0;
 
@@ -119,7 +124,7 @@ public class Controleur implements Observateur {
                         CarteTresor e = cartesTresor.tirerCarte();
                         cartesTresor.replacerDansLaPile(d);
                         d = e;
-                    } 
+                    }
                     a.ajouterCarte(d);
                     cartesTresor.replacerDansLaPile(c);
                     cartesTresor.shuffleCards();
@@ -159,7 +164,7 @@ public class Controleur implements Observateur {
     public static int getACTION_NEXT_TOUR() {
         return ACTION_NEXT_TOUR;
     }
-    
+
     /**
      * Retourne l'aventurier courant
      *
@@ -180,13 +185,11 @@ public class Controleur implements Observateur {
 
     /**
      * Ajoute un aventurier à l'arrayList d'aventuriers, et l'intègre dans la
-     * boucle de jeu.
-    public void deplacerAventurier(String aNomTuile, Aventurier aAv) {
-        throw new UnsupportedOperationException();
-    }
-
-
-    /**
+     * boucle de jeu. public void deplacerAventurier(String aNomTuile,
+     * Aventurier aAv) { throw new UnsupportedOperationException(); }
+     *
+     *
+     * /**
      * Propose au joueur une liste de tuiles à assécher, et assèche la tuile
      * choisie. Retourne un message d'erreur si la fonction n'est pas possible.
      */
@@ -274,11 +277,11 @@ public class Controleur implements Observateur {
             avCourant = joueurs.get(getNumJoueur(avCourant) + 1);
         }
         this.action = 0;
-//        this.vueAventurier.setWindowTitle(avCourant.getNom());
-//        this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
- //       this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
-//        this.vueAventurier.setColor(avCourant.getColor());
-//        this.vueAventurier.setFontColor(avCourant.getFontColor());
+        //this.vueAventurier.setWindowTitle(avCourant.getNom());
+        //this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
+        //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
+        //this.vueAventurier.setColor(avCourant.getColor());
+        //this.vueAventurier.setFontColor(avCourant.getFontColor());
     }
 
     /**
@@ -307,9 +310,9 @@ public class Controleur implements Observateur {
      * @param m Message reçu
      * @see Observateur
      */
-    @Override
-    public void traiterMessage(Message m) {
-        switch (m) {
+    /*@Override
+    public void traiterMessage(Object m) {
+        switch (m.type) {
             case CLIC_BTN_ALLER:
                 this.traiterBoutonAller();
                 break;
@@ -326,8 +329,7 @@ public class Controleur implements Observateur {
                 this.traiterBoutonDonnerCarte();
                 break;
         }
-    }
-
+    }*/
     /**
      * Logique gérant le déplacement d'un aventurier sur la grille
      */
@@ -357,16 +359,16 @@ public class Controleur implements Observateur {
 //       vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
 
     }
-    
+
     private void traiterBoutonDonnerCarte() {
         Tuile tuileCourante = avCourant.getTuile();
         ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
         ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
         IHMBonne.choisirDestinataireEtCarte(aventuriersMemeTuile, cartesPossedees);
     }
-    
+
     //Tirer 2 cartes trésor à la fin du tour
-    private void tirerCartesTresor(){
+    private void tirerCartesTresor() {
         for (int i = 1; i <= 2; i++) {
             CarteTresor c = cartesTresor.tirerCarte();
             if ("montee_eaux".equals(c.getTypeCarte())) {
@@ -379,9 +381,27 @@ public class Controleur implements Observateur {
             }
         }
     }
-    
-    //Tirer des cartes inondation
-    private void tirerCartesInondation(){
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Message m = (Message) arg;
+        switch (m.type) {
+            case CLIC_BTN_ALLER:
+                this.traiterBoutonAller();
+                break;
+            case CLIC_BTN_ASSECHER:
+                assecherTuile();
+                break;
+            case CLIC_BTN_AUTRE_ACTION:
+                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                break;
+            case CLIC_BTN_TERMINER_TOUR:
+                this.finTour();
+                break;
+        }
+    }
+
+    private void tirerCartesInondation() {   
         int nbCartes = nbCartesInondation();
         for (int i = 1; i <= nbCartes; i++) {
             CarteInondation c = cartesInondation.tirerCarte();
@@ -389,9 +409,9 @@ public class Controleur implements Observateur {
             t.setEtatTuile();
         }
     }
-    
+
     //Calcul nombre de cartes inondation à tirer en fonction du cran de la règle
-    private int nbCartesInondation(){
+    private int nbCartesInondation() {
         switch (cranMarqueurNiveau) {
             case 1:
             case 2:
