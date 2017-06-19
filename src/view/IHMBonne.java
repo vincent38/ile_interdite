@@ -48,8 +48,9 @@ public class IHMBonne extends Observable{
     }
     
     public void traiterClicCase(int x, int y){
-        System.out.println(x);
-        System.out.println(y);
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_CASE, y, x));
+        this.clearChanged();
     }
     
     public void traiterClicDeplacer(){
@@ -91,6 +92,14 @@ public class IHMBonne extends Observable{
 
     public void setAventurier(Aventurier av) {
         this.fenetre.setAventurier(av);
+    }
+
+    public void enable(int x, int y) {
+        fenetre.enable(x, y);
+    }
+
+    public void disableBoutons() {
+        this.fenetre.disableBoutons();
     }
 
     

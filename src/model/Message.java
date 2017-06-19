@@ -11,7 +11,14 @@ package model;
  */
 public class Message {
     public TypeMessage type;
+    public int x, y;
     public Message(TypeMessage type){
         this.type = type;
+    }
+    
+    public Message(TypeMessage type, int x, int y){
+        this.type = type;
+        this.x = x; this.y = y;
+        
     }
 }

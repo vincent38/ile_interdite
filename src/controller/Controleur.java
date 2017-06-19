@@ -37,7 +37,11 @@ JavaDoc provided
 V0.1
  */
 public class Controleur implements Observer {
-
+    
+    public static final int OPERATION_AUCUNE = 0;
+    public static final int OPERATION_DEPLACEMENT = 1;
+    public static final int OPERATION_ASSECHER = 2;
+    
     public ArrayList<Carte> cartes = new ArrayList<>();
     public ArrayList<Aventurier> joueurs = new ArrayList<>();
     public Grille grille;
@@ -60,6 +64,8 @@ public class Controleur implements Observer {
     private static final Point SPAWN_PLONGEUR = new Point(2, 1);
     private static final Point SPAWN_PILOTE = new Point(3, 2);
     private static final Point SPAWN_MESSAGER = new Point(1, 2);
+    
+    private int operationEnCours = OPERATION_AUCUNE;
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -254,7 +260,12 @@ public class Controleur implements Observer {
      * @param nvTuile Tuile où déplacer l'aventurier
      */
     public void deplacerAventurierCourant(Tuile nvTuile) {
+        int xAncien = avCourant.getTuile().getX();
+        int yAncien = avCourant.getTuile().getY();
         avCourant.deplacement(nvTuile, this.grille);
+        this.vueAventurier.deplacement(avCourant, xAncien, yAncien, nvTuile.getX(), nvTuile.getY());
+        this.vueAventurier.disableBoutons();
+        this.operationEnCours = OPERATION_AUCUNE;
     }
 
     /**
@@ -339,26 +350,19 @@ public class Controleur implements Observer {
     private void traiterBoutonAller() {
         ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
         for (Tuile t : tuilesPossibles) {
-            System.out.println("x : " + t.getX());
+            /*System.out.println("x : " + t.getX());
             System.out.println("y : " + t.getY());
-            System.out.println(t.getNom() + '\n');
+            System.out.println(t.getNom() + '\n');*/
+            vueAventurier.enable(t.getX(), t.getY());
         }
-        Scanner clavier = new Scanner(System.in);
-        System.out.print("selectionner X : ");
-        int xVoulu = clavier.nextInt();
-        System.out.print("selectionner Y : ");
-        int yVoulu = clavier.nextInt();
-        System.out.println("");
-        Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
-        if (tuilesPossibles.contains(tuileV)) {
-            int xAncien = avCourant.getTuile().getX();
-            int yAncien = avCourant.getTuile().getY();
-            avCourant.deplacement(tuileV, this.grille);
-            this.vueAventurier.deplacement(avCourant, xAncien, yAncien, xVoulu, yVoulu);
-            this.ajouterAction();
-        } else {
-            afficherInformation("Le déplacement demandé est impossible.");
-        }
+        //Scanner clavier = new Scanner(System.in);
+        //int xVoulu = clavier.nextInt();
+        //int yVoulu = clavier.nextInt();
+        //Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
+        //if (tuilesPossibles.contains(tuileV)) {
+        //    avCourant.deplacement(tuileV, this.grille);
+        //    this.vueAventurier.deplacement(avCourant, xAncien, yAncien, xVoulu, yVoulu);
+            
         //System.out.println("x avCourant : " + avCourant.getTuile().getX());
         //System.out.println("y avCourant : " + avCourant.getTuile().getY());
         //System.out.println("Actions : " + this.getAction());
@@ -394,15 +398,20 @@ public class Controleur implements Observer {
         switch (m.type) {
             case CLIC_BTN_ALLER:
                 this.traiterBoutonAller();
+                this.operationEnCours = OPERATION_DEPLACEMENT;
                 break;
             case CLIC_BTN_ASSECHER:
                 assecherTuile();
+                this.operationEnCours = OPERATION_ASSECHER;
                 break;
             case CLIC_BTN_AUTRE_ACTION:
                 afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 break;
             case CLIC_BTN_TERMINER_TOUR:
                 this.finTour();
+                break;
+            case CLIC_CASE:
+                this.traiterClicCase(m.x, m.y);
                 break;
         }
     }
@@ -434,5 +443,12 @@ public class Controleur implements Observer {
                 return 5;
         }
         return 2;
+    }
+
+    private void traiterClicCase(int x, int y) {
+        if(operationEnCours == OPERATION_DEPLACEMENT){
+            this.deplacerAventurierCourant(grille.getTuile(x, y));
+            this.ajouterAction();
+        }
     }
 }

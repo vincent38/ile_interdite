@@ -254,5 +254,18 @@ public class Fenetre extends JFrame{
         this.nomJoueur.setText(av.getNom());
         this.classeJoueur.setText(av.getType());
     }
+
+    void enable(int x, int y) {
+        this.boutonsCases[y][x].setEnabled(true);
+    }
+
+    void disableBoutons() {
+        for(JButton[] js: this.boutonsCases){
+            for(JButton j : js){
+                if(j != null)
+                   j.setEnabled(false);
+            }
+        }
+    }
     
 }
