@@ -358,7 +358,10 @@ public class Controleur implements Observateur {
     }
     
     private void traiterBoutonDonnerCarte() {
-        
+        Tuile tuileCourante = avCourant.getTuile();
+        ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
+        ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
+        IHMBonne.choisirDestinataireEtCarte(aventuriersMemeTuile, cartesPossedees);
     }
     
     //Tirer 2 cartes trésor à la fin du tour
