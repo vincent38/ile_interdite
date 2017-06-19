@@ -19,6 +19,7 @@ import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
 import model.carte.CarteTresor;
+import model.carte.DeckCartesInondation;
 import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHM;
@@ -39,6 +40,7 @@ public class Controleur implements Observateur {
     public ArrayList<Tresor> tresors = new ArrayList<>();
     
     public DeckCartesTresor cartesTresor = new DeckCartesTresor();
+    public DeckCartesInondation cartesInondation = new DeckCartesInondation();
     
     public int cranMarqueurNiveau;
 
@@ -74,7 +76,7 @@ public class Controleur implements Observateur {
         avCourant = joueurs.get(0);
 
         //Affichage des informations
-        this.vueAventurier = new IHMBonne();
+        this.vueAventurier = new IHMBonne(this, joueurs.get(0), 3);
         //this.vueAventurier.setObservateur(this);
         //vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         //this.vueAventurier.setColor(avCourant.getColor());
@@ -105,6 +107,27 @@ public class Controleur implements Observateur {
         //Définition du marqueur de niveau
         cranMarqueurNiveau = 0;
 
+        //Distribution initiale des cartes
+        for (Aventurier a : joueurs) {
+            for (int i = 1; i <= 2; i++) {
+                CarteTresor c = cartesTresor.tirerCarte();
+                if ("montee_eaux".equals(c.getTypeCarte())) {
+                    //Sélectionner une autre carte et replacer la carte précédente
+                    CarteTresor d = cartesTresor.tirerCarte();
+                    while ("montee_eaux".equals(d.getTypeCarte())) {
+                        CarteTresor e = cartesTresor.tirerCarte();
+                        cartesTresor.replacerDansLaPile(d);
+                        d = e;
+                    } 
+                    a.ajouterCarte(d);
+                    cartesTresor.replacerDansLaPile(c);
+                    cartesTresor.shuffleCards();
+                } else {
+                    //Ajout de la carte au deck du joueur
+                    a.ajouterCarte(c);
+                }
+            }
+        }
     }
 
     /**
@@ -233,6 +256,7 @@ public class Controleur implements Observateur {
      */
     public void finTour() {
         doubleAssechement = false;
+        tirerCartesTresor();
         joueurSuivant();
     }
 
@@ -342,6 +366,7 @@ public class Controleur implements Observateur {
             CarteTresor c = cartesTresor.tirerCarte();
             if ("montee_eaux".equals(c.getTypeCarte())) {
                 //Actions montée des eaux
+                cranMarqueurNiveau++;
                 cartesTresor.defausserCarte(c);
             } else {
                 //Ajout de la carte au deck du joueur

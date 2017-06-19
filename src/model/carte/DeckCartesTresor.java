@@ -33,14 +33,13 @@ public class DeckCartesTresor {
         for (int i = 1; i <= 2; i++){
             deckCartes.add(new CarteBonus("Sacs de Sable"));
         }
-        for (int i = 1; i <= 3; i++){
+        for (int i = 1; i <= 2; i++){
             deckCartes.add(new CarteMonteeDesEaux());
         }
         shuffleCards();
-        dispArray(deckCartes);
     }
     
-    private void shuffleCards() {
+    public void shuffleCards() {
         //if (Parameters.ALEAS) {
             Collections.shuffle(deckCartes);
             Collections.shuffle(deckCartes);
@@ -68,6 +67,10 @@ public class DeckCartesTresor {
     
     public void defausserCarte(CarteTresor c){
         defausseCartes.add(0, c);
+    }
+    
+    public void replacerDansLaPile(CarteTresor c){
+        deckCartes.add(0, c);
     }
 }
 
