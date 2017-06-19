@@ -106,5 +106,10 @@ public class IHMBonne extends Observable{
         return(this.g);
     }
 
+
+    public void setEtatTuile(int etatTuile, int x, int y) {
+        this.fenetre.setEtatTuile(etatTuile, x, y);
+    }
+
     
 }

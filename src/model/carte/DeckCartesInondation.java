@@ -39,7 +39,7 @@ public class DeckCartesInondation {
         "La Tour du Guet",
         "Le Jardin des Murmures"};
     
-    private ArrayList<CarteInondation> deckCartes;
+    public ArrayList<CarteInondation> deckCartes;
     private ArrayList<CarteInondation> defausseCartes;
 
     public DeckCartesInondation() {
