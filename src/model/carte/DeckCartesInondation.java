@@ -74,6 +74,7 @@ public class DeckCartesInondation {
     }
     
     public CarteInondation tirerCarte(){
+        refillDeck();
         return deckCartes.remove(0);
     }
     
@@ -92,5 +93,13 @@ public class DeckCartesInondation {
         deckCartes.clear();
         defausseCartes.clear();
         deckCartes.addAll(buffer);
+    }
+    
+    private void refillDeck(){
+        if (deckCartes.isEmpty()) {
+            deckCartes.addAll(defausseCartes);
+            defausseCartes.clear();
+            shuffleCards();
+        }
     }
 }

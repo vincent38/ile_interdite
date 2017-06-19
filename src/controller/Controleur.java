@@ -418,7 +418,9 @@ public class Controleur implements Observer {
             Tuile t = grille.getTuile(c.getCaseConcernee());
             t.mouillerTuile();
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
-            cartesInondation.defausserCarte(c);
+            if (t.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE){
+                cartesInondation.defausserCarte(c);
+            }
         }
     }
 
@@ -451,7 +453,7 @@ public class Controleur implements Observer {
     
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        while (avCourant.getCartes().size() > 4){
+        while (avCourant.getCartes().size() > 5){
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size()-1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
