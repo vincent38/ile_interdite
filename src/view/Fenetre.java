@@ -6,7 +6,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -236,11 +235,24 @@ public class Fenetre extends JFrame{
                     this.boutonsCases[j][i].setText(g.getTuile(i,j).getNom());
                 }
             }
-            //afficher l'aventurier en x, 
-            
-            
+            //afficher l'aventurier en x,
         }
         
+    }
+
+    void deplacement(Aventurier av, int xa, int ya, int xn, int yn) {
+        this.boutonsCases[ya][xa].setBackground(null);
+        this.boutonsCases[yn][xn].setBackground(av.getColor());
+        
+    }
+
+    void setNbAct(int i) {
+        this.nbAct.setText(""+i);
+    }
+
+    void setAventurier(Aventurier av) {
+        this.nomJoueur.setText(av.getNom());
+        this.classeJoueur.setText(av.getType());
     }
     
 }

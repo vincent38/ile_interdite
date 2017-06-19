@@ -25,6 +25,7 @@ import model.Grille;
 import model.Message;
 import model.TypeMessage;
 import model.Observateur;
+import model.Tuile;
 import model.aventurier.Aventurier;
 
 /**
@@ -35,9 +36,12 @@ public class IHMBonne extends Observable{
     private Fenetre fenetre;
     private Observateur observateur;
     private ArrayList<Aventurier> aventuriers;
+    private Grille g;
     
     
     public IHMBonne(Aventurier firstJoueur, int nbActRestantes, Grille g, ArrayList<Aventurier> aventuriers){
+        this.g = g;
+        this.aventuriers = aventuriers;
         fenetre = new Fenetre(this, firstJoueur, nbActRestantes);
         fenetre.afficherAventuriers(aventuriers, g);
         
@@ -74,6 +78,19 @@ public class IHMBonne extends Observable{
         this.setChanged();
         this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TERMINER_TOUR));
         this.clearChanged();
+    }
+
+    public void deplacement(Aventurier av, int xa, int ya, int xn, int yn) {
+        fenetre.deplacement(av, xa, ya, xn, yn);
+    }
+
+    public void setNbAct(int i) {
+        System.out.println("*");
+        fenetre.setNbAct(i);
+    }
+
+    public void setAventurier(Aventurier av) {
+        this.fenetre.setAventurier(av);
     }
 
     
