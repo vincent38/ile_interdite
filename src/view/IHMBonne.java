@@ -101,6 +101,10 @@ public class IHMBonne extends Observable{
     public void disableBoutons() {
         this.fenetre.disableBoutons();
     }
+    
+    public Grille getGrille(){
+        return(this.g);
+    }
 
     
 }

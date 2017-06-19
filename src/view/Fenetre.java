@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -120,6 +121,17 @@ public class Fenetre extends JFrame{
                             }
                         }
                     });
+                    switch(this.ihm.getGrille().getTuile(i, j).getEtatTuile()){
+                        case Tuile.ETAT_TUILE_COULEE:
+                            boutonsCases[j][i].setBackground(Color.BLUE);
+                            break;
+                        case Tuile.ETAT_TUILE_INONDEE:
+                            boutonsCases[j][i].setBackground(Color.YELLOW);
+                            break;
+                        default:
+                            boutonsCases[j][i].setBackground(Color.orange);
+                            break;
+                    }
                 }
                 else{
                     casesPane.add(new JPanel());

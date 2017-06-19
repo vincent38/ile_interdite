@@ -72,15 +72,8 @@ public class Tuile {
         }
     }
     
-    /**
-     * Ultimate megamix 2017 deluxxx edition des 3 précédentes parceque #yolo #RTsiCtrist #Fromage
-     * 11/10 IGN "Best method ever"
-     * 9/10 JVC "Oué c bi1 mé jem trolé ptdr"
-     * 8/8 gr8 b8 m8 would r8 again
-     * @see lolTMort
-     */
     
-    public void setEtatTuile() {
+    public void mouillerTuile() {
         if (etatTuile == ETAT_TUILE_INONDEE) {
             setCoulee();
         } else {

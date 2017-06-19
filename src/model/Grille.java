@@ -350,7 +350,6 @@ public class Grille {
             for (Tuile t2 : this.getTuilesAdjacentesSombreesOuCoulees(t)) {
                 if (!tuilesPassage.contains(t2)) {
                     tuilesPassage.add(t2);
-                    //System.out.println("Tuiles passage plongeur : \nNom : " + t2.getNom() + "\nX : " + t2.getX() + "\nY : " + t2.getY());
                 }
             }
 

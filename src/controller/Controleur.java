@@ -87,8 +87,7 @@ public class Controleur implements Observer {
         avCourant = joueurs.get(0);
 
         //Affichage des informations
-        this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
-        this.vueAventurier.addObserver(this);
+        
         //this.vueAventurier.setObservateur(this);
         //vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         //this.vueAventurier.setColor(avCourant.getColor());
@@ -115,6 +114,9 @@ public class Controleur implements Observer {
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_COULEE);
 
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);
+        
+        this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
+        this.vueAventurier.addObserver(this);
         
         //Définition du marqueur de niveau
         cranMarqueurNiveau = 0;
@@ -351,24 +353,12 @@ public class Controleur implements Observer {
     private void traiterBoutonAller() {
         ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
         for (Tuile t : tuilesPossibles) {
-            /*System.out.println("x : " + t.getX());
-            System.out.println("y : " + t.getY());
-            System.out.println(t.getNom() + '\n');*/
             vueAventurier.enable(t.getX(), t.getY());
+            System.out.println("X : " + t.getX());
+            System.out.println("Y : " + t.getY());
+            System.out.println();
         }
-        //Scanner clavier = new Scanner(System.in);
-        //int xVoulu = clavier.nextInt();
-        //int yVoulu = clavier.nextInt();
-        //Tuile tuileV = grille.getTuile(xVoulu, yVoulu);
-        //if (tuilesPossibles.contains(tuileV)) {
-        //    avCourant.deplacement(tuileV, this.grille);
-        //    this.vueAventurier.deplacement(avCourant, xAncien, yAncien, xVoulu, yVoulu);
-            
-        //System.out.println("x avCourant : " + avCourant.getTuile().getX());
-        //System.out.println("y avCourant : " + avCourant.getTuile().getY());
-        //System.out.println("Actions : " + this.getAction());
-//       vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
-
+        System.out.println();
     }
 
     private void traiterBoutonDonnerCarte() {
@@ -424,7 +414,8 @@ public class Controleur implements Observer {
         for (int i = 1; i <= nbCartes; i++) {
             CarteInondation c = cartesInondation.tirerCarte();
             Tuile t = grille.getTuile(c.getCaseConcernee());
-            t.setEtatTuile();
+            t.mouillerTuile();
+            vueAventurier.mouillerTuile(t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
         }
     }
@@ -448,13 +439,13 @@ public class Controleur implements Observer {
         }
         return 2;
     }
-<<<<<<< HEAD
 
     private void traiterClicCase(int x, int y) {
         if(operationEnCours == OPERATION_DEPLACEMENT){
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             this.ajouterAction();
-=======
+        }
+    }
     
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
@@ -462,7 +453,6 @@ public class Controleur implements Observer {
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size()-1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
->>>>>>> 69db56b10383ed16187ec4020b809e3266218e72
         }
     }
 }
