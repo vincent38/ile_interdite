@@ -257,6 +257,7 @@ public class Controleur implements Observateur {
     public void finTour() {
         doubleAssechement = false;
         tirerCartesTresor();
+        tirerCartesInondation();
         joueurSuivant();
     }
 
@@ -373,5 +374,10 @@ public class Controleur implements Observateur {
                 avCourant.ajouterCarte(c);
             }
         }
+    }
+    
+    //Tirer des cartes inondation
+    private void tirerCartesInondation(){
+        
     }
 }
