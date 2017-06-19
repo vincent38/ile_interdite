@@ -248,7 +248,7 @@ public class Controleur implements Observer {
             } else {
                 afficherInformation("Vous ne pouvez pas assécher cette tuile.");
             }
-//            this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
+            //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         } else {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }

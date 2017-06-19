@@ -106,5 +106,9 @@ public class IHMBonne extends Observable{
         return(this.g);
     }
 
+    public void mouillerTuile(int x, int y) {
+        
+    }
+
     
 }
