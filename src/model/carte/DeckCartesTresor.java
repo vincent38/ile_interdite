@@ -37,7 +37,7 @@ public class DeckCartesTresor {
             deckCartes.add(new CarteMonteeDesEaux());
         }
         shuffleCards();
-        dispArray(deckCartes);
+        //dispArray(deckCartes);
     }
     
     private void shuffleCards() {
