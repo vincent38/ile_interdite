@@ -448,13 +448,13 @@ public class Controleur implements Observer {
         }
         return 2;
     }
-<<<<<<< HEAD
 
     private void traiterClicCase(int x, int y) {
         if(operationEnCours == OPERATION_DEPLACEMENT){
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             this.ajouterAction();
-=======
+        }
+    }
     
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
@@ -462,7 +462,6 @@ public class Controleur implements Observer {
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size()-1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
->>>>>>> 69db56b10383ed16187ec4020b809e3266218e72
         }
     }
 }
