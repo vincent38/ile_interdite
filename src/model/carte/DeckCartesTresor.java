@@ -37,10 +37,13 @@ public class DeckCartesTresor {
             deckCartes.add(new CarteMonteeDesEaux());
         }
         shuffleCards();
+<<<<<<< HEAD
         //dispArray(deckCartes);
+=======
+>>>>>>> da2382a26db5ef09a2b4b0ce30fb5e610163500e
     }
     
-    private void shuffleCards() {
+    public void shuffleCards() {
         //if (Parameters.ALEAS) {
             Collections.shuffle(deckCartes);
             Collections.shuffle(deckCartes);
@@ -68,6 +71,10 @@ public class DeckCartesTresor {
     
     public void defausserCarte(CarteTresor c){
         defausseCartes.add(0, c);
+    }
+    
+    public void replacerDansLaPile(CarteTresor c){
+        deckCartes.add(0, c);
     }
 }
 
