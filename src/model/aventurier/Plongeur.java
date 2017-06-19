@@ -34,6 +34,15 @@ public class Plongeur extends Aventurier {
         else
             return super.getDeplacementsPossibles(g);
     }
+    
+    @Override
+    public void deplacement(Tuile nvTuile, Grille g){
+        if (!super.getDeplacementsPossibles(g).contains(nvTuile)){
+            this.pouvoirDispo = false;
+        }
+        this.tuileCourante.rmAventurier(this);
+        this.setTuile(nvTuile);
+    }
 
     /**
      * Retourne la couleur Noir du plongeur
