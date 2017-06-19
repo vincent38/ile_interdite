@@ -51,6 +51,10 @@ public class DeckCartesInondation {
         }
         
         shuffleCards();
+        
+        for (CarteInondation c : deckCartes){
+            System.out.println(c.getCaseConcernee());
+        }
     }
     
     public void shuffleCards() {

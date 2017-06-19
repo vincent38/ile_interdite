@@ -381,6 +381,7 @@ public class Controleur implements Observer {
                 cartesInondation.shuffleDefausseCards();
                 cartesInondation.fusionDecks();
                 cartesTresor.defausserCarte(c);
+                System.out.println("Montee des eaux !");
             } else {
                 //Ajout de la carte au deck du joueur
                 avCourant.ajouterCarte(c);
@@ -416,6 +417,7 @@ public class Controleur implements Observer {
         int nbCartes = nbCartesInondation();
         for (int i = 1; i <= nbCartes; i++) {
             CarteInondation c = cartesInondation.tirerCarte();
+            System.out.println("Carte tirée : "+c.getCaseConcernee());
             Tuile t = grille.getTuile(c.getCaseConcernee());
             t.mouillerTuile();
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
@@ -452,7 +454,7 @@ public class Controleur implements Observer {
     
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        while (avCourant.getCartes().size() > 5){
+        while (avCourant.getCartes().size() > 4){
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size()-1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
