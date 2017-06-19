@@ -61,4 +61,15 @@ public class DeckCartesInondation {
         //}
     }
     
+    public CarteInondation tirerCarte(){
+        return deckCartes.remove(0);
+    }
+    
+    public void defausserCarte(CarteInondation c){
+        defausseCartes.add(0, c);
+    }
+    
+    public void replacerDansLaPile(CarteInondation c){
+        deckCartes.add(0, c);
+    }
 }

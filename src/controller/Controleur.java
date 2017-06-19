@@ -18,6 +18,7 @@ import model.aventurier.Pilote;
 import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
+import model.carte.CarteInondation;
 import model.carte.CarteTresor;
 import model.carte.DeckCartesInondation;
 import model.carte.DeckCartesTresor;
@@ -381,6 +382,31 @@ public class Controleur implements Observateur {
     
     //Tirer des cartes inondation
     private void tirerCartesInondation(){
-        
+        int nbCartes = nbCartesInondation();
+        for (int i = 1; i <= nbCartes; i++) {
+            CarteInondation c = cartesInondation.tirerCarte();
+            Tuile t = grille.getTuile(c.getCaseConcernee());
+            t.setEtatTuile();
+        }
+    }
+    
+    //Calcul nombre de cartes inondation à tirer en fonction du cran de la règle
+    private int nbCartesInondation(){
+        switch (cranMarqueurNiveau) {
+            case 1:
+            case 2:
+                return 2;
+            case 3:
+            case 4:
+            case 5:
+                return 3;
+            case 6:
+            case 7:
+                return 4;
+            case 8:
+            case 9:
+                return 5;
+        }
+        return 2;
     }
 }
