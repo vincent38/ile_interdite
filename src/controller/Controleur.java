@@ -80,8 +80,8 @@ public class Controleur implements Observer {
         joueurs.add(new Messager(grille.getTuile((int) SPAWN_MESSAGER.getX(), (int) SPAWN_MESSAGER.getY()), "Jul"));
         joueurs.add(new Ingenieur(grille.getTuile((int) SPAWN_INGENIEUR.getX(), (int) SPAWN_INGENIEUR.getY()), "Vincent"));
         joueurs.add(new Plongeur(grille.getTuile((int) SPAWN_PLONGEUR.getX(), (int) SPAWN_PLONGEUR.getY()), "Clement"));
-        joueurs.add(new Pilote(grille.getTuile((int) SPAWN_PILOTE.getX(), (int) SPAWN_PILOTE.getY()), "Et mille"));
-        joueurs.add(new Navigateur(grille.getTuile((int) SPAWN_NAVIGATEUR.getX(), (int) SPAWN_NAVIGATEUR.getY()), "Henrie"));
+        //joueurs.add(new Pilote(grille.getTuile((int) SPAWN_PILOTE.getX(), (int) SPAWN_PILOTE.getY()), "Et mille"));
+        //joueurs.add(new Navigateur(grille.getTuile((int) SPAWN_NAVIGATEUR.getX(), (int) SPAWN_NAVIGATEUR.getY()), "Henrie"));
 
         //Définition de l'aventurier courant
         avCourant = joueurs.get(0);
@@ -291,6 +291,7 @@ public class Controleur implements Observer {
         }
         this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
+        defausse();
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
         //this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
         //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
@@ -384,6 +385,8 @@ public class Controleur implements Observer {
             if ("montee_eaux".equals(c.getTypeCarte())) {
                 //Actions montée des eaux
                 cranMarqueurNiveau++;
+                cartesInondation.shuffleDefausseCards();
+                cartesInondation.fusionDecks();
                 cartesTresor.defausserCarte(c);
             } else {
                 //Ajout de la carte au deck du joueur
@@ -422,6 +425,7 @@ public class Controleur implements Observer {
             CarteInondation c = cartesInondation.tirerCarte();
             Tuile t = grille.getTuile(c.getCaseConcernee());
             t.setEtatTuile();
+            cartesInondation.defausserCarte(c);
         }
     }
 
@@ -444,11 +448,21 @@ public class Controleur implements Observer {
         }
         return 2;
     }
+<<<<<<< HEAD
 
     private void traiterClicCase(int x, int y) {
         if(operationEnCours == OPERATION_DEPLACEMENT){
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             this.ajouterAction();
+=======
+    
+    //Défausse automatique tant que le joueur a trop de cartes
+    private void defausse() {
+        while (avCourant.getCartes().size() > 5){
+            CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size()-1);
+            cartesTresor.defausserCarte(c);
+            System.out.println("Défaussé : une carte");
+>>>>>>> 69db56b10383ed16187ec4020b809e3266218e72
         }
     }
 }
