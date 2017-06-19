@@ -277,6 +277,7 @@ public class Controleur implements Observer {
             avCourant = joueurs.get(getNumJoueur(avCourant) + 1);
         }
         this.action = 0;
+        defausse();
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
         //this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
         //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
@@ -407,6 +408,7 @@ public class Controleur implements Observer {
             CarteInondation c = cartesInondation.tirerCarte();
             Tuile t = grille.getTuile(c.getCaseConcernee());
             t.setEtatTuile();
+            cartesInondation.defausserCarte(c);
         }
     }
 
@@ -428,5 +430,14 @@ public class Controleur implements Observer {
                 return 5;
         }
         return 2;
+    }
+    
+    //Défausse automatique tant que le joueur a trop de cartes
+    private void defausse() {
+        while (avCourant.getCartes().size() > 5){
+            CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size()-1);
+            cartesTresor.defausserCarte(c);
+            System.out.println("Défaussé : une carte");
+        }
     }
 }
