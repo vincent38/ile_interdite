@@ -7,6 +7,7 @@ package model.carte;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import model.TypeTresor;
 import util.Parameters;
 
 /**
@@ -22,10 +23,10 @@ public class DeckCartesTresor {
         deckCartes = new ArrayList<>();
         defausseCartes = new ArrayList<>();
         for (int i = 1; i <= 5; i++){
-            deckCartes.add(new CartePiece("La Pierre sacrée"));
-            deckCartes.add(new CartePiece("La Statue du zéphyr"));
-            deckCartes.add(new CartePiece("Le Cristal ardent"));
-            deckCartes.add(new CartePiece("Le Calice de l'onde"));
+            deckCartes.add(new CartePiece("La Pierre sacrée", TypeTresor.pierreSacree));
+            deckCartes.add(new CartePiece("La Statue du zéphyr", TypeTresor.statueDuZephyr));
+            deckCartes.add(new CartePiece("Le Cristal ardent", TypeTresor.cristalArdent));
+            deckCartes.add(new CartePiece("Le Calice de l'onde", TypeTresor.caliceDeLOnde));
         }
         for (int i = 1; i <= 3; i++){
             deckCartes.add(new CarteBonus("Hélicoptère"));
