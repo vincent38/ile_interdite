@@ -158,4 +158,11 @@ public class Tuile {
         return this.etatTuile;
     }
 
+    public Tresor getTresor() {
+        return tresor;
+    }
+
+    public void setTresor(Tresor tresor) {
+        this.tresor = tresor;
+    }
 }

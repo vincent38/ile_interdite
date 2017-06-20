@@ -7,7 +7,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import model.Grille;
-import model.Observateur;
 import model.Tuile;
 import model.aventurier.Aventurier;
 
@@ -38,6 +37,8 @@ public class Fenetre extends JFrame{
     private JPanel casesPane;
     private JPanel choixActionPane;
     private JPanel joueurPane;
+    private JPanel niveauEauPane;
+    private JPanel cartesEtTresorsPane;
     
     private JPanel[][] cases;
     private JButton[][] boutonsCases;
@@ -224,6 +225,15 @@ public class Fenetre extends JFrame{
         
         
         this.afficherJoueur();
+        
+        this.niveauEauPane = new JPanel(new GridLayout(1,1));
+        this.content.add(niveauEauPane, BorderLayout.EAST);
+        this.niveauEauPane.add(new JLabel("le nivo des o"));
+        
+        this.cartesEtTresorsPane = new JPanel(new GridLayout(2,1));
+        this.content.add(cartesEtTresorsPane, BorderLayout.WEST);
+        this.cartesEtTresorsPane.add(new JLabel("Tresors gagnes"));
+        this.cartesEtTresorsPane.add(new JLabel("Affichage de la main"));
         
         this.setVisible(true);
     }
