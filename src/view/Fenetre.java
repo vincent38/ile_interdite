@@ -350,4 +350,18 @@ public class Fenetre extends JFrame{
         }
     }
     
+    public void disableInteraction(){
+        boutonDeplacer.setEnabled(false);
+        boutonAssecher.setEnabled(false);
+        boutonAutreAction.setEnabled(false);
+        boutonFinTour.setEnabled(false);
+    }
+    
+    public void enableInteraction(){
+        boutonDeplacer.setEnabled(true);
+        boutonAssecher.setEnabled(true);
+        boutonAutreAction.setEnabled(true);
+        boutonFinTour.setEnabled(true);
+    }
+    
 }

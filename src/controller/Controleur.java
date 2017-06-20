@@ -37,11 +37,11 @@ JavaDoc provided
 V0.1
  */
 public class Controleur implements Observer {
-    
+
     public static final int OPERATION_AUCUNE = 0;
     public static final int OPERATION_DEPLACEMENT = 1;
     public static final int OPERATION_ASSECHER = 2;
-    
+
     public ArrayList<Carte> cartes = new ArrayList<>();
     public ArrayList<Aventurier> joueurs = new ArrayList<>();
     public Grille grille;
@@ -65,8 +65,11 @@ public class Controleur implements Observer {
     private static final Point SPAWN_PLONGEUR = new Point(2, 1);
     private static final Point SPAWN_PILOTE = new Point(3, 2);
     private static final Point SPAWN_MESSAGER = new Point(1, 2);
-    
+
     private int operationEnCours = OPERATION_AUCUNE;
+
+    private boolean deplacementObligatoire;
+    public String pktnul = ""; // Sert à afficher pourquoi on a perdu la partie
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -75,7 +78,6 @@ public class Controleur implements Observer {
     public Controleur() {
         //Initialisation de la grille
         this.grille = new Grille();
-        
 
         //Création et placement des joueurs
         joueurs.add(new Explorateur(grille.getTuile((int) SPAWN_EXPLORATEUR.getX(), (int) SPAWN_EXPLORATEUR.getY()), "Jano"));
@@ -89,7 +91,6 @@ public class Controleur implements Observer {
         avCourant = joueurs.get(0);
 
         //Affichage des informations
-        
         //this.vueAventurier.setObservateur(this);
         //vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
         //this.vueAventurier.setColor(avCourant.getColor());
@@ -116,10 +117,9 @@ public class Controleur implements Observer {
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_COULEE);
 
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);*/
-        
         this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
         this.vueAventurier.addObserver(this);
-        
+
         //Définition du marqueur de niveau
         cranMarqueurNiveau = 0;
 
@@ -144,18 +144,17 @@ public class Controleur implements Observer {
                 }
             }
         }
-        
+
         //Tirage des cartes inondation de début de partie
         for (int i = 1; i <= 6; i++) {
             CarteInondation c = cartesInondation.tirerCarte();
-            System.out.println("Carte tirée : "+c.getTuileConcernee());
+            System.out.println("Carte tirée : " + c.getTuileConcernee());
             Tuile t = grille.getTuile(c.getTuileConcernee());
             t.mouillerTuile();
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
         }
-        
-        
+
     }
 
     /**
@@ -165,10 +164,10 @@ public class Controleur implements Observer {
     public void ajouterAction() {
         action += 1;
         if (action == ACTION_NEXT_TOUR) {
-            this.joueurSuivant();
-            
+            finTour();
+
         }
-        this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
+        this.vueAventurier.setNbAct(ACTION_NEXT_TOUR - action);
     }
 
     /**
@@ -240,14 +239,23 @@ public class Controleur implements Observer {
     public void finTour() {
         doubleAssechement = false;
         tirerCartesTresor();
-        
+
         tirerCartesInondation();
         if (gameOver()) {
-            afficherInformation("Perdu lol");
+            afficherInformation("Partie perdue : " + pktnul);
+        } else {
+            joueurSuivant();
+            avCourant.setPouvoirDispo(true);
+            //Si avCourant est sur une tuile inondée, on le déplace d'office
+            if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+                vueAventurier.disableInteraction();
+                deplacementObligatoire = true;
+                this.operationEnCours = OPERATION_DEPLACEMENT;
+                this.traiterBoutonAller();
+                deplacementObligatoire = false;
+            }
+        //}
         }
-        
-        joueurSuivant();
-        avCourant.setPouvoirDispo(true);
     }
 
     /**
@@ -265,6 +273,7 @@ public class Controleur implements Observer {
         this.action = 0;
         this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
         defausse();
+
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
         //this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
         //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
@@ -292,7 +301,6 @@ public class Controleur implements Observer {
         return i;
     }
 
-    
     /**
      * Logique gérant le déplacement d'un aventurier sur la grille
      */
@@ -328,20 +336,49 @@ public class Controleur implements Observer {
         }
     }
 
-    
+    @Override
+    public void update(Observable o, Object arg) {
 
-    private void tirerCartesInondation() {   
+        Message m = (Message) arg;
+        vueAventurier.disableBoutons();
+        switch (m.type) {
+            case CLIC_BTN_ALLER:
+                this.traiterBoutonAller();
+                this.operationEnCours = OPERATION_DEPLACEMENT;
+                break;
+            case CLIC_BTN_ASSECHER:
+                this.traiterAssechement();
+                //assecherTuile();
+                this.operationEnCours = OPERATION_ASSECHER;
+                break;
+            case CLIC_BTN_AUTRE_ACTION:
+                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                break;
+            case CLIC_BTN_TERMINER_TOUR:
+                this.operationEnCours = OPERATION_AUCUNE;
+                vueAventurier.disableBoutons();
+                this.finTour();
+                break;
+            case CLIC_CASE:
+                this.traiterClicCase(m.x, m.y);
+                vueAventurier.enableInteraction();
+                break;
+        }
+
+    }
+
+    private void tirerCartesInondation() {
         int nbCartes = nbCartesInondation();
         for (int i = 1; i <= nbCartes; i++) {
             CarteInondation c = cartesInondation.tirerCarte();
-            System.out.println("Carte tirée : "+c.getTuileConcernee());
+            System.out.println("Carte tirée : " + c.getTuileConcernee());
             Tuile t = grille.getTuile(c.getTuileConcernee());
             t.mouillerTuile();
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
-            if (t.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE){
+            if (t.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE) {
                 cartesInondation.defausserCarte(c);
-            } else if (t.getEtatTuile() == Tuile.ETAT_TUILE_COULEE){
-                
+            } else if (t.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+
             }
         }
     }
@@ -367,47 +404,47 @@ public class Controleur implements Observer {
     }
 
     private void traiterClicCase(int x, int y) {
-        if(operationEnCours == OPERATION_DEPLACEMENT){
+        if (operationEnCours == OPERATION_DEPLACEMENT) {
             this.deplacerAventurierCourant(grille.getTuile(x, y));
-            this.ajouterAction();
-        }else if(operationEnCours == OPERATION_ASSECHER){
+            if (deplacementObligatoire == true) {
+                this.ajouterAction();
+            }
+        } else if (operationEnCours == OPERATION_ASSECHER) {
             this.assecherTuile(x, y);
             this.vueAventurier.actualiseTuiles();
         }
     }
-    
+
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        while (avCourant.getCartes().size() > 5){
-            CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size()-1);
+        while (avCourant.getCartes().size() > 5) {
+            CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
         }
     }
-    
+
     /**
-     * Retourne vrai si :
-     * - l'héliport est coulé
-     * - les deux tuiles d'une même relique est inondée sans qu'un joueur ait déjà récupéré la relique
-     * - une tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se déplacer
-     * - le niveau de l'eau arrive au max
+     * Retourne vrai si : - l'héliport est coulé - les deux tuiles d'une même
+     * relique est inondée sans qu'un joueur ait déjà récupéré la relique - une
+     * tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se
+     * déplacer - le niveau de l'eau arrive au max
      */
     private boolean gameOver() {
-        if(   grille.getTuile("Heliport").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
-           || PierreSacreeMort()
-           || StatueZephyrMort()
-           || CristalArdentMort()
-           || CaliceOndeMort()
-           || AventurierMort()
-           || cranMarqueurNiveau == NIVEAU_EAU_MAX) {
+        if (heliportMort()
+                || pierreSacreeMort()
+                || statueZephyrMort()
+                || cristalArdentMort()
+                || caliceOndeMort()
+                || aventurierMort()
+                || eauMax()) {
             return true;
         }
         return false;
     }
 
-
     private void traiterAssechement() {
-    ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
+        ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
         for (Tuile t : tuilesAssechables) {
             vueAventurier.enable(t.getX(), t.getY());
         }
@@ -445,50 +482,81 @@ public class Controleur implements Observer {
         } else {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
-        
+
     }
-    
-    private boolean PierreSacreeMort() {
-        if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
-             && grille.getTuile("Le Temple du Soleil").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
-             /* et les joueurs n'ont pas le trésor */) {
+
+    private boolean heliportMort() {
+        if (grille.getTuile("Heliport").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+            if (pktnul.equals("")) {
+                pktnul = "L'héliport a coulé";
+            } else {
+                pktnul = pktnul + " ; L'héliport a coulé";
+            }
             return true;
         } else {
             return false;
         }
     }
     
-    private boolean StatueZephyrMort() {
-        if ((   grille.getTuile("Le Jardin des Murmures").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
-             && grille.getTuile("Le Jardin des Hurlements").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
-             /* et les joueurs n'ont pas le trésor */) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    private boolean CristalArdentMort() {
-        if ((   grille.getTuile("La Caverne du Brasier").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
-             && grille.getTuile("La Caverne des Ombres").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
-             /* et les joueurs n'ont pas le trésor */) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    private boolean CaliceOndeMort() {
-        if ((   grille.getTuile("Le Palais de Corail").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
-             && grille.getTuile("Le Palais des Marees").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
-             /* et les joueurs n'ont pas le trésor */) {
+   
+
+    private boolean pierreSacreeMort() {
+        if ((grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
+                && grille.getTuile("Le Temple du Soleil").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
+            if (pktnul.equals("")) {
+                pktnul = "Vous ne pouvez plus obtenir la Pierre Sacrée";
+            } else {
+                pktnul = pktnul + " ; Vous ne pouvez plus obtenir la Pierre Sacrée";
+            }
             return true;
         } else {
             return false;
         }
     }
 
-    private boolean AventurierMort() {
+    private boolean statueZephyrMort() {
+        if ((grille.getTuile("Le Jardin des Murmures").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
+                && grille.getTuile("Le Jardin des Hurlements").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
+            if (pktnul.equals("")) {
+                pktnul = "Vous ne pouvez plus obtenir la Statue du Zéphyr";
+            } else {
+                pktnul = pktnul + " ; Vous ne pouvez plus obtenir la Statue du Zéphyr";
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean cristalArdentMort() {
+        if ((grille.getTuile("La Caverne du Brasier").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
+                && grille.getTuile("La Caverne des Ombres").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
+            if (pktnul.equals("")) {
+                pktnul = "Vous ne pouvez plus obtenir le Cristal Ardent";
+            } else {
+                pktnul = pktnul + " ; Vous ne pouvez plus obtenir le Cristal Ardent";
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean caliceOndeMort() {
+        if ((grille.getTuile("Le Palais de Corail").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
+                && grille.getTuile("Le Palais des Marees").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
+            if (pktnul.equals("")) {
+                pktnul = "Vous ne pouvez plus obtenir le Calice de l'Onde";
+            } else {
+                pktnul = pktnul + " ; Vous ne pouvez plus obtenir le Calice de l'Onde";
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean aventurierMort() {
         boolean mort = false;
         Tuile tuileCourante;
         ArrayList<Tuile> tuilesPossibles = new ArrayList<>();
@@ -498,40 +566,31 @@ public class Controleur implements Observer {
                 tuilesPossibles = a.getDeplacementsPossibles(grille);
                 if (tuilesPossibles.size() == 0) {
                     mort = true;
+                    if (pktnul.equals("")) {
+                        pktnul = "Un aventurier est décédé";
+                    } else {
+                        pktnul = pktnul + " ; Un aventurier est décédé";
+                    }
                 }
             }
         }
         return mort;
     }
     
-    @Override
-    public void update(Observable o, Object arg) {
-        this.doubleAssechement = false;
-        Message m = (Message) arg;
-        vueAventurier.disableBoutons();
-        switch (m.type) {
-            case CLIC_BTN_ALLER:
-                this.traiterBoutonAller();
-                this.operationEnCours = OPERATION_DEPLACEMENT;
-                break;
-            case CLIC_BTN_ASSECHER:
-                this.traiterAssechement();
-                //assecherTuile();
-                this.operationEnCours = OPERATION_ASSECHER;
-                break;
-            case CLIC_BTN_AUTRE_ACTION:
-                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
-                break;
-            case CLIC_BTN_TERMINER_TOUR:
-                this.operationEnCours = OPERATION_AUCUNE;
-                vueAventurier.disableBoutons();
-                this.finTour();
-                break;
-            case CLIC_CASE:
-                this.traiterClicCase(m.x, m.y);
-                break;
-        }
-        
-    }
     
+    
+
+    private boolean eauMax() {
+        if (cranMarqueurNiveau == NIVEAU_EAU_MAX) {
+            if (pktnul.equals("")) {
+                pktnul = "L'île a été submergée";
+            } else {
+                pktnul = pktnul + " ; L'île a été submergée";
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

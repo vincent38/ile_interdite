@@ -111,7 +111,15 @@ public class IHMBonne extends Observable{
     public void setEtatTuile(int etatTuile, int x, int y) {
         this.fenetre.setEtatTuile(etatTuile, x, y);
     }
-
+    
+    public void disableInteraction() {
+        fenetre.disableInteraction();
+    }
+    
+    public void enableInteraction() {
+        fenetre.enableInteraction();
+    }
+    
     public void actualiseTuiles() {
         fenetre.actualiseTuiles(g);
     }
