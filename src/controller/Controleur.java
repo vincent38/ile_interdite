@@ -229,7 +229,7 @@ public class Controleur implements Observer {
         this.vueAventurier.actualiseAventuriers();
         this.vueAventurier.disableBoutons();
         this.operationEnCours = OPERATION_AUCUNE;
-        this.ajouterAction();
+        //this.ajouterAction();
     }
 
     /**
@@ -251,7 +251,6 @@ public class Controleur implements Observer {
                 deplacementObligatoire = true;
                 this.operationEnCours = OPERATION_DEPLACEMENT;
                 this.traiterBoutonAller();
-                deplacementObligatoire = false;
             }
         //}
         }
@@ -405,8 +404,10 @@ public class Controleur implements Observer {
     private void traiterClicCase(int x, int y) {
         if (operationEnCours == OPERATION_DEPLACEMENT) {
             this.deplacerAventurierCourant(grille.getTuile(x, y));
-            if (deplacementObligatoire == true) {
+            if (deplacementObligatoire == false) {
                 this.ajouterAction();
+            } else {
+                deplacementObligatoire = false;
             }
         } else if (operationEnCours == OPERATION_ASSECHER) {
             this.assecherTuile(x, y);
