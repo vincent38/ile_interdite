@@ -1,6 +1,6 @@
 package model;
 
-public enum typeTresor {
+public enum TypeTresor {
 	statueDuZephyr, 
 	cristalArdent, 
 	caliceDeLOnde, 
