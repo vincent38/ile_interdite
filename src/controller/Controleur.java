@@ -368,11 +368,7 @@ public class Controleur implements Observer {
         ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
         for (Tuile t : tuilesPossibles) {
             vueAventurier.enable(t.getX(), t.getY());
-            System.out.println("X : " + t.getX());
-            System.out.println("Y : " + t.getY());
-            System.out.println();
         }
-        System.out.println();
     }
 
     private void traiterBoutonDonnerCarte() {
@@ -409,7 +405,8 @@ public class Controleur implements Observer {
                 this.operationEnCours = OPERATION_DEPLACEMENT;
                 break;
             case CLIC_BTN_ASSECHER:
-                assecherTuile();
+                this.traiterAssechement();
+                //assecherTuile();
                 this.operationEnCours = OPERATION_ASSECHER;
                 break;
             case CLIC_BTN_AUTRE_ACTION:
@@ -466,6 +463,8 @@ public class Controleur implements Observer {
         if(operationEnCours == OPERATION_DEPLACEMENT){
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             this.ajouterAction();
+        }else if(operationEnCours == OPERATION_ASSECHER){
+            this.assecherTuile(x, y);
         }
     }
     
@@ -480,13 +479,91 @@ public class Controleur implements Observer {
     
     /**
      * Retourne vrai si :
-     * - l'héliport est inondé
-     * - toutes les tuiles d'une même relique est inondée sans qu'un joueur ait déjà récupéré la relique
+     * - l'héliport est coulé
+     * - les deux tuiles d'une même relique est inondée sans qu'un joueur ait déjà récupéré la relique
      * - une tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se déplacer
      * - le niveau de l'eau arrive au max
      */
     private boolean gameOver() {
-        
+        if(   grille.getTuile("Heliport").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
+           || PierreSacreeMort()
+           || StatueZephyrMort()
+           || CristalArdentMort()
+           || CaliceOndeMort()
+           || AventurierMort()
+           || cranMarqueurNiveau == NIVEAU_EAU_MAX) {
+            return true;
+        }
         return false;
     }
+
+
+    private void traiterAssechement() {
+    ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
+        for (Tuile t : tuilesAssechables) {
+            vueAventurier.enable(t.getX(), t.getY());
+        }
+    }
+
+    private void assecherTuile(int x, int y) {
+        this.grille.getTuile(x, y).setAssechee();
+    }
+
+    
+    private boolean PierreSacreeMort() {
+        if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
+             && grille.getTuile("Le Temple du Soleil").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
+             /* et les joueurs n'ont pas le trésor */) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean StatueZephyrMort() {
+        if ((   grille.getTuile("Le Jardin des Murmures").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
+             && grille.getTuile("Le Jardin des Hurlements").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
+             /* et les joueurs n'ont pas le trésor */) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean CristalArdentMort() {
+        if ((   grille.getTuile("La Caverne du Brasier").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
+             && grille.getTuile("La Caverne des Ombres").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
+             /* et les joueurs n'ont pas le trésor */) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean CaliceOndeMort() {
+        if ((   grille.getTuile("Le Palais de Corail").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
+             && grille.getTuile("Le Palais des Marees").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
+             /* et les joueurs n'ont pas le trésor */) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean AventurierMort() {
+        boolean mort = false;
+        Tuile tuileCourante;
+        ArrayList<Tuile> tuilesPossibles = new ArrayList<>();
+        for (Aventurier a : joueurs) {
+            tuileCourante = a.getTuile();
+            if (tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+                tuilesPossibles = a.getDeplacementsPossibles(grille);
+                if (tuilesPossibles.size() == 0) {
+                    mort = true;
+                }
+            }
+        }
+        return mort;
+    }
+    
 }

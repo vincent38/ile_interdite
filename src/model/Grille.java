@@ -70,6 +70,10 @@ public class Grille {
             tuiles.get(i).setNom(NOMS_TUILES[i]);
         }
     }
+    
+    public int estCoulee(Tuile t) {
+        return t.getEtatTuile();
+    }
 
         
     /*
