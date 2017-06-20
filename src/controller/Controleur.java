@@ -479,15 +479,24 @@ public class Controleur implements Observer {
     
     /**
      * Retourne vrai si :
-     * - l'héliport est inondé
-     * - toutes les tuiles d'une même relique est inondée sans qu'un joueur ait déjà récupéré la relique
+     * - l'héliport est coulé
+     * - les deux tuiles d'une même relique est inondée sans qu'un joueur ait déjà récupéré la relique
      * - une tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se déplacer
      * - le niveau de l'eau arrive au max
      */
     private boolean gameOver() {
-        
+        if(   grille.getTuile("Heliport").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
+           || PierreSacreeMort()
+           || StatueZephyrMort()
+           || CristalArdentMort()
+           || CaliceOndeMort()
+           || AventurierMort()
+           || cranMarqueurNiveau == NIVEAU_EAU_MAX) {
+            return true;
+        }
         return false;
     }
+<<<<<<< HEAD
 
     private void traiterAssechement() {
     ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
@@ -499,4 +508,63 @@ public class Controleur implements Observer {
     private void assecherTuile(int x, int y) {
         this.grille.getTuile(x, y).setAssechee();
     }
+=======
+    
+    private boolean PierreSacreeMort() {
+        if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
+             && grille.getTuile("Le Temple du Soleil").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
+             /* et les joueurs n'ont pas le trésor */) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean StatueZephyrMort() {
+        if ((   grille.getTuile("Le Jardin des Murmures").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
+             && grille.getTuile("Le Jardin des Hurlements").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
+             /* et les joueurs n'ont pas le trésor */) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean CristalArdentMort() {
+        if ((   grille.getTuile("La Caverne du Brasier").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
+             && grille.getTuile("La Caverne des Ombres").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
+             /* et les joueurs n'ont pas le trésor */) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean CaliceOndeMort() {
+        if ((   grille.getTuile("Le Palais de Corail").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
+             && grille.getTuile("Le Palais des Marees").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
+             /* et les joueurs n'ont pas le trésor */) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean AventurierMort() {
+        boolean mort = false;
+        Tuile tuileCourante;
+        ArrayList<Tuile> tuilesPossibles = new ArrayList<>();
+        for (Aventurier a : joueurs) {
+            tuileCourante = a.getTuile();
+            if (tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+                tuilesPossibles = a.getDeplacementsPossibles(grille);
+                if (tuilesPossibles.size() == 0) {
+                    mort = true;
+                }
+            }
+        }
+        return mort;
+    }
+    
+>>>>>>> b3e41d8dff700918563467fdcedf04881275d34b
 }
