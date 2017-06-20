@@ -148,7 +148,7 @@ public class Fenetre extends JFrame{
                             boutonsCases[j][i].setBackground(new Color(30, 127, 203));
                             break;
                         default:
-                            boutonsCases[j][i].setBackground(new Color(223, 109, 20));
+                            boutonsCases[j][i].setBackground(new Color(240, 195, 0));
                             break;
                     }
                 }
@@ -310,7 +310,7 @@ public class Fenetre extends JFrame{
                 this.boutonsCases[y][x].setBackground(new Color(30, 127, 203));
                 break;
             default:
-                this.boutonsCases[y][x].setBackground(new Color(223, 109, 20));
+                this.boutonsCases[y][x].setBackground(new Color(240, 195, 0));
                 break;
         }
         
