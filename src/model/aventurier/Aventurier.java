@@ -184,6 +184,14 @@ public abstract class Aventurier {
         this.pouvoirDispo = true;
     }
 
+    public ArrayList<Tresor> getTresorsObtenus() {
+        return tresorsObtenus;
+    }
+
+    public void addTresorsObtenus(Tresor tresorObtenu) {
+        tresorsObtenus.add(tresorObtenu);
+    }
+    
     public void retirerCarte(CarteTresor carteASupprimer) {
         this.cartes.remove(carteASupprimer);
     }
@@ -191,6 +199,8 @@ public abstract class Aventurier {
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
+    
+    
     
 }
 

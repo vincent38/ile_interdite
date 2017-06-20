@@ -165,4 +165,8 @@ public class Tuile {
     public void setTresor(Tresor tresor) {
         this.tresor = tresor;
     }
+    
+    public void wipeTresor(){
+        this.tresor = null;
+    }
 }
