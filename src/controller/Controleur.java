@@ -368,11 +368,7 @@ public class Controleur implements Observer {
         ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
         for (Tuile t : tuilesPossibles) {
             vueAventurier.enable(t.getX(), t.getY());
-            System.out.println("X : " + t.getX());
-            System.out.println("Y : " + t.getY());
-            System.out.println();
         }
-        System.out.println();
     }
 
     private void traiterBoutonDonnerCarte() {
@@ -409,7 +405,8 @@ public class Controleur implements Observer {
                 this.operationEnCours = OPERATION_DEPLACEMENT;
                 break;
             case CLIC_BTN_ASSECHER:
-                assecherTuile();
+                this.traiterAssechement();
+                //assecherTuile();
                 this.operationEnCours = OPERATION_ASSECHER;
                 break;
             case CLIC_BTN_AUTRE_ACTION:
@@ -466,6 +463,8 @@ public class Controleur implements Observer {
         if(operationEnCours == OPERATION_DEPLACEMENT){
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             this.ajouterAction();
+        }else if(operationEnCours == OPERATION_ASSECHER){
+            this.assecherTuile(x, y);
         }
     }
     
@@ -488,5 +487,16 @@ public class Controleur implements Observer {
     private boolean gameOver() {
         
         return false;
+    }
+
+    private void traiterAssechement() {
+    ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
+        for (Tuile t : tuilesAssechables) {
+            vueAventurier.enable(t.getX(), t.getY());
+        }
+    }
+
+    private void assecherTuile(int x, int y) {
+        this.grille.getTuile(x, y).setAssechee();
     }
 }
