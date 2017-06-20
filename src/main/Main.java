@@ -6,6 +6,7 @@
 package main;
 
 import controller.Controleur;
+import java.util.Scanner;
 
 /**
  *

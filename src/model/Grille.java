@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import model.aventurier.Aventurier;
 
 public class Grille {
 
@@ -414,5 +415,6 @@ public class Grille {
         }
         return r;
     }
+
 
 }

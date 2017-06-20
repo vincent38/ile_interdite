@@ -192,6 +192,10 @@ public abstract class Aventurier {
         tresorsObtenus.add(tresorObtenu);
     }
     
+    public void retirerCarte(CarteTresor carteASupprimer) {
+        this.cartes.remove(carteASupprimer);
+    }
+    
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
