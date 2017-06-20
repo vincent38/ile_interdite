@@ -51,12 +51,13 @@ public class Controleur implements Observer {
     public DeckCartesInondation cartesInondation = new DeckCartesInondation();
 
     public int cranMarqueurNiveau;
-    public int banane;
+    private static final int NIVEAU_EAU_MAX = 10;
 
     public IHMBonne vueAventurier;
     public Aventurier avCourant;
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
+    public static final int ACTION_NEXT_TOUR_NAVIGATEUR = 4;
     private boolean doubleAssechement = false;
     private static final Point SPAWN_EXPLORATEUR = new Point(4, 2);
     private static final Point SPAWN_NAVIGATEUR = new Point(3, 1);
@@ -93,7 +94,7 @@ public class Controleur implements Observer {
         //this.vueAventurier.setColor(avCourant.getColor());
         //this.vueAventurier.setFontColor(avCourant.getFontColor());
         //Définition des tuiles inondées et coulées en dur
-        grille.setTuile(3, 0, Tuile.ETAT_TUILE_INONDEE);
+        /*grille.setTuile(3, 0, Tuile.ETAT_TUILE_INONDEE);
 
         grille.setTuile(2, 2, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(2, 2, Tuile.ETAT_TUILE_COULEE);
@@ -113,7 +114,7 @@ public class Controleur implements Observer {
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_COULEE);
 
-        grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);*/
         
         this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
         this.vueAventurier.addObserver(this);
@@ -141,6 +142,16 @@ public class Controleur implements Observer {
                     a.ajouterCarte(c);
                 }
             }
+        }
+        
+        //Tirage des cartes inondation de début de partie
+        for (int i = 1; i <= 6; i++) {
+            CarteInondation c = cartesInondation.tirerCarte();
+            System.out.println("Carte tirée : "+c.getTuileConcernee());
+            Tuile t = grille.getTuile(c.getTuileConcernee());
+            t.mouillerTuile();
+            vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
+            cartesInondation.defausserCarte(c);
         }
     }
 
@@ -425,6 +436,8 @@ public class Controleur implements Observer {
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             if (t.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE){
                 cartesInondation.defausserCarte(c);
+            } else if (t.getEtatTuile() == Tuile.ETAT_TUILE_COULEE){
+                
             }
         }
     }
@@ -463,5 +476,17 @@ public class Controleur implements Observer {
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
         }
+    }
+    
+    /**
+     * Retourne vrai si :
+     * - l'héliport est inondé
+     * - toutes les tuiles d'une même relique est inondée sans qu'un joueur ait déjà récupéré la relique
+     * - une tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se déplacer
+     * - le niveau de l'eau arrive au max
+     */
+    private boolean gameOver() {
+        
+        return false;
     }
 }
