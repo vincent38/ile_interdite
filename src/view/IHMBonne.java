@@ -119,4 +119,8 @@ public class IHMBonne extends Observable{
     public void enableInteraction() {
         fenetre.enableInteraction();
     }
+    
+    public void actualiseTuiles() {
+        fenetre.actualiseTuiles(g);
+    }
 }
