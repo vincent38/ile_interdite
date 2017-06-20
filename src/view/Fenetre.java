@@ -69,7 +69,7 @@ public class Fenetre extends JFrame{
         
         this.setSize(500,500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setAlwaysOnTop(true);
+       // this.setAlwaysOnTop(true);
         this.setLocationRelativeTo(null);
         
         content = new JPanel();
