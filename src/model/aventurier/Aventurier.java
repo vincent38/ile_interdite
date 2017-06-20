@@ -149,6 +149,8 @@ public abstract class Aventurier {
         return grille.getTuilesAdjacentes(this.tuileCourante);
     }
     
+    
+    
     /**
      * Retourne le nom de l'aventurier
      * @return 

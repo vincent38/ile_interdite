@@ -292,6 +292,9 @@ public class Controleur implements Observer {
         tirerCartesTresor();
         
         tirerCartesInondation();
+        if (gameOver()) {
+            afficherInformation("Perdu lol");
+        }
         
         joueurSuivant();
         avCourant.setPouvoirDispo(true);
@@ -478,6 +481,10 @@ public class Controleur implements Observer {
         }
         return false;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c7823e2e505eac4789f8b5812883561c12debf5
 
     private void traiterAssechement() {
     ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
@@ -520,6 +527,10 @@ public class Controleur implements Observer {
         }
         
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c7823e2e505eac4789f8b5812883561c12debf5
     
     private boolean PierreSacreeMort() {
         if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
