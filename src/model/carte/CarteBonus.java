@@ -17,5 +17,5 @@ public class CarteBonus extends CarteTresor {
         this.pouvoir = pouvoir;
     }
     
-    
+    //sacs de sable : n'importe quelle tuile sur plateau
 }

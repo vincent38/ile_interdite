@@ -44,6 +44,9 @@ public class Grille {
      */
     public Grille() {
         //remainingTuilesNames();
+        
+        //Définition de la grille
+        
         for (int i = 2; i <= 3; i++) {
             tuiles.add(new Tuile(i, 0));
         }
@@ -66,16 +69,52 @@ public class Grille {
             tuiles.add(new Tuile(i, 5));
         }
 
+        //Définition nom des tuiles
+        
         for (int i = 0; i < tuiles.size(); i++) {
             tuiles.get(i).setNom(NOMS_TUILES[i]);
         }
+        
+        //Ajout des trésors aux tuiles
+        for (Tuile t : getTuiles()) {
+            if (t.getNom().equals("Le Temple de La Lune")
+                || t.getNom().equals("Le Temple du Soleil")) {
+                Tresor tr = new Tresor();
+                tr.typeTresor = TypeTresor.pierreSacree;
+                t.setTresor(tr);
+            }
+            if (t.getNom().equals("Le Jardin des Murmures")
+                || t.getNom().equals("Le Jardin des Hurlements")) {
+                Tresor tr = new Tresor();
+                tr.typeTresor = TypeTresor.statueDuZephyr;
+                t.setTresor(tr);
+            }
+            if (t.getNom().equals("La Caverne du Brasier")
+                || t.getNom().equals("La Caverne des Ombres")) {
+                Tresor tr = new Tresor();
+                tr.typeTresor = TypeTresor.cristalArdent;
+                t.setTresor(tr);
+            }
+            if (t.getNom().equals("Le Palais de Corail")
+                || t.getNom().equals("Le Palais des Marees")) {
+                Tresor tr = new Tresor();
+                tr.typeTresor = TypeTresor.caliceDeLOnde;
+                t.setTresor(tr);
+            }
+            
+        }
+        
     }
     
     public int estCoulee(Tuile t) {
         return t.getEtatTuile();
     }
 
-        
+       
+    private ArrayList<Tuile> getTuiles(){
+        return tuiles;
+    }
+    
     /*
      * @deprecated It is not recommended to call this function for now. Please wait for the release of a newer version of this method.
      * Inutile dans cette configuration : vérifie quelles tuiles ne sont pas encore placées dans le jeu
