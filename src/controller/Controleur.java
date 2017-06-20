@@ -51,6 +51,7 @@ public class Controleur implements Observer {
     public DeckCartesInondation cartesInondation = new DeckCartesInondation();
 
     public int cranMarqueurNiveau;
+    private static final int NIVEAU_EAU_MAX = 10;
 
     public IHMBonne vueAventurier;
     public Aventurier avCourant;
@@ -463,5 +464,17 @@ public class Controleur implements Observer {
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
         }
+    }
+    
+    /**
+     * Retourne vrai si :
+     * - l'héliport est inondé
+     * - toutes les tuiles d'une même relique est inondée sans qu'un joueur ait déjà récupéré la relique
+     * - une tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se déplacer
+     * - le niveau de l'eau arrive au max
+     */
+    private boolean gameOver() {
+        
+        return false;
     }
 }
