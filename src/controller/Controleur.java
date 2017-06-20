@@ -41,6 +41,7 @@ public class Controleur implements Observer {
     public static final int OPERATION_AUCUNE = 0;
     public static final int OPERATION_DEPLACEMENT = 1;
     public static final int OPERATION_ASSECHER = 2;
+    public static final int OPERATION_DONNER_CARTE = 3;
 
     public ArrayList<Carte> cartes = new ArrayList<>();
     public ArrayList<Aventurier> joueurs = new ArrayList<>();
@@ -357,6 +358,10 @@ public class Controleur implements Observer {
                 this.operationEnCours = OPERATION_AUCUNE;
                 vueAventurier.disableBoutons();
                 this.finTour();
+                break;
+            case CLIC_BTN_DONNER_CARTE:
+                this.operationEnCours = OPERATION_DONNER_CARTE;
+                // Afficher fenêtre choix joueur et cartes
                 break;
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);
