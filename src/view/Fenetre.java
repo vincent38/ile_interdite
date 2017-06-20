@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -51,13 +52,17 @@ public class Fenetre extends JFrame{
     
     private int nbActRestantes;
     
+    private HashMap<Aventurier, JPanel> paneAventuriers;
+    
     
     
 
-    Fenetre(IHMBonne ihm, Aventurier firstJoueur, int nbActRestantes) {
+    Fenetre(IHMBonne ihm, Aventurier firstJoueur, int nbActRestantes, ArrayList<Aventurier> aventuriers) {
         super("L'Île interdite");
         this.ihm = ihm;
         
+        
+        this.initAventuriers(aventuriers);
         this.joueur = firstJoueur;
         
         this.setSize(500,500);
@@ -104,8 +109,8 @@ public class Fenetre extends JFrame{
             for(int j = 0; j < 6; j++){
                 if (cases[i][j] != null){
                     casesPane.add(cases[i][j]);
-                    cases[i][j].setLayout(new GridLayout(1,1));
-                    cases[i][j].add(boutonsCases[i][j]);
+                    cases[i][j].setLayout(new BorderLayout());
+                    cases[i][j].add(boutonsCases[i][j], BorderLayout.CENTER);
                     
                     
                     boutonsCases[i][j].setEnabled(false);
@@ -203,6 +208,7 @@ public class Fenetre extends JFrame{
         nbAct.setHorizontalAlignment(SwingConstants.CENTER);
         
         
+        
         this.afficherJoueur();
         
         this.setVisible(true);
@@ -235,26 +241,28 @@ public class Fenetre extends JFrame{
         nbAct.setText("" + nbActRestantes);
     }
 
-    void afficherAventuriers(ArrayList<Aventurier> aventuriers, Grille g) {
-        for(Aventurier a : aventuriers){
+    void afficherAventuriers(Grille g) {
+        for(Aventurier a : paneAventuriers.keySet()){
             Tuile t = a.getTuile();
             for(int i = 0; i <= 6; i++){
                 for(int j = 0; j <= 6; j++){
                     if (t == g.getTuile(i, j)){
-                        this.boutonsCases[j][i].setBackground(a.getColor());
+                        this.cases[j][i].add(paneAventuriers.get(a), BorderLayout.NORTH);
                     }
                     if(g.getTuile(i,j) != null)
                     this.boutonsCases[j][i].setText(g.getTuile(i,j).getNom());
                 }
             }
-            //afficher l'aventurier en x,
         }
         
     }
 
-    void deplacement(Aventurier av, int xa, int ya, int xn, int yn) {
-        this.setEtatTuile(this.ihm.getGrille().getTuile(xa, ya).getEtatTuile(), xa, ya);
-        this.boutonsCases[yn][xn].setBackground(av.getColor());
+    void actualiseAventuriers(Grille g) {
+        this.rmAventuriers();
+        this.afficherAventuriers(g);
+        
+        /*this.setEtatTuile(this.ihm.getGrille().getTuile(xa, ya).getEtatTuile(), xa, ya);
+        this.boutonsCases[yn][xn].setBackground(av.getColor());*/
         
     }
 
@@ -293,7 +301,32 @@ public class Fenetre extends JFrame{
                 this.boutonsCases[y][x].setBackground(Color.ORANGE);
                 break;
         }
+        if(this.ihm.getGrille().getTuile(x, y).getAventuriers().size() > 0){
+            this.boutonsCases[y][x].setBackground(this.ihm.getGrille().getTuile(x, y).getAventuriers().get(0).getColor());
+        }
         
+    }
+
+    private void initAventuriers(ArrayList<Aventurier> aventuriers) {
+        this.paneAventuriers = new HashMap();
+        for (Aventurier a : aventuriers){
+            JPanel j = new JPanel();
+            j.setBackground(a.getColor());
+            this.paneAventuriers.put(a, j);
+        }
+    }
+
+    private void rmAventuriers() {
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 6; j++){
+                for (JPanel k : paneAventuriers.values()){
+                    if (cases[j][i] != null){
+                        cases[j][i].remove(k);
+                    }
+                }
+            }
+            
+        }
     }
     
 }

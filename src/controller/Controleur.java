@@ -51,12 +51,13 @@ public class Controleur implements Observer {
     public DeckCartesInondation cartesInondation = new DeckCartesInondation();
 
     public int cranMarqueurNiveau;
-    public int banane;
+    private static final int NIVEAU_EAU_MAX = 10;
 
     public IHMBonne vueAventurier;
     public Aventurier avCourant;
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
+    public static final int ACTION_NEXT_TOUR_NAVIGATEUR = 4;
     private boolean doubleAssechement = false;
     private static final Point SPAWN_EXPLORATEUR = new Point(4, 2);
     private static final Point SPAWN_NAVIGATEUR = new Point(3, 1);
@@ -275,7 +276,7 @@ public class Controleur implements Observer {
         int xAncien = avCourant.getTuile().getX();
         int yAncien = avCourant.getTuile().getY();
         avCourant.deplacement(nvTuile, this.grille);
-        this.vueAventurier.deplacement(avCourant, xAncien, yAncien, nvTuile.getX(), nvTuile.getY());
+        this.vueAventurier.actualiseAventuriers();
         this.vueAventurier.disableBoutons();
         this.operationEnCours = OPERATION_AUCUNE;
     }
@@ -415,7 +416,9 @@ public class Controleur implements Observer {
                 afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 break;
             case CLIC_BTN_TERMINER_TOUR:
-                this.finTour();
+                if(this.operationEnCours == OPERATION_AUCUNE){
+                    this.finTour();
+                }
                 break;
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);
@@ -473,5 +476,17 @@ public class Controleur implements Observer {
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
         }
+    }
+    
+    /**
+     * Retourne vrai si :
+     * - l'héliport est inondé
+     * - toutes les tuiles d'une même relique est inondée sans qu'un joueur ait déjà récupéré la relique
+     * - une tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se déplacer
+     * - le niveau de l'eau arrive au max
+     */
+    private boolean gameOver() {
+        
+        return false;
     }
 }
