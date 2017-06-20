@@ -235,13 +235,11 @@ public class Grille {
      */
 
     public ArrayList<Tuile> getToutesLesTuiles() {
-        ArrayList<Tuile> tuilesNonCoulees = new ArrayList<Tuile>();
+        ArrayList<Tuile> tuiles = new ArrayList<Tuile>();
         for (Tuile t : this.tuiles) {
-            if (t.getEtatTuile() != Tuile.ETAT_TUILE_COULEE) {
-                tuilesNonCoulees.add(t);
-            }
+                tuiles.add(t);
         }
-        return tuilesNonCoulees;
+        return tuiles;
     }
     
     /*
