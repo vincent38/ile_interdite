@@ -417,8 +417,8 @@ public class Controleur implements Observer {
         int nbCartes = nbCartesInondation();
         for (int i = 1; i <= nbCartes; i++) {
             CarteInondation c = cartesInondation.tirerCarte();
-            System.out.println("Carte tirée : "+c.getCaseConcernee());
-            Tuile t = grille.getTuile(c.getCaseConcernee());
+            System.out.println("Carte tirée : "+c.getTuileConcernee());
+            Tuile t = grille.getTuile(c.getTuileConcernee());
             t.mouillerTuile();
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             if (t.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE){

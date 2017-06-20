@@ -2,18 +2,18 @@ package model.carte;
 
 public class CarteInondation extends Carte {
 
-    private String caseConcernee;
+    private String tuileConcernee;
     
-    public CarteInondation(String caseConcernee) {
-        setCaseConcernee(caseConcernee);
+    public CarteInondation(String tuileConcernee) {
+        setTuileConcernee(tuileConcernee);
     }
 
-    public String getCaseConcernee() {
-        return caseConcernee;
+    public String getTuileConcernee() {
+        return tuileConcernee;
     }
 
-    public void setCaseConcernee(String caseConcernee) {
-        this.caseConcernee = caseConcernee;
+    public void setTuileConcernee(String tuileConcernee) {
+        this.tuileConcernee = tuileConcernee;
     }
         
     
