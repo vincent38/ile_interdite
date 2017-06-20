@@ -51,7 +51,6 @@ public class Controleur implements Observer {
     public DeckCartesInondation cartesInondation = new DeckCartesInondation();
 
     public int cranMarqueurNiveau;
-    public int banane;
 
     public IHMBonne vueAventurier;
     public Aventurier avCourant;
