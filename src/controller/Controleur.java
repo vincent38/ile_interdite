@@ -308,6 +308,13 @@ public class Controleur implements Observer {
         this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
         defausse();
+        //Si avCourant est sur une tuile inondée, on le déplace d'office
+        if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+            this.traiterBoutonAller();
+            vueAventurier.disableInteraction();
+            this.operationEnCours = OPERATION_DEPLACEMENT;
+            vueAventurier.enableInteraction();
+        }
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
         //this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
         //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
