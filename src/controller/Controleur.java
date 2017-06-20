@@ -405,9 +405,9 @@ public class Controleur implements Observer {
                 afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 break;
             case CLIC_BTN_TERMINER_TOUR:
-                if(this.operationEnCours == OPERATION_AUCUNE){
-                    this.finTour();
-                }
+                this.operationEnCours = OPERATION_AUCUNE;
+                vueAventurier.disableBoutons();
+                this.finTour();
                 break;
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);

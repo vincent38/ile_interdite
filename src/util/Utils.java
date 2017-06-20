@@ -44,7 +44,7 @@ public class Utils {
         VIOLET("Violet", new Color(204, 94, 255)),
         JAUNE("Jaune", new Color(255, 255, 0)) ,
         NOIR("Noir", new Color(10,10,10)),
-        BLANC("Blanc", new Color(255,255,255,230));
+        BLANC("Blanc", new Color(200,200,200));
         
 
         private final String libelle ;
