@@ -496,7 +496,7 @@ public class Controleur implements Observer {
         }
         return false;
     }
-<<<<<<< HEAD
+
 
     private void traiterAssechement() {
     ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
@@ -508,7 +508,7 @@ public class Controleur implements Observer {
     private void assecherTuile(int x, int y) {
         this.grille.getTuile(x, y).setAssechee();
     }
-=======
+
     
     private boolean PierreSacreeMort() {
         if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
@@ -566,5 +566,4 @@ public class Controleur implements Observer {
         return mort;
     }
     
->>>>>>> b3e41d8dff700918563467fdcedf04881275d34b
 }
