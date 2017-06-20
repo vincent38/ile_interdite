@@ -4,12 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-<<<<<<< HEAD
 import java.util.Scanner;
-
-=======
->>>>>>> e133f309b3acd58172b4c530e7e42a2abc108304
-
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.aventurier.Explorateur;
@@ -357,7 +352,7 @@ public class Controleur implements Observer {
                 break;
             case CLIC_BTN_DONNER_CARTE:
                 this.operationEnCours = OPERATION_DONNER_CARTE;
-                // Afficher fenêtre choix joueur et cartes
+                this.traiterDonnerCarte();
                 break;
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);
@@ -592,5 +587,15 @@ public class Controleur implements Observer {
             return false;
         }
     }
-    
+
+    private void traiterDonnerCarte() {
+        Tuile tuileCourante = avCourant.getTuile();
+        ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
+        ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
+        CarteTresor carteADonner = null;
+        Aventurier destinataire = null;
+        // Affichage fenêtre choix carte et destinataire
+        avCourant.retirerCarte(carteADonner);
+        destinataire.ajouterCarte(carteADonner);
+    }
 }
