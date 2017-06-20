@@ -289,6 +289,9 @@ public class Controleur implements Observer {
         tirerCartesTresor();
         
         tirerCartesInondation();
+        if (gameOver()) {
+            afficherInformation("Perdu lol");
+        }
         
         joueurSuivant();
         avCourant.setPouvoirDispo(true);
