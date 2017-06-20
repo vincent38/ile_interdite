@@ -1,23 +1,19 @@
 package controller;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
 import java.util.Scanner;
+
+
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.aventurier.Explorateur;
 import model.Grille;
 import model.Message;
 import model.aventurier.Ingenieur;
-import model.TypeMessage;
 import model.aventurier.Messager;
-import model.aventurier.Navigateur;
-import model.Observateur;
-import model.aventurier.Pilote;
 import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
@@ -26,10 +22,8 @@ import model.carte.CarteTresor;
 import model.carte.DeckCartesInondation;
 import model.carte.DeckCartesTresor;
 import static util.Utils.*;
-import view.IHM;
 import view.IHMBonne;
 
-import view.VueAventurier;
 
 /*
 JavaDoc provided
@@ -42,20 +36,20 @@ public class Controleur implements Observer {
     public static final int OPERATION_DEPLACEMENT = 1;
     public static final int OPERATION_ASSECHER = 2;
 
-    public ArrayList<Carte> cartes = new ArrayList<>();
-    public ArrayList<Aventurier> joueurs = new ArrayList<>();
-    public Grille grille;
-    public ArrayList<Tresor> tresors = new ArrayList<>();
+    private final ArrayList<Carte> cartes = new ArrayList<>();
+    private final ArrayList<Aventurier> joueurs = new ArrayList<>();
+    private final Grille grille;
+    private final ArrayList<Tresor> tresors = new ArrayList<>();
 
-    public DeckCartesTresor cartesTresor = new DeckCartesTresor();
-    public DeckCartesInondation cartesInondation = new DeckCartesInondation();
+    private final DeckCartesTresor cartesTresor = new DeckCartesTresor();
+    private final DeckCartesInondation cartesInondation = new DeckCartesInondation();
 
-    public int cranMarqueurNiveau;
+    private int cranMarqueurNiveau;
     private static final int NIVEAU_EAU_MAX = 10;
 
-    public IHMBonne vueAventurier;
-    public Aventurier avCourant;
-    public int action = 0;
+    private final IHMBonne vueAventurier;
+    private Aventurier avCourant;
+    private int action;
     public static final int ACTION_NEXT_TOUR = 3;
     public static final int ACTION_NEXT_TOUR_NAVIGATEUR = 4;
     private boolean doubleAssechement = false;
@@ -69,13 +63,15 @@ public class Controleur implements Observer {
     private int operationEnCours = OPERATION_AUCUNE;
 
     private boolean deplacementObligatoire;
-    public String pktnul = ""; // Sert à afficher pourquoi on a perdu la partie
+    
+    public String pktnul; // Sert à afficher pourquoi on a perdu la partie
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
      * jeu, ainsi que les appels aux vues.
      */
     public Controleur() {
+        this.action = 0;
         //Initialisation de la grille
         this.grille = new Grille();
 
@@ -154,6 +150,7 @@ public class Controleur implements Observer {
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
         }
+        new Scanner(System.in).nextLine();
 
     }
 
@@ -490,7 +487,7 @@ public class Controleur implements Observer {
 
     private boolean heliportMort() {
         if (grille.getTuile("Heliport").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
-            if (pktnul.equals("")) {
+            if (pktnul == null) {
                 pktnul = "L'héliport a coulé";
             } else {
                 pktnul = pktnul + " ; L'héliport a coulé";
@@ -506,7 +503,7 @@ public class Controleur implements Observer {
     private boolean pierreSacreeMort() {
         if ((grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
                 && grille.getTuile("Le Temple du Soleil").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
-            if (pktnul.equals("")) {
+            if (pktnul == null) {
                 pktnul = "Vous ne pouvez plus obtenir la Pierre Sacrée";
             } else {
                 pktnul = pktnul + " ; Vous ne pouvez plus obtenir la Pierre Sacrée";
@@ -520,7 +517,7 @@ public class Controleur implements Observer {
     private boolean statueZephyrMort() {
         if ((grille.getTuile("Le Jardin des Murmures").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
                 && grille.getTuile("Le Jardin des Hurlements").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
-            if (pktnul.equals("")) {
+            if (pktnul == null) {
                 pktnul = "Vous ne pouvez plus obtenir la Statue du Zéphyr";
             } else {
                 pktnul = pktnul + " ; Vous ne pouvez plus obtenir la Statue du Zéphyr";
@@ -534,7 +531,7 @@ public class Controleur implements Observer {
     private boolean cristalArdentMort() {
         if ((grille.getTuile("La Caverne du Brasier").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
                 && grille.getTuile("La Caverne des Ombres").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
-            if (pktnul.equals("")) {
+            if (pktnul == null) {
                 pktnul = "Vous ne pouvez plus obtenir le Cristal Ardent";
             } else {
                 pktnul = pktnul + " ; Vous ne pouvez plus obtenir le Cristal Ardent";
@@ -548,7 +545,7 @@ public class Controleur implements Observer {
     private boolean caliceOndeMort() {
         if ((grille.getTuile("Le Palais de Corail").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
                 && grille.getTuile("Le Palais des Marees").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
-            if (pktnul.equals("")) {
+            if (pktnul == null) {
                 pktnul = "Vous ne pouvez plus obtenir le Calice de l'Onde";
             } else {
                 pktnul = pktnul + " ; Vous ne pouvez plus obtenir le Calice de l'Onde";
@@ -569,7 +566,7 @@ public class Controleur implements Observer {
                 tuilesPossibles = a.getDeplacementsPossibles(grille);
                 if (tuilesPossibles.size() == 0) {
                     mort = true;
-                    if (pktnul.equals("")) {
+                    if (pktnul == null) {
                         pktnul = "Un aventurier est décédé";
                     } else {
                         pktnul = pktnul + " ; Un aventurier est décédé";
@@ -585,7 +582,7 @@ public class Controleur implements Observer {
 
     private boolean eauMax() {
         if (cranMarqueurNiveau == NIVEAU_EAU_MAX) {
-            if (pktnul.equals("")) {
+            if (pktnul == null) {
                 pktnul = "L'île a été submergée";
             } else {
                 pktnul = pktnul + " ; L'île a été submergée";
