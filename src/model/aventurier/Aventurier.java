@@ -183,10 +183,20 @@ public abstract class Aventurier {
     public void setPouvoirDispo(boolean b) {
         this.pouvoirDispo = true;
     }
+
+    public ArrayList<Tresor> getTresorsObtenus() {
+        return tresorsObtenus;
+    }
+
+    public void addTresorsObtenus(Tresor tresorObtenu) {
+        tresorsObtenus.add(tresorObtenu);
+    }
     
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
+    
+    
     
 }
 

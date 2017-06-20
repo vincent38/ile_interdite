@@ -18,7 +18,9 @@ import model.aventurier.Pilote;
 import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
+import model.TypeTresor;
 import model.carte.CarteInondation;
+import model.carte.CartePiece;
 import model.carte.CarteTresor;
 import model.carte.DeckCartesInondation;
 import model.carte.DeckCartesTresor;
@@ -584,5 +586,43 @@ public class Controleur implements Observer {
             return false;
         }
     }
+ 
     
+    private void getTresorFromTuile(){
+        //On teste la tuile en cours du joueur : trésor présent ?
+        if (avCourant.getTuile().getTresor() != null) {
+            TypeTresor typeTresorTuile = avCourant.getTuile().getTresor().typeTresor;
+            //Trésor présent, on vérifie que le joueur aie assez de cartes
+            ArrayList<CarteTresor> buffer = new ArrayList<>();
+            //On parcourt ses cartes
+            CarteTresor c = null;
+            for (int i = 0; i < avCourant.getCartesPossedees().size(); i++) {
+                c = avCourant.getCartesPossedees().remove(i);
+                if ("tresor".equals(c.getTypeCarte())) {
+                    CartePiece d = (CartePiece) c;
+                    if (d.getTypeTresor() == typeTresorTuile) {
+                        //Carte trésor correspondant au trésor visé ? Oui
+                        buffer.add(c);
+                    } else {
+                        //Carte non correspondante. Retour joueur
+                        avCourant.getCartesPossedees().add(c);
+                    }
+                }
+            }
+            //On les compte
+            if (buffer.size() >= 4) {
+                //Assez de cartes
+                //Defausse + récupération trésor
+                for (int j = 0; j < 4; j++){
+                    cartesTresor.defausserCarte(buffer.remove(j));
+                }
+                avCourant.getCartesPossedees().addAll(buffer);
+                avCourant.addTresorsObtenus(avCourant.getTuile().getTresor());
+                avCourant.getTuile().wipeTresor();
+            } else {
+                avCourant.getCartesPossedees().addAll(buffer);
+                System.out.println("Lol nope");
+            }
+        }
+    }
 }
