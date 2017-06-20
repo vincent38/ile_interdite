@@ -67,6 +67,8 @@ public class Controleur implements Observer {
     private static final Point SPAWN_MESSAGER = new Point(1, 2);
     
     private int operationEnCours = OPERATION_AUCUNE;
+    
+    private boolean deplacementObligatoire;
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -162,7 +164,7 @@ public class Controleur implements Observer {
     public void ajouterAction() {
         action += 1;
         if (action == ACTION_NEXT_TOUR) {
-            this.joueurSuivant();
+            finTour();
             
         }
         this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
@@ -292,9 +294,17 @@ public class Controleur implements Observer {
         if (gameOver()) {
             afficherInformation("Perdu lol");
         }
-        
-        joueurSuivant();
         avCourant.setPouvoirDispo(true);
+        joueurSuivant();
+        //Si avCourant est sur une tuile inondée, on le déplace d'office
+        if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+            vueAventurier.disableInteraction();
+            deplacementObligatoire = true;
+            this.operationEnCours = OPERATION_DEPLACEMENT;
+            this.traiterBoutonAller();
+            vueAventurier.enableInteraction();
+            deplacementObligatoire = false;
+        }
     }
 
     /**
@@ -311,13 +321,7 @@ public class Controleur implements Observer {
         this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
         defausse();
-        //Si avCourant est sur une tuile inondée, on le déplace d'office
-        if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
-            this.traiterBoutonAller();
-            vueAventurier.disableInteraction();
-            this.operationEnCours = OPERATION_DEPLACEMENT;
-            vueAventurier.enableInteraction();
-        }
+        
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
         //this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
         //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
@@ -472,7 +476,9 @@ public class Controleur implements Observer {
     private void traiterClicCase(int x, int y) {
         if(operationEnCours == OPERATION_DEPLACEMENT){
             this.deplacerAventurierCourant(grille.getTuile(x, y));
-            this.ajouterAction();
+            if (deplacementObligatoire == true) {
+                this.ajouterAction();
+            }
         }else if(operationEnCours == OPERATION_ASSECHER){
             this.assecherTuile(x, y);
         }
