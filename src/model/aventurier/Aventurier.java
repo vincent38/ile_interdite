@@ -73,7 +73,8 @@ public abstract class Aventurier {
         //On vérifie si elle existe. Existe -> on assèche la tuile
         for (Tuile t : tuilesAssechables) {
             if (t.getX() == tuileVoulue.getX() && t.getY() == tuileVoulue.getY()) {
-                g.setTuile(t.getX(), t.getY(), Tuile.ETAT_TUILE_SECHE);
+                //g.setTuile(t.getX(), t.getY(), Tuile.ETAT_TUILE_SECHE);
+                t.setAssechee();
                 //System.out.println(tuileVoulue.getEtatTuile());
                 return true;
             }
@@ -147,6 +148,8 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getDeplacementsPossibles(Grille grille) {
         return grille.getTuilesAdjacentes(this.tuileCourante);
     }
+    
+    
     
     /**
      * Retourne le nom de l'aventurier

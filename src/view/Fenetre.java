@@ -142,13 +142,13 @@ public class Fenetre extends JFrame{
                     });
                     switch(this.ihm.getGrille().getTuile(i, j).getEtatTuile()){
                         case Tuile.ETAT_TUILE_COULEE:
-                            boutonsCases[j][i].setBackground(Color.cyan);
+                            boutonsCases[j][i].setBackground(new Color(34, 66, 124));
                             break;
                         case Tuile.ETAT_TUILE_INONDEE:
-                            boutonsCases[j][i].setBackground(Color.YELLOW);
+                            boutonsCases[j][i].setBackground(new Color(30, 127, 203));
                             break;
                         default:
-                            boutonsCases[j][i].setBackground(Color.ORANGE);
+                            boutonsCases[j][i].setBackground(new Color(240, 195, 0));
                             break;
                     }
                 }
@@ -304,13 +304,13 @@ public class Fenetre extends JFrame{
     void setEtatTuile(int etatTuile, int x, int y) {
         switch(etatTuile){
             case Tuile.ETAT_TUILE_COULEE:
-                this.boutonsCases[y][x].setBackground(Color.cyan);
+                this.boutonsCases[y][x].setBackground(new Color(34, 66, 124));
                 break;
             case Tuile.ETAT_TUILE_INONDEE:
-                this.boutonsCases[y][x].setBackground(Color.YELLOW);
+                this.boutonsCases[y][x].setBackground(new Color(30, 127, 203));
                 break;
             default:
-                this.boutonsCases[y][x].setBackground(Color.ORANGE);
+                this.boutonsCases[y][x].setBackground(new Color(240, 195, 0));
                 break;
         }
         
