@@ -93,7 +93,7 @@ public class Controleur implements Observer {
         //this.vueAventurier.setColor(avCourant.getColor());
         //this.vueAventurier.setFontColor(avCourant.getFontColor());
         //Définition des tuiles inondées et coulées en dur
-        grille.setTuile(3, 0, Tuile.ETAT_TUILE_INONDEE);
+        /*grille.setTuile(3, 0, Tuile.ETAT_TUILE_INONDEE);
 
         grille.setTuile(2, 2, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(2, 2, Tuile.ETAT_TUILE_COULEE);
@@ -113,7 +113,7 @@ public class Controleur implements Observer {
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_INONDEE);
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_COULEE);
 
-        grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);
+        grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);*/
         
         this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
         this.vueAventurier.addObserver(this);
@@ -141,6 +141,16 @@ public class Controleur implements Observer {
                     a.ajouterCarte(c);
                 }
             }
+        }
+        
+        //Tirage des cartes inondation de début de partie
+        for (int i = 1; i <= 6; i++) {
+            CarteInondation c = cartesInondation.tirerCarte();
+            System.out.println("Carte tirée : "+c.getTuileConcernee());
+            Tuile t = grille.getTuile(c.getTuileConcernee());
+            t.mouillerTuile();
+            vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
+            cartesInondation.defausserCarte(c);
         }
     }
 
@@ -423,6 +433,8 @@ public class Controleur implements Observer {
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             if (t.getEtatTuile() == Tuile.ETAT_TUILE_INONDEE){
                 cartesInondation.defausserCarte(c);
+            } else if (t.getEtatTuile() == Tuile.ETAT_TUILE_COULEE){
+                
             }
         }
     }
