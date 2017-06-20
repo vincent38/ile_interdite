@@ -33,6 +33,10 @@ import model.aventurier.Aventurier;
  * @author sangj
  */
 public class IHMBonne extends Observable{
+
+    public void fermerFenetre() {
+        fenetre.dispose();
+    }
     private Fenetre fenetre;
     private Observateur observateur;
     private ArrayList<Aventurier> aventuriers;

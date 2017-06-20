@@ -242,6 +242,7 @@ public class Controleur implements Observer {
         tirerCartesInondation();
         if (gameOver()) {
             afficherInformation("Partie perdue : " + pktnul);
+            vueAventurier.fermerFenetre();
         } else {
             joueurSuivant();
             avCourant.setPouvoirDispo(true);
