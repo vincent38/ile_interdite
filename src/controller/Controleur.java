@@ -67,6 +67,8 @@ public class Controleur implements Observer {
     private static final Point SPAWN_MESSAGER = new Point(1, 2);
     
     private int operationEnCours = OPERATION_AUCUNE;
+    
+    public String pktnul = ""; // Sert à afficher pourquoi on a perdu la partie
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -290,11 +292,12 @@ public class Controleur implements Observer {
         
         tirerCartesInondation();
         if (gameOver()) {
-            afficherInformation("Perdu lol");
-        }
+            afficherInformation("Partie perdue : " + pktnul);
+        } else {
         
         joueurSuivant();
         avCourant.setPouvoirDispo(true);
+        }
     }
 
     /**
@@ -488,13 +491,13 @@ public class Controleur implements Observer {
      * - le niveau de l'eau arrive au max
      */
     private boolean gameOver() {
-        if(   grille.getTuile("Heliport").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
-           || PierreSacreeMort()
-           || StatueZephyrMort()
-           || CristalArdentMort()
-           || CaliceOndeMort()
-           || AventurierMort()
-           || cranMarqueurNiveau == NIVEAU_EAU_MAX) {
+        if(   heliportMort()
+           || pierreSacreeMort()
+           || statueZephyrMort()
+           || cristalArdentMort()
+           || caliceOndeMort()
+           || aventurierMort()
+           || eauMax()) {
             return true;
         }
         return false;
@@ -511,49 +514,82 @@ public class Controleur implements Observer {
     private void assecherTuile(int x, int y) {
         this.grille.getTuile(x, y).setAssechee();
     }
+    
+    private boolean heliportMort() {
+        if (grille.getTuile("Heliport").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+            if (pktnul.equals("")) {
+                pktnul = "L'héliport a coulé";
+            } else {
+                pktnul = pktnul + " ; L'héliport a coulé";
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     
-    private boolean PierreSacreeMort() {
+    private boolean pierreSacreeMort() {
         if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
              && grille.getTuile("Le Temple du Soleil").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
              /* et les joueurs n'ont pas le trésor */) {
+            if (pktnul.equals("")) {
+                pktnul = "Vous ne pouvez plus obtenir la Pierre Sacrée";
+            } else {
+                pktnul = pktnul + " ; Vous ne pouvez plus obtenir la Pierre Sacrée";
+            }
             return true;
         } else {
             return false;
         }
     }
     
-    private boolean StatueZephyrMort() {
+    private boolean statueZephyrMort() {
         if ((   grille.getTuile("Le Jardin des Murmures").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
              && grille.getTuile("Le Jardin des Hurlements").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
              /* et les joueurs n'ont pas le trésor */) {
+            if (pktnul.equals("")) {
+                pktnul = "Vous ne pouvez plus obtenir la Statue du Zéphyr";
+            } else {
+                pktnul = pktnul + " ; Vous ne pouvez plus obtenir la Statue du Zéphyr";
+            }
             return true;
         } else {
             return false;
         }
     }
     
-    private boolean CristalArdentMort() {
+    private boolean cristalArdentMort() {
         if ((   grille.getTuile("La Caverne du Brasier").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
              && grille.getTuile("La Caverne des Ombres").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
              /* et les joueurs n'ont pas le trésor */) {
+            if (pktnul.equals("")) {
+                pktnul = "Vous ne pouvez plus obtenir le Cristal Ardent";
+            } else {
+                pktnul = pktnul + " ; Vous ne pouvez plus obtenir le Cristal Ardent";
+            }
             return true;
         } else {
             return false;
         }
     }
     
-    private boolean CaliceOndeMort() {
+    private boolean caliceOndeMort() {
         if ((   grille.getTuile("Le Palais de Corail").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
              && grille.getTuile("Le Palais des Marees").getEtatTuile() == Tuile.ETAT_TUILE_COULEE)
              /* et les joueurs n'ont pas le trésor */) {
+            if (pktnul.equals("")) {
+                pktnul = "Vous ne pouvez plus obtenir le Calice de l'Onde";
+            } else {
+                pktnul = pktnul + " ; Vous ne pouvez plus obtenir le Calice de l'Onde";
+            }
             return true;
         } else {
             return false;
         }
     }
 
-    private boolean AventurierMort() {
+    private boolean aventurierMort() {
         boolean mort = false;
         Tuile tuileCourante;
         ArrayList<Tuile> tuilesPossibles = new ArrayList<>();
@@ -563,10 +599,28 @@ public class Controleur implements Observer {
                 tuilesPossibles = a.getDeplacementsPossibles(grille);
                 if (tuilesPossibles.size() == 0) {
                     mort = true;
+                    if (pktnul.equals("")) {
+                        pktnul = "Un aventurier est décédé";
+                    } else {
+                        pktnul = pktnul + " ; Un aventurier est décédé";
+                    }
                 }
             }
         }
         return mort;
+    }
+    
+    private boolean eauMax() {
+        if (cranMarqueurNiveau == NIVEAU_EAU_MAX) {
+            if (pktnul.equals("")) {
+                pktnul = "L'île a été submergée";
+            } else {
+                pktnul = pktnul + " ; L'île a été submergée";
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
     
 }
