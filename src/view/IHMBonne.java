@@ -42,8 +42,8 @@ public class IHMBonne extends Observable{
     public IHMBonne(Aventurier firstJoueur, int nbActRestantes, Grille g, ArrayList<Aventurier> aventuriers){
         this.g = g;
         this.aventuriers = aventuriers;
-        fenetre = new Fenetre(this, firstJoueur, nbActRestantes);
-        fenetre.afficherAventuriers(aventuriers, g);
+        fenetre = new Fenetre(this, firstJoueur, nbActRestantes, aventuriers);
+        fenetre.afficherAventuriers(g);
         
     }
     
@@ -81,8 +81,8 @@ public class IHMBonne extends Observable{
         this.clearChanged();
     }
 
-    public void deplacement(Aventurier av, int xa, int ya, int xn, int yn) {
-        fenetre.deplacement(av, xa, ya, xn, yn);
+    public void actualiseAventuriers() {
+        fenetre.actualiseAventuriers(this.g);
     }
 
     public void setNbAct(int i) {

@@ -265,7 +265,7 @@ public class Controleur implements Observer {
         int xAncien = avCourant.getTuile().getX();
         int yAncien = avCourant.getTuile().getY();
         avCourant.deplacement(nvTuile, this.grille);
-        this.vueAventurier.deplacement(avCourant, xAncien, yAncien, nvTuile.getX(), nvTuile.getY());
+        this.vueAventurier.actualiseAventuriers();
         this.vueAventurier.disableBoutons();
         this.operationEnCours = OPERATION_AUCUNE;
     }
@@ -405,7 +405,9 @@ public class Controleur implements Observer {
                 afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 break;
             case CLIC_BTN_TERMINER_TOUR:
-                this.finTour();
+                if(this.operationEnCours == OPERATION_AUCUNE){
+                    this.finTour();
+                }
                 break;
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);
