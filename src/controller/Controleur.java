@@ -1,19 +1,16 @@
 package controller;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import java.util.Scanner;
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.aventurier.Explorateur;
 import model.Grille;
 import model.Message;
 import model.aventurier.Ingenieur;
-import model.TypeMessage;
 import model.aventurier.Messager;
 import model.aventurier.Navigateur;
 import model.Observateur;
@@ -59,6 +56,7 @@ public class Controleur implements Observer {
     public static final int ACTION_NEXT_TOUR = 3;
     public static final int ACTION_NEXT_TOUR_NAVIGATEUR = 4;
     private boolean doubleAssechement = false;
+    
     private static final Point SPAWN_EXPLORATEUR = new Point(4, 2);
     private static final Point SPAWN_NAVIGATEUR = new Point(3, 1);
     private static final Point SPAWN_INGENIEUR = new Point(3, 0);
@@ -90,11 +88,6 @@ public class Controleur implements Observer {
         //Définition de l'aventurier courant
         avCourant = joueurs.get(0);
 
-        //Affichage des informations
-        //this.vueAventurier.setObservateur(this);
-        //vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
-        //this.vueAventurier.setColor(avCourant.getColor());
-        //this.vueAventurier.setFontColor(avCourant.getFontColor());
         //Définition des tuiles inondées et coulées en dur
         /*grille.setTuile(3, 0, Tuile.ETAT_TUILE_INONDEE);
 
@@ -117,6 +110,7 @@ public class Controleur implements Observer {
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_COULEE);
 
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);*/
+        
         this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
         this.vueAventurier.addObserver(this);
 
