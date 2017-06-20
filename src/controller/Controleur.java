@@ -4,12 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-<<<<<<< HEAD
 import java.util.Scanner;
-
-=======
->>>>>>> e133f309b3acd58172b4c530e7e42a2abc108304
-
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.aventurier.Explorateur;
@@ -38,6 +33,7 @@ public class Controleur implements Observer {
     public static final int OPERATION_AUCUNE = 0;
     public static final int OPERATION_DEPLACEMENT = 1;
     public static final int OPERATION_ASSECHER = 2;
+    public static final int OPERATION_DONNER_CARTE = 3;
 
     private final ArrayList<Carte> cartes = new ArrayList<>();
     private final ArrayList<Aventurier> joueurs = new ArrayList<>();
@@ -354,6 +350,10 @@ public class Controleur implements Observer {
                 vueAventurier.disableBoutons();
                 this.finTour();
                 break;
+            case CLIC_BTN_DONNER_CARTE:
+                this.operationEnCours = OPERATION_DONNER_CARTE;
+                this.traiterDonnerCarte();
+                break;
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);
                 vueAventurier.enableInteraction();
@@ -587,5 +587,15 @@ public class Controleur implements Observer {
             return false;
         }
     }
-    
+
+    private void traiterDonnerCarte() {
+        Tuile tuileCourante = avCourant.getTuile();
+        ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
+        ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
+        CarteTresor carteADonner = null;
+        Aventurier destinataire = null;
+        // Affichage fenêtre choix carte et destinataire
+        avCourant.retirerCarte(carteADonner);
+        destinataire.ajouterCarte(carteADonner);
+    }
 }

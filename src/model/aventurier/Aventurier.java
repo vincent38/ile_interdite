@@ -183,6 +183,10 @@ public abstract class Aventurier {
     public void setPouvoirDispo(boolean b) {
         this.pouvoirDispo = true;
     }
+
+    public void retirerCarte(CarteTresor carteASupprimer) {
+        this.cartes.remove(carteASupprimer);
+    }
     
     /**
      * Méthode inutilisée actuellement. Gardée en prévision.
