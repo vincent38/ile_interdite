@@ -302,10 +302,9 @@ public class Controleur implements Observer {
                 deplacementObligatoire = true;
                 this.operationEnCours = OPERATION_DEPLACEMENT;
                 this.traiterBoutonAller();
-                vueAventurier.enableInteraction();
                 deplacementObligatoire = false;
             }
-        }
+        //}
     }
 
     /**
@@ -410,6 +409,7 @@ public class Controleur implements Observer {
                 break;
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);
+                vueAventurier.enableInteraction();
                 break;
         }
 
