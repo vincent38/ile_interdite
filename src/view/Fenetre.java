@@ -7,6 +7,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -40,6 +41,7 @@ public class Fenetre extends JFrame{
     
     private JPanel[][] cases;
     private JButton[][] boutonsCases;
+    private JPanel[][] conteneursAventuriers;
     
     private JButton boutonDeplacer;
     private JButton boutonAssecher;
@@ -83,13 +85,18 @@ public class Fenetre extends JFrame{
         
         cases = new JPanel[6][6];
         boutonsCases = new JButton[6][6];
+        conteneursAventuriers = new JPanel[6][6];
         
         
         for(int i = 2; i <= 3; i++){
             cases[i][0] = new JPanel();
             cases[i][5] = new JPanel();
+            
             boutonsCases[i][0] = new JButton();
             boutonsCases[i][5] = new JButton();
+            
+            conteneursAventuriers[i][0] = new JPanel();
+            conteneursAventuriers[i][5] = new JPanel();
         }
         for(int i = 1; i <= 4; i++){
             cases[i][1] = new JPanel();
@@ -97,6 +104,9 @@ public class Fenetre extends JFrame{
             
             boutonsCases[i][1] = new JButton();
             boutonsCases[i][4] = new JButton();
+            
+            conteneursAventuriers[i][1] = new JPanel();
+            conteneursAventuriers[i][4] = new JPanel();
         }
         for(int i = 0; i <= 5; i++){
             cases[i][2] = new JPanel();
@@ -104,6 +114,9 @@ public class Fenetre extends JFrame{
             
             boutonsCases[i][2] = new JButton();
             boutonsCases[i][3] = new JButton();
+            
+            conteneursAventuriers[i][2] = new JPanel();
+            conteneursAventuriers[i][3] = new JPanel();
         }
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 6; j++){
@@ -111,6 +124,7 @@ public class Fenetre extends JFrame{
                     casesPane.add(cases[i][j]);
                     cases[i][j].setLayout(new BorderLayout());
                     cases[i][j].add(boutonsCases[i][j], BorderLayout.CENTER);
+                    cases[i][j].add(conteneursAventuriers[i][j] , BorderLayout.NORTH);
                     
                     
                     boutonsCases[i][j].setEnabled(false);
@@ -128,13 +142,13 @@ public class Fenetre extends JFrame{
                     });
                     switch(this.ihm.getGrille().getTuile(i, j).getEtatTuile()){
                         case Tuile.ETAT_TUILE_COULEE:
-                            boutonsCases[j][i].setBackground(Color.cyan);
+                            boutonsCases[j][i].setBackground(new Color(34, 66, 124));
                             break;
                         case Tuile.ETAT_TUILE_INONDEE:
-                            boutonsCases[j][i].setBackground(Color.YELLOW);
+                            boutonsCases[j][i].setBackground(new Color(30, 127, 203));
                             break;
                         default:
-                            boutonsCases[j][i].setBackground(Color.ORANGE);
+                            boutonsCases[j][i].setBackground(new Color(223, 109, 20));
                             break;
                     }
                 }
@@ -247,7 +261,7 @@ public class Fenetre extends JFrame{
             for(int i = 0; i <= 6; i++){
                 for(int j = 0; j <= 6; j++){
                     if (t == g.getTuile(i, j)){
-                        this.cases[j][i].add(paneAventuriers.get(a), BorderLayout.NORTH);
+                        this.conteneursAventuriers[j][i].add(paneAventuriers.get(a));
                     }
                     if(g.getTuile(i,j) != null)
                     this.boutonsCases[j][i].setText(g.getTuile(i,j).getNom());
@@ -261,8 +275,6 @@ public class Fenetre extends JFrame{
         this.rmAventuriers();
         this.afficherAventuriers(g);
         
-        /*this.setEtatTuile(this.ihm.getGrille().getTuile(xa, ya).getEtatTuile(), xa, ya);
-        this.boutonsCases[yn][xn].setBackground(av.getColor());*/
         
     }
 
@@ -292,17 +304,14 @@ public class Fenetre extends JFrame{
     void setEtatTuile(int etatTuile, int x, int y) {
         switch(etatTuile){
             case Tuile.ETAT_TUILE_COULEE:
-                this.boutonsCases[y][x].setBackground(Color.cyan);
+                this.boutonsCases[y][x].setBackground(new Color(34, 66, 124));
                 break;
             case Tuile.ETAT_TUILE_INONDEE:
-                this.boutonsCases[y][x].setBackground(Color.YELLOW);
+                this.boutonsCases[y][x].setBackground(new Color(30, 127, 203));
                 break;
             default:
-                this.boutonsCases[y][x].setBackground(Color.ORANGE);
+                this.boutonsCases[y][x].setBackground(new Color(223, 109, 20));
                 break;
-        }
-        if(this.ihm.getGrille().getTuile(x, y).getAventuriers().size() > 0){
-            this.boutonsCases[y][x].setBackground(this.ihm.getGrille().getTuile(x, y).getAventuriers().get(0).getColor());
         }
         
     }
@@ -320,13 +329,15 @@ public class Fenetre extends JFrame{
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 6; j++){
                 for (JPanel k : paneAventuriers.values()){
-                    if (cases[j][i] != null){
-                        cases[j][i].remove(k);
+                    if (conteneursAventuriers[j][i] != null){
+                        conteneursAventuriers[j][i].remove(k);
                     }
                 }
             }
             
         }
+        this.getContentPane().repaint();
+        
     }
     
 }
