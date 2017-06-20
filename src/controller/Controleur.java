@@ -163,9 +163,9 @@ public class Controleur implements Observer {
      */
     public void ajouterAction() {
         action += 1;
-        if (action == ACTION_NEXT_TOUR) {
+        System.out.println(doubleAssechement);
+        if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
             finTour();
-
         }
         this.vueAventurier.setNbAct(ACTION_NEXT_TOUR - action);
     }
@@ -463,12 +463,15 @@ public class Controleur implements Observer {
                     if (!doubleAssechement) {
                         //Premier asséchement
                         afficherInformation("Vous pouvez assécher une deuxième tuile sans consommer d'action.");
-                        ajouterAction();
                         doubleAssechement = true;
+                        ajouterAction();
                     } else {
                         //Deuxième
                         afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
                         doubleAssechement = false;
+                        if (action >= ACTION_NEXT_TOUR) {
+                            finTour();
+                        }
                     }
                 } else {
                     //Autre joueur, on ajoute une action
