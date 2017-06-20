@@ -225,12 +225,11 @@ public class Controleur implements Observer {
      * @param nvTuile Tuile où déplacer l'aventurier
      */
     public void deplacerAventurierCourant(Tuile nvTuile) {
-        int xAncien = avCourant.getTuile().getX();
-        int yAncien = avCourant.getTuile().getY();
         avCourant.deplacement(nvTuile, this.grille);
         this.vueAventurier.actualiseAventuriers();
         this.vueAventurier.disableBoutons();
         this.operationEnCours = OPERATION_AUCUNE;
+        this.ajouterAction();
     }
 
     /**
