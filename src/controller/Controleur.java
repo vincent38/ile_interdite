@@ -368,11 +368,7 @@ public class Controleur implements Observer {
         ArrayList<Tuile> tuilesPossibles = avCourant.getDeplacementsPossibles(this.grille);
         for (Tuile t : tuilesPossibles) {
             vueAventurier.enable(t.getX(), t.getY());
-            System.out.println("X : " + t.getX());
-            System.out.println("Y : " + t.getY());
-            System.out.println();
         }
-        System.out.println();
     }
 
     private void traiterBoutonDonnerCarte() {
@@ -409,7 +405,8 @@ public class Controleur implements Observer {
                 this.operationEnCours = OPERATION_DEPLACEMENT;
                 break;
             case CLIC_BTN_ASSECHER:
-                assecherTuile();
+                this.traiterAssechement();
+                //assecherTuile();
                 this.operationEnCours = OPERATION_ASSECHER;
                 break;
             case CLIC_BTN_AUTRE_ACTION:
@@ -466,6 +463,8 @@ public class Controleur implements Observer {
         if(operationEnCours == OPERATION_DEPLACEMENT){
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             this.ajouterAction();
+        }else if(operationEnCours == OPERATION_ASSECHER){
+            this.assecherTuile(x, y);
         }
     }
     
@@ -497,6 +496,19 @@ public class Controleur implements Observer {
         }
         return false;
     }
+<<<<<<< HEAD
+
+    private void traiterAssechement() {
+    ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
+        for (Tuile t : tuilesAssechables) {
+            vueAventurier.enable(t.getX(), t.getY());
+        }
+    }
+
+    private void assecherTuile(int x, int y) {
+        this.grille.getTuile(x, y).setAssechee();
+    }
+=======
     
     private boolean PierreSacreeMort() {
         if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
@@ -554,4 +566,5 @@ public class Controleur implements Observer {
         return mort;
     }
     
+>>>>>>> b3e41d8dff700918563467fdcedf04881275d34b
 }
