@@ -56,6 +56,7 @@ public class Controleur implements Observer {
     public Aventurier avCourant;
     public int action = 0;
     public static final int ACTION_NEXT_TOUR = 3;
+    public static final int ACTION_NEXT_TOUR_NAVIGATEUR = 4;
     private boolean doubleAssechement = false;
     private static final Point SPAWN_EXPLORATEUR = new Point(4, 2);
     private static final Point SPAWN_NAVIGATEUR = new Point(3, 1);
