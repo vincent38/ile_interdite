@@ -217,57 +217,7 @@ public class Controleur implements Observer {
      * Propose au joueur une liste de tuiles à assécher, et assèche la tuile
      * choisie. Retourne un message d'erreur si la fonction n'est pas possible.
      */
-    public void assecherTuile() {
-        Scanner input = new Scanner(System.in);
-
-        //On récupère les tuiles asséchables depuis le joueur
-        ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(grille);
-        //On quitte si l'arraylist est vide, sinon on continue
-        if (!tuilesAssechables.isEmpty()) {
-
-            //On les affiche
-            System.out.println("Les tuiles suivantes sont asséchables : ");
-            for (Tuile t : tuilesAssechables) {
-                System.out.println("x : " + t.getX());
-                System.out.println("y : " + t.getY());
-                System.out.println(t.getNom() + '\n');
-            }
-
-            //On demande la tuile à assécher au joueur - A EDITER
-            System.out.println("X : ");
-            int x = input.nextInt();
-            System.out.println("Y : ");
-            int y = input.nextInt();
-            //Fin d'edit
-
-            //TODO - Assecher transféré dans aventurier + ajout action
-            boolean assechee = avCourant.assecher(tuilesAssechables, grille, x, y);
-            if (assechee) {
-                if (avCourant.getType().equalsIgnoreCase("Ingenieur")) {
-                    //On teste si il en est à son premier ou deuxième asséchement
-                    if (!doubleAssechement) {
-                        //Premier asséchement
-                        afficherInformation("Vous pouvez assécher une deuxième tuile sans consommer d'action.");
-                        ajouterAction();
-                        doubleAssechement = true;
-                    } else {
-                        //Deuxième
-                        afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
-                        doubleAssechement = false;
-                    }
-                } else {
-                    //Autre joueur, on ajoute une action
-                    ajouterAction();
-                }
-            } else {
-                afficherInformation("Vous ne pouvez pas assécher cette tuile.");
-            }
-            //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
-        } else {
-            afficherInformation("Il n'y a aucune tuile à assécher.");
-        }
-
-    }
+    
 
     /**
      * Déplace l'aventurier courant sur la tuile nvTuile depuis une autre
@@ -313,6 +263,7 @@ public class Controleur implements Observer {
         }
         this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
+        this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
         defausse();
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
         //this.vueAventurier.setTypeAv(avCourant.getClass().getSimpleName());
@@ -377,35 +328,7 @@ public class Controleur implements Observer {
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        
-        Message m = (Message) arg;
-        vueAventurier.disableBoutons();
-        switch (m.type) {
-            case CLIC_BTN_ALLER:
-                this.traiterBoutonAller();
-                this.operationEnCours = OPERATION_DEPLACEMENT;
-                break;
-            case CLIC_BTN_ASSECHER:
-                this.traiterAssechement();
-                //assecherTuile();
-                this.operationEnCours = OPERATION_ASSECHER;
-                break;
-            case CLIC_BTN_AUTRE_ACTION:
-                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
-                break;
-            case CLIC_BTN_TERMINER_TOUR:
-                this.operationEnCours = OPERATION_AUCUNE;
-                vueAventurier.disableBoutons();
-                this.finTour();
-                break;
-            case CLIC_CASE:
-                this.traiterClicCase(m.x, m.y);
-                break;
-        }
-        
-    }
+    
 
     private void tirerCartesInondation() {   
         int nbCartes = nbCartesInondation();
@@ -481,10 +404,7 @@ public class Controleur implements Observer {
         }
         return false;
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 0c7823e2e505eac4789f8b5812883561c12debf5
 
     private void traiterAssechement() {
     ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
@@ -527,10 +447,6 @@ public class Controleur implements Observer {
         }
         
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 0c7823e2e505eac4789f8b5812883561c12debf5
     
     private boolean PierreSacreeMort() {
         if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 
@@ -586,6 +502,36 @@ public class Controleur implements Observer {
             }
         }
         return mort;
+    }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        this.doubleAssechement = false;
+        Message m = (Message) arg;
+        vueAventurier.disableBoutons();
+        switch (m.type) {
+            case CLIC_BTN_ALLER:
+                this.traiterBoutonAller();
+                this.operationEnCours = OPERATION_DEPLACEMENT;
+                break;
+            case CLIC_BTN_ASSECHER:
+                this.traiterAssechement();
+                //assecherTuile();
+                this.operationEnCours = OPERATION_ASSECHER;
+                break;
+            case CLIC_BTN_AUTRE_ACTION:
+                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                break;
+            case CLIC_BTN_TERMINER_TOUR:
+                this.operationEnCours = OPERATION_AUCUNE;
+                vueAventurier.disableBoutons();
+                this.finTour();
+                break;
+            case CLIC_CASE:
+                this.traiterClicCase(m.x, m.y);
+                break;
+        }
+        
     }
     
 }
