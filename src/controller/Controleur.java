@@ -77,6 +77,7 @@ public class Controleur implements Observer {
     public Controleur() {
         //Initialisation de la grille
         this.grille = new Grille();
+        
 
         //Création et placement des joueurs
         joueurs.add(new Explorateur(grille.getTuile((int) SPAWN_EXPLORATEUR.getX(), (int) SPAWN_EXPLORATEUR.getY()), "Jano"));
@@ -155,6 +156,8 @@ public class Controleur implements Observer {
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
         }
+        
+        
     }
 
     /**
@@ -341,32 +344,7 @@ public class Controleur implements Observer {
         return i;
     }
 
-    /**
-     * Interprète les messages reçus de la vue VueAventurier
-     *
-     * @param m Message reçu
-     * @see Observateur
-     */
-    /*@Override
-    public void traiterMessage(Object m) {
-        switch (m.type) {
-            case CLIC_BTN_ALLER:
-                this.traiterBoutonAller();
-                break;
-            case CLIC_BTN_ASSECHER:
-                assecherTuile();
-                break;
-            case CLIC_BTN_AUTRE_ACTION:
-                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
-                break;
-            case CLIC_BTN_TERMINER_TOUR:
-                this.finTour();
-                break;
-            case CLIC_BTN_DONNER_CARTE:
-                this.traiterBoutonDonnerCarte();
-                break;
-        }
-    }*/
+    
     /**
      * Logique gérant le déplacement d'un aventurier sur la grille
      */
@@ -404,7 +382,9 @@ public class Controleur implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        
         Message m = (Message) arg;
+        vueAventurier.disableBoutons();
         switch (m.type) {
             case CLIC_BTN_ALLER:
                 this.traiterBoutonAller();
@@ -427,6 +407,7 @@ public class Controleur implements Observer {
                 this.traiterClicCase(m.x, m.y);
                 break;
         }
+        
     }
 
     private void tirerCartesInondation() {   
@@ -471,6 +452,7 @@ public class Controleur implements Observer {
             this.ajouterAction();
         }else if(operationEnCours == OPERATION_ASSECHER){
             this.assecherTuile(x, y);
+            this.vueAventurier.actualiseTuiles();
         }
     }
     
@@ -512,7 +494,38 @@ public class Controleur implements Observer {
     }
 
     private void assecherTuile(int x, int y) {
-        this.grille.getTuile(x, y).setAssechee();
+
+        //On récupère les tuiles asséchables depuis le joueur
+        ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(grille);
+        //On quitte si l'arraylist est vide, sinon on continue
+        if (!tuilesAssechables.isEmpty()) {
+            //TODO - Assecher transféré dans aventurier + ajout action
+            boolean assechee = avCourant.assecher(tuilesAssechables, grille, x, y);
+            if (assechee) {
+                if (avCourant.getType().equalsIgnoreCase("Ingenieur")) {
+                    //On teste si il en est à son premier ou deuxième asséchement
+                    if (!doubleAssechement) {
+                        //Premier asséchement
+                        afficherInformation("Vous pouvez assécher une deuxième tuile sans consommer d'action.");
+                        ajouterAction();
+                        doubleAssechement = true;
+                    } else {
+                        //Deuxième
+                        afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
+                        doubleAssechement = false;
+                    }
+                } else {
+                    //Autre joueur, on ajoute une action
+                    ajouterAction();
+                }
+            } else {
+                afficherInformation("Vous ne pouvez pas assécher cette tuile.");
+            }
+            //this.vueAventurier.setPosition("X : " + this.avCourant.getTuile().getX() + " Y : " + this.avCourant.getTuile().getY() + " - " + avCourant.getTuile().getNom() + " - Action(s) restante(s) : " + (getACTION_NEXT_TOUR() - getAction()));
+        } else {
+            afficherInformation("Il n'y a aucune tuile à assécher.");
+        }
+        
     }
     
     private boolean heliportMort() {
@@ -527,7 +540,6 @@ public class Controleur implements Observer {
             return false;
         }
     }
-
     
     private boolean pierreSacreeMort() {
         if ((   grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE 

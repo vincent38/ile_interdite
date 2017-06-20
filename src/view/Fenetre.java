@@ -339,5 +339,15 @@ public class Fenetre extends JFrame{
         this.getContentPane().repaint();
         
     }
+
+    void actualiseTuiles(Grille g) {
+        for (int x = 0; x <6; x++){
+            for (int y = 0; y < 6; y++){
+                if (this.cases[x][y] != null){
+                    this.setEtatTuile(g.getTuile(x, y).getEtatTuile(), x, y);
+                }
+            }
+        }
+    }
     
 }
