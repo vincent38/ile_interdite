@@ -59,12 +59,12 @@ public class Controleur implements Observer {
     public static final int ACTION_NEXT_TOUR = 3;
     public static final int ACTION_NEXT_TOUR_NAVIGATEUR = 4;
     private boolean doubleAssechement = false;
-    private static final Point SPAWN_EXPLORATEUR = new Point(4, 2);
-    private static final Point SPAWN_NAVIGATEUR = new Point(3, 1);
-    private static final Point SPAWN_INGENIEUR = new Point(3, 0);
-    private static final Point SPAWN_PLONGEUR = new Point(2, 1);
-    private static final Point SPAWN_PILOTE = new Point(3, 2);
-    private static final Point SPAWN_MESSAGER = new Point(1, 2);
+    private static final String SPAWN_EXPLORATEUR = "La Porte de Cuivre";
+    private static final String SPAWN_NAVIGATEUR = "La Porte d’Or";
+    private static final String SPAWN_INGENIEUR = "La Porte de Bronze";
+    private static final String SPAWN_PLONGEUR = "La Porte de Fer";
+    private static final String SPAWN_PILOTE = "Heliport";
+    private static final String SPAWN_MESSAGER = "La Porte d’Argent";
 
     private int operationEnCours = OPERATION_AUCUNE;
 
@@ -80,12 +80,12 @@ public class Controleur implements Observer {
         this.grille = new Grille();
 
         //Création et placement des joueurs
-        joueurs.add(new Explorateur(grille.getTuile((int) SPAWN_EXPLORATEUR.getX(), (int) SPAWN_EXPLORATEUR.getY()), "Jano"));
-        joueurs.add(new Messager(grille.getTuile((int) SPAWN_MESSAGER.getX(), (int) SPAWN_MESSAGER.getY()), "Jul"));
-        joueurs.add(new Ingenieur(grille.getTuile((int) SPAWN_INGENIEUR.getX(), (int) SPAWN_INGENIEUR.getY()), "Vincent"));
-        joueurs.add(new Plongeur(grille.getTuile((int) SPAWN_PLONGEUR.getX(), (int) SPAWN_PLONGEUR.getY()), "Clement"));
-        //joueurs.add(new Pilote(grille.getTuile((int) SPAWN_PILOTE.getX(), (int) SPAWN_PILOTE.getY()), "Et mille"));
-        //joueurs.add(new Navigateur(grille.getTuile((int) SPAWN_NAVIGATEUR.getX(), (int) SPAWN_NAVIGATEUR.getY()), "Henrie"));
+        joueurs.add(new Explorateur(grille.getTuile(SPAWN_EXPLORATEUR), "Jano"));
+        joueurs.add(new Messager(grille.getTuile(SPAWN_MESSAGER), "Jul"));
+        joueurs.add(new Ingenieur(grille.getTuile(SPAWN_INGENIEUR), "Vincent"));
+        joueurs.add(new Plongeur(grille.getTuile(SPAWN_PLONGEUR), "Clement"));
+        //joueurs.add(new Pilote(grille.getTuile(SPAWN_PILOTE), "Et mille"));
+        //joueurs.add(new Navigateur(grille.getTuile(SPAWN_MESSAGER), "Henrie"));
 
         //Définition de l'aventurier courant
         avCourant = joueurs.get(0);
@@ -502,8 +502,6 @@ public class Controleur implements Observer {
         }
     }
     
-   
-
     private boolean pierreSacreeMort() {
         if ((grille.getTuile("Le Temple de La Lune").getEtatTuile() == Tuile.ETAT_TUILE_COULEE
                 && grille.getTuile("Le Temple du Soleil").getEtatTuile() == Tuile.ETAT_TUILE_COULEE) /* et les joueurs n'ont pas le trésor */) {
@@ -580,9 +578,6 @@ public class Controleur implements Observer {
         }
         return mort;
     }
-    
-    
-    
 
     private boolean eauMax() {
         if (cranMarqueurNiveau == NIVEAU_EAU_MAX) {
@@ -596,5 +591,5 @@ public class Controleur implements Observer {
             return false;
         }
     }
-
+    
 }
