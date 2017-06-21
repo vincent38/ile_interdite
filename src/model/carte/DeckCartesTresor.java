@@ -22,7 +22,7 @@ public class DeckCartesTresor {
     public DeckCartesTresor(){
         deckCartes = new ArrayList<>();
         defausseCartes = new ArrayList<>();
-        /*for (int i = 1; i <= 5; i++){
+        for (int i = 1; i <= 5; i++){
             deckCartes.add(new CartePiece("Pierre", TypeTresor.pierreSacree));
             deckCartes.add(new CartePiece("Zephyr", TypeTresor.statueDuZephyr));
             deckCartes.add(new CartePiece("Cristal", TypeTresor.cristalArdent));
@@ -30,13 +30,13 @@ public class DeckCartesTresor {
         }
         for (int i = 1; i <= 3; i++){
             deckCartes.add(new CarteBonus("Helicoptere"));
-        }*/
-        for (int i = 1; i <= 100; i++){
+        }
+        for (int i = 1; i <= 2; i++){
             deckCartes.add(new CarteBonus("SacsDeSable"));
         }
-        /*for (int i = 1; i <= 2; i++){
+        for (int i = 1; i <= 2; i++){
             deckCartes.add(new CarteMonteeDesEaux());
-        }*/
+        }
         shuffleCards();
         dispArray(deckCartes);
     }

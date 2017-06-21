@@ -10,11 +10,14 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import model.aventurier.Aventurier;
+import model.carte.CarteTresor;
 
 /**
  *
@@ -31,7 +34,7 @@ public class FenetreDonCarte extends JFrame {
     private JButton boutonValider = new JButton("Valider");
     
 
-    FenetreDonCarte(IHMDonCarte ihm) {
+    FenetreDonCarte(IHMDonCarte ihm, ArrayList<Aventurier> aventuriers, ArrayList<CarteTresor> cartes) {
         this.ihm = ihm;
         this.setTitle("Don d'une carte");
         this.setSize(new Dimension(800, 500));
