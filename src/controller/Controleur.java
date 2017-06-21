@@ -44,7 +44,6 @@ public class Controleur implements Observer {
     private final ArrayList<Carte> cartes = new ArrayList<>();
     private final ArrayList<Aventurier> joueurs = new ArrayList<>();
     private final Grille grille;
-    private final ArrayList<Tresor> tresors = new ArrayList<>();
     private ArrayList<Tresor> tresorsObtenus = new ArrayList();
 
     private final DeckCartesTresor cartesTresor = new DeckCartesTresor();
@@ -401,6 +400,10 @@ public class Controleur implements Observer {
                 }else{
                     this.traiterClicCase(m.x, m.y);
                 }
+                if (victoire()) {
+                    afficherInformation("Bravo ! Vous avez réussi !");
+                    vueAventurier.fermerFenetre();
+                }
                 break;
 
             case CLIC_COMMENCER:
@@ -645,10 +648,7 @@ public class Controleur implements Observer {
     }
     
     private boolean victoire() {
-        if (   pierreSacreeObtenue()
-            && cristalArdentObtenu()
-            && statueZephyrObtenue()
-            && caliceOndeObtenu()
+        if (   tresorsObtenus()
             && quatreAventuriersSurHeliport()) {
             return true;
         } else {
@@ -656,20 +656,8 @@ public class Controleur implements Observer {
         }
     }
     
-    private boolean pierreSacreeObtenue() {
-        return true;
-    }
-    
-    private boolean cristalArdentObtenu() {
-        return true;
-    }
-    
-    private boolean statueZephyrObtenue() {
-        return true;
-    }
-    
-    private boolean caliceOndeObtenu() {
-        return true;
+    private boolean tresorsObtenus() {
+        return (tresorsObtenus.size() == 4);
     }
     
     private boolean quatreAventuriersSurHeliport() {
