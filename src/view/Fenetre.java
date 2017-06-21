@@ -39,6 +39,7 @@ public class Fenetre extends JFrame{
     private JPanel joueurPane;
     private JPanel niveauEauPane;
     private JPanel cartesEtTresorsPane;
+    private JPanel paneWest;
     
     private JPanel[][] cases;
     private JButton[][] boutonsCases;
@@ -49,6 +50,12 @@ public class Fenetre extends JFrame{
     private JButton boutonAutreAction;
     private JButton boutonFinTour;
     
+    private JButton boutonCalice;
+    private JButton boutonCristal;
+    private JButton boutonPierre;
+    private JButton boutonZephyr;
+    private JPanel paneBoutonsTresors;
+    
     private JLabel nomJoueur;
     private JLabel classeJoueur;
     private JLabel nbAct;
@@ -56,6 +63,8 @@ public class Fenetre extends JFrame{
     private int nbActRestantes;
     
     private HashMap<Aventurier, JPanel> paneAventuriers;
+    private JPanel panelTresors;
+    private VueNiveau vueNiv;
     
     
     
@@ -63,177 +72,17 @@ public class Fenetre extends JFrame{
     Fenetre(IHMBonne ihm, Aventurier firstJoueur, int nbActRestantes, ArrayList<Aventurier> aventuriers) {
         super("L'Île interdite");
         this.ihm = ihm;
-        
-        
         this.initAventuriers(aventuriers);
         this.joueur = firstJoueur;
-        
         this.setSize(500,500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       // this.setAlwaysOnTop(true);
         this.setLocationRelativeTo(null);
-        
-        content = new JPanel();
-        this.setContentPane(content);
-        content.setLayout(new BorderLayout());
-        
-        casesPane = new JPanel();
-        casesPane.setLayout(new GridLayout(6,6));
-        content.add(casesPane, BorderLayout.CENTER);
-        
-        
-        
-        
-        cases = new JPanel[6][6];
-        boutonsCases = new JButton[6][6];
-        conteneursAventuriers = new JPanel[6][6];
-        
-        
-        for(int i = 2; i <= 3; i++){
-            cases[i][0] = new JPanel();
-            cases[i][5] = new JPanel();
-            
-            boutonsCases[i][0] = new JButton();
-            boutonsCases[i][5] = new JButton();
-            
-            conteneursAventuriers[i][0] = new JPanel();
-            conteneursAventuriers[i][5] = new JPanel();
-        }
-        for(int i = 1; i <= 4; i++){
-            cases[i][1] = new JPanel();
-            cases[i][4] = new JPanel();
-            
-            boutonsCases[i][1] = new JButton();
-            boutonsCases[i][4] = new JButton();
-            
-            conteneursAventuriers[i][1] = new JPanel();
-            conteneursAventuriers[i][4] = new JPanel();
-        }
-        for(int i = 0; i <= 5; i++){
-            cases[i][2] = new JPanel();
-            cases[i][3] = new JPanel();
-            
-            boutonsCases[i][2] = new JButton();
-            boutonsCases[i][3] = new JButton();
-            
-            conteneursAventuriers[i][2] = new JPanel();
-            conteneursAventuriers[i][3] = new JPanel();
-        }
-        for(int i = 0; i < 6; i++){
-            for(int j = 0; j < 6; j++){
-                if (cases[i][j] != null){
-                    casesPane.add(cases[i][j]);
-                    cases[i][j].setLayout(new BorderLayout());
-                    cases[i][j].add(boutonsCases[i][j], BorderLayout.CENTER);
-                    cases[i][j].add(conteneursAventuriers[i][j] , BorderLayout.NORTH);
-                    
-                    
-                    boutonsCases[i][j].setEnabled(false);
-                    boutonsCases[i][j].addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            for (int i = 0; i < 6; i++){
-                                for (int j = 0; j < 6; j++){
-                                    if (boutonsCases[i][j] == e.getSource()){
-                                        traiterClicCase(i,j);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                    switch(this.ihm.getGrille().getTuile(i, j).getEtatTuile()){
-                        case Tuile.ETAT_TUILE_COULEE:
-                            boutonsCases[j][i].setBackground(new Color(34, 66, 124));
-                            break;
-                        case Tuile.ETAT_TUILE_INONDEE:
-                            boutonsCases[j][i].setBackground(new Color(30, 127, 203));
-                            break;
-                        default:
-                            boutonsCases[j][i].setBackground(new Color(240, 195, 0));
-                            break;
-                    }
-                }
-                else{
-                    casesPane.add(new JPanel());
-                }
-            }
-        }
-        choixActionPane = new JPanel();
-        content.add(choixActionPane, BorderLayout.SOUTH);
-        
-        choixActionPane.setLayout(new GridLayout(2,2));
-        boutonDeplacer = new JButton("Se deplacer");
-        boutonAssecher = new JButton("Assecher");
-        boutonAutreAction = new JButton("Autre action");
-        boutonFinTour = new JButton("Fin de tour");
-        
-        choixActionPane.add(boutonDeplacer);
-        choixActionPane.add(boutonAssecher);
-        choixActionPane.add(boutonAutreAction);
-        choixActionPane.add(boutonFinTour);
-        
-        boutonDeplacer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                traiterClicDeplacer();
-            }
-        });
-        
-        boutonAssecher.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                traiterClicAssecher();
-            }
-        });
-        
-        boutonAutreAction.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                traiterClicAutreAction();
-            }
-        });
-        
-        boutonFinTour.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                traiterClicFinTour();
-            }
-        });
-        
-        joueurPane = new JPanel(new GridLayout(1,3));
-        content.add(joueurPane, BorderLayout.NORTH);
-        
-        this.nbActRestantes = nbActRestantes;
-        
-        this.nomJoueur = new JLabel();
-        this.classeJoueur = new JLabel();
-        this.nbAct = new JLabel();
-        
-        
-        joueurPane.add(nomJoueur);
-        joueurPane.add(classeJoueur);
-        joueurPane.add(nbAct);
-        
-        nomJoueur.setFont(new Font("Arial", Font.PLAIN, 30));
-        classeJoueur.setFont(new Font("Arial", Font.PLAIN, 30));
-        nbAct.setFont(new Font("Arial", Font.PLAIN, 30));
-        
-        nomJoueur.setHorizontalAlignment(SwingConstants.CENTER);
-        classeJoueur.setHorizontalAlignment(SwingConstants.CENTER);
-        nbAct.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        
-        
-        this.afficherJoueur();
-        
-        this.niveauEauPane = new JPanel(new GridLayout(1,1));
-        this.content.add(niveauEauPane, BorderLayout.EAST);
-        this.niveauEauPane.add(new JLabel("le nivo des o"));
-        
-        this.cartesEtTresorsPane = new JPanel(new GridLayout(2,1));
-        this.content.add(cartesEtTresorsPane, BorderLayout.WEST);
-        this.cartesEtTresorsPane.add(new JLabel("Tresors gagnes"));
-        this.cartesEtTresorsPane.add(new JLabel("Affichage de la main"));
+        this.initCases();
+        this.initActionPane();
+        this.initJoueursPane();
+        this.afficherJoueurPane();
+        this.afficherNiveauPane();
+        this.initPaneWest();
         
         this.setVisible(true);
     }
@@ -259,7 +108,7 @@ public class Fenetre extends JFrame{
         ihm.traiterClicFinTour();
     }
     
-    public void afficherJoueur() {
+    public void afficherJoueurPane() {
         nomJoueur.setText(joueur.getNom());
         classeJoueur.setText(joueur.getType());
         nbAct.setText("" + nbActRestantes);
@@ -372,6 +221,262 @@ public class Fenetre extends JFrame{
         boutonAssecher.setEnabled(true);
         boutonAutreAction.setEnabled(true);
         boutonFinTour.setEnabled(true);
+    }
+
+    void setNiveau(int niv) {
+        this.vueNiv.setNiveau(niv);
+        this.content.repaint();
+    }
+
+    private void afficherNiveauPane() {
+        this.niveauEauPane = new JPanel(new GridLayout(1,1));
+        this.content.add(niveauEauPane, BorderLayout.EAST);
+        this.vueNiv = new VueNiveau(1);
+        this.niveauEauPane.add(vueNiv.getMainPanel());
+    }
+
+    private void initCases() {
+        content = new JPanel();
+        this.setContentPane(content);
+        content.setLayout(new BorderLayout());
+        
+        casesPane = new JPanel();
+        casesPane.setLayout(new GridLayout(6,6));
+        content.add(casesPane, BorderLayout.CENTER);
+        
+        
+        
+        
+        cases = new JPanel[6][6];
+        boutonsCases = new JButton[6][6];
+        conteneursAventuriers = new JPanel[6][6];
+        
+        for(int i = 2; i <= 3; i++){
+            cases[i][0] = new JPanel();
+            cases[i][5] = new JPanel();
+            
+            boutonsCases[i][0] = new JButton();
+            boutonsCases[i][5] = new JButton();
+            
+            conteneursAventuriers[i][0] = new JPanel();
+            conteneursAventuriers[i][5] = new JPanel();
+        }
+        for(int i = 1; i <= 4; i++){
+            cases[i][1] = new JPanel();
+            cases[i][4] = new JPanel();
+            
+            boutonsCases[i][1] = new JButton();
+            boutonsCases[i][4] = new JButton();
+            
+            conteneursAventuriers[i][1] = new JPanel();
+            conteneursAventuriers[i][4] = new JPanel();
+        }
+        for(int i = 0; i <= 5; i++){
+            cases[i][2] = new JPanel();
+            cases[i][3] = new JPanel();
+            
+            boutonsCases[i][2] = new JButton();
+            boutonsCases[i][3] = new JButton();
+            
+            conteneursAventuriers[i][2] = new JPanel();
+            conteneursAventuriers[i][3] = new JPanel();
+        }
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 6; j++){
+                if (cases[i][j] != null){
+                    casesPane.add(cases[i][j]);
+                    cases[i][j].setLayout(new BorderLayout());
+                    cases[i][j].add(boutonsCases[i][j], BorderLayout.CENTER);
+                    cases[i][j].add(conteneursAventuriers[i][j] , BorderLayout.NORTH);
+                    
+                    
+                    boutonsCases[i][j].setEnabled(false);
+                    boutonsCases[i][j].addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            for (int i = 0; i < 6; i++){
+                                for (int j = 0; j < 6; j++){
+                                    if (boutonsCases[i][j] == e.getSource()){
+                                        traiterClicCase(i,j);
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    switch(this.ihm.getGrille().getTuile(i, j).getEtatTuile()){
+                        case Tuile.ETAT_TUILE_COULEE:
+                            boutonsCases[j][i].setBackground(new Color(34, 66, 124));
+                            break;
+                        case Tuile.ETAT_TUILE_INONDEE:
+                            boutonsCases[j][i].setBackground(new Color(30, 127, 203));
+                            break;
+                        default:
+                            boutonsCases[j][i].setBackground(new Color(240, 195, 0));
+                            break;
+                    }
+                }
+                else{
+                    casesPane.add(new JPanel());
+                }
+            }
+        }
+    }
+
+    private void initActionPane() {
+        choixActionPane = new JPanel();
+        content.add(choixActionPane, BorderLayout.SOUTH);
+        
+        choixActionPane.setLayout(new GridLayout(2,2));
+        boutonDeplacer = new JButton("Se deplacer");
+        boutonAssecher = new JButton("Assecher");
+        boutonAutreAction = new JButton("Autre action");
+        boutonFinTour = new JButton("Fin de tour");
+        
+        choixActionPane.add(boutonDeplacer);
+        choixActionPane.add(boutonAssecher);
+        choixActionPane.add(boutonAutreAction);
+        choixActionPane.add(boutonFinTour);
+        
+        boutonDeplacer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicDeplacer();
+            }
+        });
+        
+        boutonAssecher.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicAssecher();
+            }
+        });
+        
+        boutonAutreAction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicAutreAction();
+            }
+        });
+        
+        boutonFinTour.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicFinTour();
+            }
+        });
+    }
+
+    private void initJoueursPane() {
+        joueurPane = new JPanel(new GridLayout(1,3));
+        content.add(joueurPane, BorderLayout.NORTH);
+        
+        this.nbActRestantes = nbActRestantes;
+        
+        this.nomJoueur = new JLabel();
+        this.classeJoueur = new JLabel();
+        this.nbAct = new JLabel();
+        
+        
+        joueurPane.add(nomJoueur);
+        joueurPane.add(classeJoueur);
+        joueurPane.add(nbAct);
+        
+        nomJoueur.setFont(new Font("Arial", Font.PLAIN, 30));
+        classeJoueur.setFont(new Font("Arial", Font.PLAIN, 30));
+        nbAct.setFont(new Font("Arial", Font.PLAIN, 30));
+        
+        nomJoueur.setHorizontalAlignment(SwingConstants.CENTER);
+        classeJoueur.setHorizontalAlignment(SwingConstants.CENTER);
+        nbAct.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+    private void initCartesEtTResorsPane() {
+        this.cartesEtTresorsPane = new JPanel(new GridLayout(2,1));
+        this.paneWest.add(cartesEtTresorsPane, BorderLayout.CENTER);
+        this.panelTresors = new JPanel(new GridLayout(2,2));
+        this.cartesEtTresorsPane.add(panelTresors);
+        this.cartesEtTresorsPane.add(new JLabel("Affichage de la main"));
+        
+        //debug graphique
+        //this.cartesEtTresorsPane.setBackground(Color.red);
+        //this.panelTresors.setBackground(Color.red);
+    }
+
+    private void initPaneBoutonsTresors() {
+        this.paneBoutonsTresors = new JPanel(new GridLayout(4,1));
+        this.paneWest.add(paneBoutonsTresors, BorderLayout.WEST);
+        this.boutonCalice = new JButton("Récupérer le Calice");
+        this.boutonCristal = new JButton("Récupérer le Crystal");
+        this.boutonPierre = new JButton("Récupérer la Pierre");
+        this.boutonZephyr = new JButton("Récupérer le Zéphyr");
+        
+        this.boutonCalice.setEnabled(false);
+        this.boutonCristal.setEnabled(false);
+        this.boutonPierre.setEnabled(false);
+        this.boutonZephyr.setEnabled(false);
+        
+        this.paneBoutonsTresors.add(boutonCalice);
+        this.paneBoutonsTresors.add(boutonCristal);
+        this.paneBoutonsTresors.add(boutonPierre);
+        this.paneBoutonsTresors.add(boutonZephyr);
+        
+        this.boutonCalice.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicCalice();
+            }
+        });
+        
+        this.boutonCristal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicCristal();
+            }
+        });
+        
+        this.boutonPierre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicPierre();
+            }
+        });
+        
+        this.boutonZephyr.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicZephyr();
+            }
+        });
+        
+        //debug graphique
+        //this.paneBoutonsTresors.setBackground(Color.red);
+    }
+    
+    private void traiterClicCalice(){
+        ihm.traiterClicCalice();
+    }
+    
+    private void traiterClicCristal(){
+        ihm.traiterClicCristal();
+    }
+    
+    private void traiterClicPierre(){
+        ihm.traiterClicPierre();
+    }
+    
+    private void traiterClicZephyr(){
+        ihm.traiterClicZephyr();
+    }
+
+    private void initPaneWest() {
+        this.paneWest = new JPanel(new BorderLayout());
+        this.content.add(paneWest, BorderLayout.WEST);
+        
+        this.initCartesEtTResorsPane();
+        this.initPaneBoutonsTresors();
+        
+        //debug graphique
+        //this.paneWest.setBackground(Color.red);
     }
     
 }

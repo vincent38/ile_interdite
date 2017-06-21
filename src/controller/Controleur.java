@@ -147,7 +147,6 @@ public class Controleur implements Observer {
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
         }
-        new Scanner(System.in).nextLine();
 
     }
 
@@ -318,6 +317,7 @@ public class Controleur implements Observer {
             if ("montee_eaux".equals(c.getTypeCarte())) {
                 //Actions montée des eaux
                 cranMarqueurNiveau++;
+                this.vueAventurier.setNiveau(cranMarqueurNiveau);
                 cartesInondation.shuffleDefausseCards();
                 cartesInondation.fusionDecks();
                 cartesTresor.defausserCarte(c);
@@ -339,27 +339,35 @@ public class Controleur implements Observer {
                 this.traiterBoutonAller();
                 this.operationEnCours = OPERATION_DEPLACEMENT;
                 break;
+                
             case CLIC_BTN_ASSECHER:
                 this.traiterAssechement();
                 //assecherTuile();
                 this.operationEnCours = OPERATION_ASSECHER;
                 break;
+                
             case CLIC_BTN_AUTRE_ACTION:
                 afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 break;
+                
             case CLIC_BTN_TERMINER_TOUR:
                 this.operationEnCours = OPERATION_AUCUNE;
                 vueAventurier.disableBoutons();
                 this.finTour();
                 break;
+                
             case CLIC_BTN_DONNER_CARTE:
                 this.operationEnCours = OPERATION_DONNER_CARTE;
                 this.traiterDonnerCarte();
                 break;
+                
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);
                 vueAventurier.enableInteraction();
                 break;
+                
+            case CLIC_BTN_TRESOR:
+                this.traiterClicBoutonTresor(m.typeTresor);
         }
 
     }
@@ -619,7 +627,7 @@ public class Controleur implements Observer {
                     cartesTresor.defausserCarte(buffer.remove(j));
                 }
                 avCourant.getCartesPossedees().addAll(buffer);
-                avCourant.addTresorsObtenus(avCourant.getTuile().getTresor());
+                this.addTresorsObtenus(avCourant.getTuile().getTresor());
                 avCourant.getTuile().wipeTresor();
             } else {
                 avCourant.getCartesPossedees().addAll(buffer);
@@ -638,4 +646,23 @@ public class Controleur implements Observer {
         avCourant.retirerCarte(carteADonner);
         destinataire.ajouterCarte(carteADonner);
     }
+
+    private void traiterClicBoutonTresor(TypeTresor t) {
+        switch(t){
+            case caliceDeLOnde:
+                this.tresorsObtenus.add;
+                break;
+                
+            case cristalArdent:
+                break;
+                
+            case pierreSacree:
+                break;
+                
+            case statueDuZephyr:
+                break;
+        }
+    }
+
+    
 }

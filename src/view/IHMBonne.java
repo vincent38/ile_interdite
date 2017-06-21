@@ -26,7 +26,10 @@ import model.Message;
 import model.TypeMessage;
 import model.Observateur;
 import model.Tuile;
+import model.TypeTresor;
 import model.aventurier.Aventurier;
+import util.Utils;
+import util.Utils.Tresor;
 
 /**
  *
@@ -90,7 +93,6 @@ public class IHMBonne extends Observable{
     }
 
     public void setNbAct(int i) {
-        System.out.println("*");
         fenetre.setNbAct(i);
     }
 
@@ -126,5 +128,33 @@ public class IHMBonne extends Observable{
     
     public void actualiseTuiles() {
         fenetre.actualiseTuiles(g);
+    }
+
+    public void setNiveau(int niv) {
+        this.fenetre.setNiveau(niv);
+    }
+
+    void traiterClicCalice() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR, TypeTresor.caliceDeLOnde));
+        this.clearChanged();    
+    }
+
+    void traiterClicCristal() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR, TypeTresor.cristalArdent));
+        this.clearChanged();
+    }
+
+    void traiterClicPierre() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR, TypeTresor.pierreSacree));
+        this.clearChanged();
+    }
+
+    void traiterClicZephyr() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR, TypeTresor.statueDuZephyr));
+        this.clearChanged();
     }
 }
