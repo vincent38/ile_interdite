@@ -756,7 +756,7 @@ public class Controleur implements Observer {
         nomsJoueurs = vueSelection.getNomsJoueurs();
         for (int i = 0; i < nomsJoueurs.size(); i++){
             joueurs.add(specialisationAleatoire(nomsJoueurs.get(i)));
-            System.out.println(nomsJoueurs.get(i));
+            //System.out.println(nomsJoueurs.get(i));
         }
         
         avCourant = joueurs.get(0);
@@ -788,7 +788,7 @@ public class Controleur implements Observer {
        
         shuffleSpe();
         nomAve = specialisations.get(0);
-        System.out.println(specialisations.get(0));
+        //System.out.println(specialisations.get(0));
         specialisations.remove(0);
 
 

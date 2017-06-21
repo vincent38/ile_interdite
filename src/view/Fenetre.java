@@ -113,8 +113,11 @@ public class Fenetre extends JFrame{
     
     public void afficherJoueurPane() {
         nomJoueur.setText(joueur.getNom());
+        nomJoueur.setForeground(joueur.getColor());
         classeJoueur.setText(joueur.getType());
+        classeJoueur.setForeground(joueur.getColor());
         nbAct.setText("" + nbActRestantes);
+        nbAct.setForeground(joueur.getColor());
     }
 
     void afficherAventuriers(Grille g) {
@@ -142,11 +145,15 @@ public class Fenetre extends JFrame{
 
     void setNbAct(int i) {
         this.nbAct.setText(""+i);
+        
     }
 
     void setAventurier(Aventurier av) {
         this.nomJoueur.setText(av.getNom());
         this.classeJoueur.setText(av.getType());
+        nomJoueur.setForeground(av.getColor());
+        classeJoueur.setForeground(av.getColor());
+        nbAct.setForeground(av.getColor());
     }
 
     void enable(int x, int y) {
