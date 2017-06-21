@@ -31,8 +31,4 @@ public class Message {
         
     }
 
-    public Message(TypeMessage typeMessage, TypeTresor typeTresor) {
-        this.type = typeMessage;
-        this.typeTresor = typeTresor;
-    }
 }

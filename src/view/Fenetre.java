@@ -14,13 +14,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import model.Grille;
+import model.Tresor;
 import model.Tuile;
+import model.TypeTresor;
 import model.aventurier.Aventurier;
 
 /**
@@ -63,7 +66,7 @@ public class Fenetre extends JFrame{
     private int nbActRestantes;
     
     private HashMap<Aventurier, JPanel> paneAventuriers;
-    private JPanel panelTresors;
+    private JPanel paneTresors;
     private VueNiveau vueNiv;
     
     
@@ -393,8 +396,8 @@ public class Fenetre extends JFrame{
     private void initCartesEtTResorsPane() {
         this.cartesEtTresorsPane = new JPanel(new GridLayout(2,1));
         this.paneWest.add(cartesEtTresorsPane, BorderLayout.CENTER);
-        this.panelTresors = new JPanel(new GridLayout(2,2));
-        this.cartesEtTresorsPane.add(panelTresors);
+        this.paneTresors = new JPanel(new GridLayout(2,2));
+        this.cartesEtTresorsPane.add(paneTresors);
         this.cartesEtTresorsPane.add(new JLabel("Affichage de la main"));
         
         //debug graphique
@@ -423,28 +426,28 @@ public class Fenetre extends JFrame{
         this.boutonCalice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                traiterClicCalice();
+                traiterClicTresor();
             }
         });
         
         this.boutonCristal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                traiterClicCristal();
+                traiterClicTresor();
             }
         });
         
         this.boutonPierre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                traiterClicPierre();
+                traiterClicTresor();
             }
         });
         
         this.boutonZephyr.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                traiterClicZephyr();
+                traiterClicTresor();
             }
         });
         
@@ -452,31 +455,72 @@ public class Fenetre extends JFrame{
         //this.paneBoutonsTresors.setBackground(Color.red);
     }
     
-    private void traiterClicCalice(){
-        ihm.traiterClicCalice();
-    }
-    
-    private void traiterClicCristal(){
-        ihm.traiterClicCristal();
-    }
-    
-    private void traiterClicPierre(){
-        ihm.traiterClicPierre();
-    }
-    
-    private void traiterClicZephyr(){
-        ihm.traiterClicZephyr();
+    private void traiterClicTresor(){
+        ihm.traiterClicTresor();
     }
 
     private void initPaneWest() {
         this.paneWest = new JPanel(new BorderLayout());
         this.content.add(paneWest, BorderLayout.WEST);
         
+        
         this.initCartesEtTResorsPane();
         this.initPaneBoutonsTresors();
         
         //debug graphique
         //this.paneWest.setBackground(Color.red);
+    }
+
+    void afficherTresor(Tresor tresor) {
+        JLabel img = null;
+        switch(tresor.typeTresor){
+            case caliceDeLOnde:
+                img = new JLabel(new ImageIcon(getClass().getResource("/images/calice.png")));
+                
+                break;
+            case cristalArdent:
+                img = new JLabel(new ImageIcon(getClass().getResource("/images/cristal.png")));
+                this.paneTresors.add(img);
+                this.content.repaint();
+                break;
+            case pierreSacree:
+                img = new JLabel(new ImageIcon(getClass().getResource("/images/pierre.png")));
+                this.paneTresors.add(img);
+                this.content.repaint();
+                break;
+            case statueDuZephyr:
+                img = new JLabel(new ImageIcon(getClass().getResource("/images/zephyr.png")));
+               
+        }
+        this.paneTresors.add(img);
+        this.content.invalidate();
+        this.paneTresors.invalidate();
+        this.paneTresors.validate();
+        this.content.revalidate();
+    }
+
+    void enable(TypeTresor typeTresor) {
+        switch(typeTresor){
+            case caliceDeLOnde:
+                this.boutonCalice.setEnabled(true);
+                break;
+            case cristalArdent:
+                this.boutonCristal.setEnabled(true);
+                    break;
+            case pierreSacree:
+                this.boutonPierre.setEnabled(true);
+                break;
+            case statueDuZephyr:
+                this.boutonZephyr.setEnabled(true);
+                break;
+        }
+    }
+
+    void disableTresors() {
+        this.boutonCalice.setEnabled(false);
+        this.boutonCristal.setEnabled(false);
+        this.boutonPierre.setEnabled(false);
+        this.boutonZephyr.setEnabled(false);
     }
     
 }

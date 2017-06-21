@@ -41,6 +41,7 @@ public class Controleur implements Observer {
     private final ArrayList<Aventurier> joueurs = new ArrayList<>();
     private final Grille grille;
     private final ArrayList<Tresor> tresors = new ArrayList<>();
+    private ArrayList<Tresor> tresorsObtenus = new ArrayList();
 
     private final DeckCartesTresor cartesTresor = new DeckCartesTresor();
     private final DeckCartesInondation cartesInondation = new DeckCartesInondation();
@@ -66,6 +67,7 @@ public class Controleur implements Observer {
     private boolean deplacementObligatoire;
     
     public String pktnul; // Sert à afficher pourquoi on a perdu la partie
+    
 
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
@@ -147,6 +149,8 @@ public class Controleur implements Observer {
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
         }
+        
+        this.afficherTresorsRamassables();
 
     }
 
@@ -155,7 +159,7 @@ public class Controleur implements Observer {
      * d'actions maximal, la fonction joueurSuivant est appelée
      */
     public void ajouterAction() {
-        action += 1;
+        //action += 1;
         System.out.println(doubleAssechement);
         if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
             finTour();
@@ -338,6 +342,7 @@ public class Controleur implements Observer {
             case CLIC_BTN_ALLER:
                 this.traiterBoutonAller();
                 this.operationEnCours = OPERATION_DEPLACEMENT;
+                
                 break;
                 
             case CLIC_BTN_ASSECHER:
@@ -354,20 +359,29 @@ public class Controleur implements Observer {
                 this.operationEnCours = OPERATION_AUCUNE;
                 vueAventurier.disableBoutons();
                 this.finTour();
+                this.afficherTresorsRamassables();
                 break;
                 
             case CLIC_BTN_DONNER_CARTE:
                 this.operationEnCours = OPERATION_DONNER_CARTE;
                 this.traiterDonnerCarte();
+                this.afficherTresorsRamassables();
                 break;
                 
             case CLIC_CASE:
-                this.traiterClicCase(m.x, m.y);
-                vueAventurier.enableInteraction();
+                if(this.operationEnCours == OPERATION_DEPLACEMENT){
+                    this.traiterClicCase(m.x, m.y);
+                    vueAventurier.enableInteraction();
+                    this.afficherTresorsRamassables();
+                }else{
+                    this.traiterClicCase(m.x, m.y);
+                }
                 break;
                 
             case CLIC_BTN_TRESOR:
-                this.traiterClicBoutonTresor(m.typeTresor);
+                this.traiterClicBoutonTresor();
+                this.afficherTresorsRamassables();
+                break;
         }
 
     }
@@ -647,20 +661,30 @@ public class Controleur implements Observer {
         destinataire.ajouterCarte(carteADonner);
     }
 
-    private void traiterClicBoutonTresor(TypeTresor t) {
-        switch(t){
-            case caliceDeLOnde:
-                this.tresorsObtenus.add;
-                break;
-                
-            case cristalArdent:
-                break;
-                
-            case pierreSacree:
-                break;
-                
-            case statueDuZephyr:
-                break;
+    private void traiterClicBoutonTresor() {
+        this.addTresorsObtenus(avCourant.getTuile().getTresor());
+        this.vueAventurier.afficherTresor(avCourant.getTuile().getTresor());
+        this.avCourant.getTuile().tresor = null;
+    }
+
+    private void addTresorsObtenus(Tresor tresor) {
+        this.tresorsObtenus.add(tresor);
+    }
+
+    private void afficherTresorsRamassables() {
+        Tresor t = avCourant.getTuile().getTresor();
+        boolean tRamasse = false;
+        
+        this.vueAventurier.disableTresors();
+        if(t != null){
+            for(Tresor trO : this.tresorsObtenus){
+                if (t.typeTresor == trO.typeTresor){
+                    tRamasse = true;
+                }
+            }
+            if(!tRamasse){
+                this.vueAventurier.enable(t.typeTresor);
+            }
         }
     }
 
