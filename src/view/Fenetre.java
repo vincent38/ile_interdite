@@ -545,6 +545,7 @@ public class Fenetre extends JFrame{
     void afficherCartes(ArrayList<CarteTresor> cartes) {
         Image i = new ImageIcon(getClass().getResource("/images/Pierre.png")).getImage();
         JButton j;
+        this.paneCartes.removeAll();
         for (CarteTresor c : cartes){
             if(c.getTypeCarte().equals("tresor")){
                 CartePiece d = (CartePiece) c;
@@ -552,18 +553,21 @@ public class Fenetre extends JFrame{
             }else if(c.getTypeCarte().equals("action_speciale")){
                 CarteBonus d = (CarteBonus) c;
                 i = new ImageIcon(getClass().getResource("/images/" + d.getPouvoir() + ".png")).getImage();
-            }//else if(c.getTypeCarte().equals){
+            }else if(c.getTypeCarte().equals("montee_eaux")){
+                i = null;
+            }
             
             
             
             
             
             
+            if(i != null){
+                i = scaleImage(i, 100, 200);
+                j = new JButton(new ImageIcon(i));
             
-            i = scaleImage(i, 100, 200);
-            j = new JButton(new ImageIcon(i));
-            
-            this.paneCartes.add(j);
+                this.paneCartes.add(j);
+            }
         }
     }
     

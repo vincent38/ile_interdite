@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.Grille;
@@ -26,6 +25,7 @@ import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHMselectionJoueur;
 import view.IHMBonne;
+import view.IHMDefausse;
 import view.IHMDonCarte;
 
 
@@ -53,6 +53,7 @@ public class Controleur implements Observer {
     private int cranMarqueurNiveau;
     private static final int NIVEAU_EAU_MAX = 10;
 
+    private IHMDefausse vueDefausse;
     private final IHMselectionJoueur vueSelection;
     private  IHMDonCarte vueDonCarte;
     private IHMBonne vueAventurier;
@@ -240,6 +241,7 @@ public class Controleur implements Observer {
             } else {
                 joueurSuivant();
                 avCourant.setPouvoirDispo(true);
+                this.vueAventurier.actualiserCartes(avCourant.getCartes());
                 //Si avCourant est sur une tuile inondée, on le déplace d'office
                 if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
                     vueAventurier.disableInteraction();
@@ -394,6 +396,7 @@ public class Controleur implements Observer {
                 this.traiterClicBoutonTresor();
                 this.afficherTresorsRamassables();
                 break;
+            case CLIC_BTN_VALIDER_DEFAUSSE:
 
         }
 
@@ -453,6 +456,8 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
+        vueDefausse = new IHMDefausse();
+        this.vueDefausse.addObserver(this);
         while (avCourant.getCartes().size() > 5) {
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
             cartesTresor.defausserCarte(c);
@@ -743,33 +748,28 @@ public class Controleur implements Observer {
             joueurs.add(specialisationAleatoire(nomsJoueurs.get(i)));
 
             //System.out.println(nomsJoueurs.get(i));
+        }
 
-            System.out.println(nomsJoueurs.get(i));
             
             for (Aventurier a : joueurs) {
-            for (int j = 1; j <= 2; j++) {
-                CarteTresor c = cartesTresor.tirerCarte();
-                if ("montee_eaux".equals(c.getTypeCarte())) {
-                    //Sélectionner une autre carte et replacer la carte précédente
+                for (int j = 1; j <= 2; j++) {
                     CarteTresor d = cartesTresor.tirerCarte();
                     while ("montee_eaux".equals(d.getTypeCarte())) {
-                        CarteTresor e = cartesTresor.tirerCarte();
-                        cartesTresor.replacerDansLaPile(d);
-                        d = e;
+                        //Sélectionner une autre carte et replacer la carte précédente
+                            cartesTresor.replacerDansLaPile(d);
+                            cartesTresor.shuffleCards();
+
+                            d = cartesTresor.tirerCarte();
+
                     }
-                    a.ajouterCarte(d);
-                    cartesTresor.replacerDansLaPile(c);
-                    cartesTresor.shuffleCards();
-                } else {
-                    //Ajout de la carte au deck du joueur
-                    a.ajouterCarte(c);
-                }
+                        a.ajouterCarte(d);
+                        cartesTresor.shuffleCards();
+                        //Ajout de la carte au deck du joueur
             }
         }
 
         
         
-        }
         
         
         avCourant = joueurs.get(0);
@@ -870,7 +870,7 @@ public class Controleur implements Observer {
     }
 
     private void afficherCartes() {
-        this.vueAventurier.afficherCartes(avCourant.getCartes());
+        this.vueAventurier.actualiserCartes(avCourant.getCartes());
     }
 
 }
