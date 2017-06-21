@@ -93,6 +93,12 @@ public class Controleur implements Observer {
         this.vueSelection = new IHMselectionJoueur();
         this.vueSelection.addObserver(this);
         
+        specialisations.add("ingenieur");
+        specialisations.add("naviguateur");
+        specialisations.add("pilote");
+        specialisations.add("explorateur");
+        specialisations.add("plongeur");
+        specialisations.add("messager");
         
         
         this.action = 0;
@@ -534,13 +540,13 @@ public class Controleur implements Observer {
      * déplacer - le niveau de l'eau arrive au max
      */
     private boolean gameOver() {
-        if (//heliportMort()
-            //    || pierreSacreeMort()
-            //    || statueZephyrMort()
-            //    || cristalArdentMort()
-            //    || caliceOndeMort()
-            //    || aventurierMort()
-            /*    ||*/ eauMax()) {
+        if (heliportMort()
+                || pierreSacreeMort()
+                || statueZephyrMort()
+                || cristalArdentMort()
+                || caliceOndeMort()
+                || aventurierMort()
+                || eauMax()) {
             return true;
         }
         return false;
@@ -752,6 +758,7 @@ public class Controleur implements Observer {
         nomsJoueurs = vueSelection.getNomsJoueurs();
         for (int i = 0; i < nomsJoueurs.size(); i++){
             joueurs.add(specialisationAleatoire(nomsJoueurs.get(i)));
+            System.out.println(nomsJoueurs.get(i));
         }
         
         avCourant = joueurs.get(0);
@@ -779,39 +786,34 @@ public class Controleur implements Observer {
         Aventurier aventurier = null;
         String nomAve;
         
-        specialisations.add("ingenieur");
-        specialisations.add("naviguateur");
-        specialisations.add("pilote");
-        specialisations.add("explorateur");
-        specialisations.add("plongeur");
-        specialisations.add("messager");
-        
-        for (int i = 0; i < nomsJoueurs.size(); i++){
-            shuffleSpe();
-            nomAve = specialisations.get(0);
-            specialisations.remove(0);
-            
-            
-            if (nomAve.equals("ingenieur")){
-                aventurier = new Ingenieur(grille.getTuile(SPAWN_INGENIEUR), nom);
-            }
-            else if (nomAve.equals("naviguateur")){
-                aventurier = new Navigateur(grille.getTuile(SPAWN_NAVIGATEUR), nom);
-            }
-            else if (nomAve.equals("pilote")){
-                aventurier = new Pilote(grille.getTuile(SPAWN_PILOTE), nom);
-            }
-            else if (nomAve.equals("explorateur")){
-                aventurier = new Explorateur(grille.getTuile(SPAWN_EXPLORATEUR), nom);
-            }
-            else if (nomAve.equals("plongeur")){
-                aventurier = new Plongeur(grille.getTuile(SPAWN_PLONGEUR), nom);
-            }
-            else if (nomAve.equals("messager")){
-                aventurier = new Messager(grille.getTuile(SPAWN_MESSAGER), nom);
-            }  
-            
+        System.out.println(nomsJoueurs.size());   
+       
+        shuffleSpe();
+        nomAve = specialisations.get(0);
+        System.out.println(specialisations.get(0));
+        specialisations.remove(0);
+
+
+        if (nomAve.equals("ingenieur")){
+            aventurier = new Ingenieur(grille.getTuile(SPAWN_INGENIEUR), nom);
         }
+        else if (nomAve.equals("naviguateur")){
+            aventurier = new Navigateur(grille.getTuile(SPAWN_NAVIGATEUR), nom);
+        }
+        else if (nomAve.equals("pilote")){
+            aventurier = new Pilote(grille.getTuile(SPAWN_PILOTE), nom);
+        }
+        else if (nomAve.equals("explorateur")){
+            aventurier = new Explorateur(grille.getTuile(SPAWN_EXPLORATEUR), nom);
+        }
+        else if (nomAve.equals("plongeur")){
+            aventurier = new Plongeur(grille.getTuile(SPAWN_PLONGEUR), nom);
+        }
+        else if (nomAve.equals("messager")){
+            aventurier = new Messager(grille.getTuile(SPAWN_MESSAGER), nom);
+        }  
+
+        
         
         return aventurier;
     }
@@ -819,8 +821,23 @@ public class Controleur implements Observer {
     private void shuffleSpe() {
     
         Collections.shuffle(specialisations);
-        Collections.shuffle(specialisations);
-        Collections.shuffle(specialisations);
+    }
+
+    private void traiterClicBoutonTresor(TypeTresor t) {
+        switch(t){
+            case caliceDeLOnde:
+                //this.tresorsObtenus.add();
+                break;
+                
+            case cristalArdent:
+                break;
+                
+            case pierreSacree:
+                break;
+                
+            case statueDuZephyr:
+                break;
+        }
     }
 
     private void afficherCartes() {
