@@ -5,9 +5,12 @@
  */
 package view;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import model.Message;
 import model.TypeMessage;
+import model.aventurier.Aventurier;
+import model.carte.CarteTresor;
 
 /**
  *
@@ -16,8 +19,8 @@ import model.TypeMessage;
 public class IHMDonCarte extends Observable {
     private FenetreDonCarte fenetre;
     
-    public IHMDonCarte() {
-        fenetre = new FenetreDonCarte(this);
+    public IHMDonCarte(ArrayList<Aventurier> aventuriers, ArrayList<CarteTresor> cartes) {
+        fenetre = new FenetreDonCarte(this, aventuriers, cartes);
     }
 
     public void traiterClicAnnuler() {

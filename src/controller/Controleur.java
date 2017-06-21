@@ -54,7 +54,7 @@ public class Controleur implements Observer {
     private static final int NIVEAU_EAU_MAX = 10;
 
     private final IHMselectionJoueur vueSelection;
-    private  IHMDonCarte vueDonCarte = new IHMDonCarte();
+    private  IHMDonCarte vueDonCarte;
     private IHMBonne vueAventurier;
     private Aventurier avCourant;
     private int action;
@@ -351,7 +351,7 @@ public class Controleur implements Observer {
             case CLIC_BTN_DONNER_CARTE:
                 //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 this.operationEnCours = OPERATION_DONNER_CARTE;
-                this.traiterDonnerCarte();
+                this.InitDonCarte();
                 this.afficherTresorsRamassables();
                 break;
                 
@@ -687,16 +687,15 @@ public class Controleur implements Observer {
         }
     }
 
-    private void traiterDonnerCarte() {
+    private void InitDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
         ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
         ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
         CarteTresor carteADonner = null;
         Aventurier destinataire = null;
+        vueDonCarte = new IHMDonCarte(aventuriersMemeTuile, cartesPossedees);
         vueAventurier.disableInteraction();
         vueDonCarte.afficherFenetre();
-        //avCourant.retirerCarte(carteADonner);
-        //destinataire.ajouterCarte(carteADonner);
     }
 
 
