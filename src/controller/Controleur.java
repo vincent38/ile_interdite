@@ -90,7 +90,6 @@ public class Controleur implements Observer {
      * jeu, ainsi que les appels aux vues.
      */
     public Controleur() {
-        
         this.vueSelection = new IHMselectionJoueur();
         this.vueSelection.addObserver(this);
         
@@ -157,9 +156,8 @@ public class Controleur implements Observer {
         }
 
         
-        new Scanner(System.in).nextLine();
 
-
+        //System.out.println(vueAventurier);
         //Tirage des cartes inondation de début de partie
         for (int i = 1; i <= 6; i++) {
             CarteInondation c = cartesInondation.tirerCarte();
@@ -169,6 +167,10 @@ public class Controleur implements Observer {
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
         }
+        
+        
+        
+        this.afficherCartes();
         
         this.afficherTresorsRamassables();
 
@@ -819,6 +821,10 @@ public class Controleur implements Observer {
         Collections.shuffle(specialisations);
         Collections.shuffle(specialisations);
         Collections.shuffle(specialisations);
+    }
+
+    private void afficherCartes() {
+        this.vueAventurier.afficherCartes(avCourant.getCartes());
     }
 
 }
