@@ -238,7 +238,7 @@ public class Controleur implements Observer {
             vueAventurier.fermerFenetre();
         } else {
             if (victoire()) {
-                afficherInformation("Bravo ! Vous avez réussi ! Mais vous êtes quand même des gros nuls ! :D");
+                afficherInformation("Bravo ! Vous avez réussi !");
                 vueAventurier.fermerFenetre();
             } else {
                 joueurSuivant();
