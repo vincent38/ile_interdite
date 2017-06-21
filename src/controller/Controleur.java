@@ -697,7 +697,7 @@ public class Controleur implements Observer {
                     cartesTresor.defausserCarte(buffer.remove(j));
                 }
                 avCourant.getCartesPossedees().addAll(buffer);
-                this.addTresorsObtenus(avCourant.getTuile().getTresor());
+                //this.addTresorsObtenus(avCourant.getTuile().getTresor());
                 avCourant.getTuile().wipeTresor();
             } else {
                 avCourant.getCartesPossedees().addAll(buffer);
@@ -795,7 +795,7 @@ public class Controleur implements Observer {
     private void traiterClicBoutonTresor(TypeTresor t) {
         switch(t){
             case caliceDeLOnde:
-                this.tresorsObtenus.add;
+                //this.tresorsObtenus.add;
                 break;
                 
             case cristalArdent:
