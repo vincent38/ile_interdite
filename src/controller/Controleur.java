@@ -397,6 +397,7 @@ public class Controleur implements Observer {
                 this.afficherTresorsRamassables();
                 break;
             case CLIC_BTN_VALIDER_DEFAUSSE:
+                vueDefausse.fermerFenetre();
 
         }
 
@@ -456,9 +457,9 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        vueDefausse = new IHMDefausse();
-        this.vueDefausse.addObserver(this);
         while (avCourant.getCartes().size() > 5) {
+            vueDefausse = new IHMDefausse();
+            this.vueDefausse.addObserver(this);
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
