@@ -532,13 +532,13 @@ public class Controleur implements Observer {
      * déplacer - le niveau de l'eau arrive au max
      */
     private boolean gameOver() {
-        if (//heliportMort()
-            //    || pierreSacreeMort()
-            //    || statueZephyrMort()
-            //    || cristalArdentMort()
-            //    || caliceOndeMort()
-            //    || aventurierMort()
-            /*    ||*/ eauMax()) {
+        if (heliportMort()
+                || pierreSacreeMort()
+                || statueZephyrMort()
+                || cristalArdentMort()
+                || caliceOndeMort()
+                || aventurierMort()
+                || eauMax()) {
             return true;
         }
         return false;
