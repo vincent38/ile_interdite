@@ -241,6 +241,7 @@ public class Controleur implements Observer {
             } else {
                 joueurSuivant();
                 avCourant.setPouvoirDispo(true);
+                this.vueAventurier.actualiserCartes(avCourant.getCartes());
                 //Si avCourant est sur une tuile inondée, on le déplace d'office
                 if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
                     vueAventurier.disableInteraction();
@@ -734,33 +735,28 @@ public class Controleur implements Observer {
             joueurs.add(specialisationAleatoire(nomsJoueurs.get(i)));
 
             //System.out.println(nomsJoueurs.get(i));
+        }
 
-            System.out.println(nomsJoueurs.get(i));
             
             for (Aventurier a : joueurs) {
-            for (int j = 1; j <= 2; j++) {
-                CarteTresor c = cartesTresor.tirerCarte();
-                if ("montee_eaux".equals(c.getTypeCarte())) {
-                    //Sélectionner une autre carte et replacer la carte précédente
+                for (int j = 1; j <= 2; j++) {
                     CarteTresor d = cartesTresor.tirerCarte();
                     while ("montee_eaux".equals(d.getTypeCarte())) {
-                        CarteTresor e = cartesTresor.tirerCarte();
-                        cartesTresor.replacerDansLaPile(d);
-                        d = e;
+                        //Sélectionner une autre carte et replacer la carte précédente
+                            cartesTresor.replacerDansLaPile(d);
+                            cartesTresor.shuffleCards();
+
+                            d = cartesTresor.tirerCarte();
+
                     }
-                    a.ajouterCarte(d);
-                    cartesTresor.replacerDansLaPile(c);
-                    cartesTresor.shuffleCards();
-                } else {
-                    //Ajout de la carte au deck du joueur
-                    a.ajouterCarte(c);
-                }
+                        a.ajouterCarte(d);
+                        cartesTresor.shuffleCards();
+                        //Ajout de la carte au deck du joueur
             }
         }
 
         
         
-        }
         
         
         avCourant = joueurs.get(0);
@@ -861,7 +857,7 @@ public class Controleur implements Observer {
     }
 
     private void afficherCartes() {
-        this.vueAventurier.afficherCartes(avCourant.getCartes());
+        this.vueAventurier.actualiserCartes(avCourant.getCartes());
     }
 
 }
