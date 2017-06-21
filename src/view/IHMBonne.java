@@ -76,9 +76,9 @@ public class IHMBonne extends Observable{
         this.clearChanged();
     }
     
-    public void traiterClicAutreAction(){
+    public void traiterClicDonCarte(){
         this.setChanged();
-        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_AUTRE_ACTION));
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_DONNER_CARTE));
         this.clearChanged();
     }
     
@@ -152,5 +152,9 @@ public class IHMBonne extends Observable{
 
     public void disableTresors() {
         this.fenetre.disableTresors();
+    }
+
+    public void afficherCartes(ArrayList<CarteTresor> cartes) {
+        this.fenetre.afficherCartes(cartes);
     }
 }

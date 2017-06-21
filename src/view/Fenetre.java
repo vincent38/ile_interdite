@@ -9,9 +9,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
@@ -25,6 +29,8 @@ import model.Tresor;
 import model.Tuile;
 import model.TypeTresor;
 import model.aventurier.Aventurier;
+import model.carte.CartePiece;
+import model.carte.CarteTresor;
 
 /**
  *
@@ -42,6 +48,7 @@ public class Fenetre extends JFrame{
     private JPanel joueurPane;
     private JPanel niveauEauPane;
     private JPanel cartesEtTresorsPane;
+    private JPanel paneCartes;
     private JPanel paneWest;
     
     private JPanel[][] cases;
@@ -50,7 +57,7 @@ public class Fenetre extends JFrame{
     
     private JButton boutonDeplacer;
     private JButton boutonAssecher;
-    private JButton boutonAutreAction;
+    private JButton boutonDonnerCarte;
     private JButton boutonFinTour;
     
     private JButton boutonCalice;
@@ -104,7 +111,7 @@ public class Fenetre extends JFrame{
     }
     
     public void traiterClicAutreAction(){
-        ihm.traiterClicAutreAction();
+        ihm.traiterClicDonCarte();
     }
     
     public void traiterClicFinTour(){
@@ -222,14 +229,14 @@ public class Fenetre extends JFrame{
     public void disableInteraction(){
         boutonDeplacer.setEnabled(false);
         boutonAssecher.setEnabled(false);
-        boutonAutreAction.setEnabled(false);
+        boutonDonnerCarte.setEnabled(false);
         boutonFinTour.setEnabled(false);
     }
     
     public void enableInteraction(){
         boutonDeplacer.setEnabled(true);
         boutonAssecher.setEnabled(true);
-        boutonAutreAction.setEnabled(true);
+        boutonDonnerCarte.setEnabled(true);
         boutonFinTour.setEnabled(true);
     }
 
@@ -339,12 +346,12 @@ public class Fenetre extends JFrame{
         choixActionPane.setLayout(new GridLayout(2,2));
         boutonDeplacer = new JButton("Se deplacer");
         boutonAssecher = new JButton("Assecher");
-        boutonAutreAction = new JButton("Autre action");
+        boutonDonnerCarte = new JButton("Donner une carte");
         boutonFinTour = new JButton("Fin de tour");
         
         choixActionPane.add(boutonDeplacer);
         choixActionPane.add(boutonAssecher);
-        choixActionPane.add(boutonAutreAction);
+        choixActionPane.add(boutonDonnerCarte);
         choixActionPane.add(boutonFinTour);
         
         boutonDeplacer.addActionListener(new ActionListener() {
@@ -361,7 +368,7 @@ public class Fenetre extends JFrame{
             }
         });
         
-        boutonAutreAction.addActionListener(new ActionListener() {
+        boutonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 traiterClicAutreAction();
@@ -404,8 +411,12 @@ public class Fenetre extends JFrame{
         this.cartesEtTresorsPane = new JPanel(new GridLayout(2,1));
         this.paneWest.add(cartesEtTresorsPane, BorderLayout.CENTER);
         this.paneTresors = new JPanel(new GridLayout(2,2));
+        
+        this.paneCartes = new JPanel(new GridLayout(1,5));
         this.cartesEtTresorsPane.add(paneTresors);
-        this.cartesEtTresorsPane.add(new JLabel("Affichage de la main"));
+        this.cartesEtTresorsPane.add(paneCartes);
+        
+        
         
         //debug graphique
         //this.cartesEtTresorsPane.setBackground(Color.red);
@@ -529,5 +540,32 @@ public class Fenetre extends JFrame{
         this.boutonPierre.setEnabled(false);
         this.boutonZephyr.setEnabled(false);
     }
+
+    void afficherCartes(ArrayList<CarteTresor> cartes) {
+        Image i = new ImageIcon(getClass().getResource("/images/Pierre.png")).getImage();;
+        JButton j;
+        for (CarteTresor c : cartes){
+            if(c.getTypeCarte().equals("tresor")){
+                CartePiece d = (CartePiece) c;
+                i = new ImageIcon(getClass().getResource("/images/" + d.getNomTresor() + ".png")).getImage();
+            }  
+            
+            //i = scaleImage(i, 100, 200);
+            j = new JButton(new ImageIcon(i));
+            
+            this.paneCartes.add(j);
+        }
+    }
     
+    public static Image scaleImage(Image source, int width, int height) {
+    BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g = (Graphics2D) img.getGraphics();
+    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+    g.drawImage(source, 0, 0, width, height, null);
+    g.dispose();
+    return img;
+    }
+    
+  
+
 }

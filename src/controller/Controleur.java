@@ -26,6 +26,7 @@ import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHMselectionJoueur;
 import view.IHMBonne;
+import view.IHMDonCarte;
 
 
 /*
@@ -53,6 +54,7 @@ public class Controleur implements Observer {
     private static final int NIVEAU_EAU_MAX = 10;
 
     private final IHMselectionJoueur vueSelection;
+    private  IHMDonCarte vueDonCarte = new IHMDonCarte();
     private IHMBonne vueAventurier;
     private Aventurier avCourant;
     private int action;
@@ -90,9 +92,9 @@ public class Controleur implements Observer {
      * jeu, ainsi que les appels aux vues.
      */
     public Controleur() {
-        
         this.vueSelection = new IHMselectionJoueur();
         this.vueSelection.addObserver(this);
+        this.vueDonCarte.addObserver(this);
         
         specialisations.add("ingenieur");
         specialisations.add("naviguateur");
@@ -141,42 +143,7 @@ public class Controleur implements Observer {
         cranMarqueurNiveau = 0;
 
         //Distribution initiale des cartes
-        for (Aventurier a : joueurs) {
-            for (int i = 1; i <= 2; i++) {
-                CarteTresor c = cartesTresor.tirerCarte();
-                if ("montee_eaux".equals(c.getTypeCarte())) {
-                    //Sélectionner une autre carte et replacer la carte précédente
-                    CarteTresor d = cartesTresor.tirerCarte();
-                    while ("montee_eaux".equals(d.getTypeCarte())) {
-                        CarteTresor e = cartesTresor.tirerCarte();
-                        cartesTresor.replacerDansLaPile(d);
-                        d = e;
-                    }
-                    a.ajouterCarte(d);
-                    cartesTresor.replacerDansLaPile(c);
-                    cartesTresor.shuffleCards();
-                } else {
-                    //Ajout de la carte au deck du joueur
-                    a.ajouterCarte(c);
-                }
-            }
-        }
-
         
-        new Scanner(System.in).nextLine();
-
-
-        //Tirage des cartes inondation de début de partie
-        for (int i = 1; i <= 6; i++) {
-            CarteInondation c = cartesInondation.tirerCarte();
-            System.out.println("Carte tirée : " + c.getTuileConcernee());
-            Tuile t = grille.getTuile(c.getTuileConcernee());
-            t.mouillerTuile();
-            vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
-            cartesInondation.defausserCarte(c);
-        }
-        
-        this.afficherTresorsRamassables();
 
 
     }
@@ -381,20 +348,26 @@ public class Controleur implements Observer {
                 this.operationEnCours = OPERATION_ASSECHER;
                 break;
                 
-            case CLIC_BTN_AUTRE_ACTION:
-                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+            case CLIC_BTN_DONNER_CARTE:
+                //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                this.operationEnCours = OPERATION_DONNER_CARTE;
+                this.traiterDonnerCarte();
+                this.afficherTresorsRamassables();
+                break;
+                
+            case CLIC_BTN_ANNULER_DON_CARTE:
+                this.operationEnCours = OPERATION_AUCUNE;
+                vueDonCarte.cacherFenetre();
+                vueAventurier.enableInteraction();
+                break;
+                
+            case CLIC_BTN_VALIDER_DON_CARTE:
                 break;
                 
             case CLIC_BTN_TERMINER_TOUR:
                 this.operationEnCours = OPERATION_AUCUNE;
                 vueAventurier.disableBoutons();
                 this.finTour();
-                this.afficherTresorsRamassables();
-                break;
-                
-            case CLIC_BTN_DONNER_CARTE:
-                this.operationEnCours = OPERATION_DONNER_CARTE;
-                this.traiterDonnerCarte();
                 this.afficherTresorsRamassables();
                 break;
                 
@@ -475,6 +448,8 @@ public class Controleur implements Observer {
             this.assecherTuile(x, y);
             this.vueAventurier.actualiseTuiles();
         }
+        
+        this.vueAventurier.disableBoutons();
     }
 
     //Défausse automatique tant que le joueur a trop de cartes
@@ -720,9 +695,10 @@ public class Controleur implements Observer {
         ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
         CarteTresor carteADonner = null;
         Aventurier destinataire = null;
-        // Affichage fenêtre choix carte et destinataire
-        avCourant.retirerCarte(carteADonner);
-        destinataire.ajouterCarte(carteADonner);
+        vueAventurier.disableInteraction();
+        vueDonCarte.afficherFenetre();
+        //avCourant.retirerCarte(carteADonner);
+        //destinataire.ajouterCarte(carteADonner);
     }
 
 
@@ -756,8 +732,36 @@ public class Controleur implements Observer {
         nomsJoueurs = vueSelection.getNomsJoueurs();
         for (int i = 0; i < nomsJoueurs.size(); i++){
             joueurs.add(specialisationAleatoire(nomsJoueurs.get(i)));
+
             //System.out.println(nomsJoueurs.get(i));
+
+            System.out.println(nomsJoueurs.get(i));
+            
+            for (Aventurier a : joueurs) {
+            for (int j = 1; j <= 2; j++) {
+                CarteTresor c = cartesTresor.tirerCarte();
+                if ("montee_eaux".equals(c.getTypeCarte())) {
+                    //Sélectionner une autre carte et replacer la carte précédente
+                    CarteTresor d = cartesTresor.tirerCarte();
+                    while ("montee_eaux".equals(d.getTypeCarte())) {
+                        CarteTresor e = cartesTresor.tirerCarte();
+                        cartesTresor.replacerDansLaPile(d);
+                        d = e;
+                    }
+                    a.ajouterCarte(d);
+                    cartesTresor.replacerDansLaPile(c);
+                    cartesTresor.shuffleCards();
+                } else {
+                    //Ajout de la carte au deck du joueur
+                    a.ajouterCarte(c);
+                }
+            }
         }
+
+        
+        
+        }
+        
         
         avCourant = joueurs.get(0);
         this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
@@ -766,6 +770,24 @@ public class Controleur implements Observer {
         vueSelection.fermerFenetre();
         vueAventurier.disableBoutons();
         tirerCarteDebut();
+        
+        
+        //System.out.println(vueAventurier);
+        //Tirage des cartes inondation de début de partie
+        for (int j = 1; j <= 6; j++) {
+            CarteInondation c = cartesInondation.tirerCarte();
+            System.out.println("Carte tirée : " + c.getTuileConcernee());
+            Tuile t = grille.getTuile(c.getTuileConcernee());
+            t.mouillerTuile();
+            vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
+            cartesInondation.defausserCarte(c);
+        }
+        
+        
+        
+        this.afficherCartes();
+        
+        this.afficherTresorsRamassables();
     }
 
     private void tirerCarteDebut() {
@@ -836,6 +858,10 @@ public class Controleur implements Observer {
             case statueDuZephyr:
                 break;
         }
+    }
+
+    private void afficherCartes() {
+        this.vueAventurier.afficherCartes(avCourant.getCartes());
     }
 
 }
