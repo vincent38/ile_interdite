@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import model.carte.CarteTresor;
 
@@ -43,6 +44,13 @@ public class FenetreDefausse extends JFrame{
         panelSouth = new JPanel();
         panelCenter = new JPanel(new GridLayout(cartes.size(), 2));
         
+        
+        for (int i = 0; i < cartes.size(); i++){
+            JPanel panel = new JPanel();
+            JLabel label = new JLabel(cartes.get(i).getTypeCarte());
+            panelCenter.add(panel);
+            panel.add(label);
+        }
         
         this.add(mainPanel);
         mainPanel.add(panelSouth, BorderLayout.SOUTH);
