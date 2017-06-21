@@ -46,10 +46,10 @@ public class IHMBonne extends Observable{
     private Grille g;
     
     
-    public IHMBonne(Aventurier firstJoueur, int nbActRestantes, Grille g, ArrayList<Aventurier> aventuriers){
+    public IHMBonne(Aventurier firstJoueur, int nbAct, Grille g, ArrayList<Aventurier> aventuriers){
         this.g = g;
         this.aventuriers = aventuriers;
-        fenetre = new Fenetre(this, firstJoueur, nbActRestantes, aventuriers);
+        fenetre = new Fenetre(this, firstJoueur, nbAct, aventuriers);
         fenetre.afficherAventuriers(g);
         
     }
@@ -134,27 +134,23 @@ public class IHMBonne extends Observable{
         this.fenetre.setNiveau(niv);
     }
 
-    void traiterClicCalice() {
+
+    public void afficherTresor(model.Tresor tresor) {
+        this.fenetre.afficherTresor(tresor);
+    }
+
+    void traiterClicTresor() {
         this.setChanged();
-        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR, TypeTresor.caliceDeLOnde));
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR));
         this.clearChanged();    
+        
     }
 
-    void traiterClicCristal() {
-        this.setChanged();
-        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR, TypeTresor.cristalArdent));
-        this.clearChanged();
+    public void enable(TypeTresor typeTresor) {
+        this.fenetre.enable(typeTresor);
     }
 
-    void traiterClicPierre() {
-        this.setChanged();
-        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR, TypeTresor.pierreSacree));
-        this.clearChanged();
-    }
-
-    void traiterClicZephyr() {
-        this.setChanged();
-        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_TRESOR, TypeTresor.statueDuZephyr));
-        this.clearChanged();
+    public void disableTresors() {
+        this.fenetre.disableTresors();
     }
 }

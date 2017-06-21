@@ -196,6 +196,6 @@ public class Utils {
      * @param message Message à afficher 
      */
     public static void afficherInformation(String message) {
-        JOptionPane.showMessageDialog(null, message, "Information", JOptionPane.OK_OPTION);
+        JOptionPane.showMessageDialog(null, message, "Information", JOptionPane.PLAIN_MESSAGE);
     }
 }

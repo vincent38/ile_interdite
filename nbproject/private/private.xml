@@ -12,8 +12,22 @@
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/model/Grille.java</file>
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/model/aventurier/Aventurier.java</file>
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/controller/Controleur.java</file>
+<<<<<<< HEAD
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/FenetreJoueur.java</file>
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/IHMselectionJoueur.java</file>
+=======
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/model/aventurier/Navigateur.java</file>
+=======
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/view/IHMBonne.java</file>
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/view/Fenetre.java</file>
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/util/Utils.java</file>
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/controller/Controleur.java</file>
+<<<<<<< HEAD
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/model/Message.java</file>
+=======
+>>>>>>> 365bc39abd255b6bfae16f4b263d08f2d6e9ed58
+>>>>>>> 5b16895e7586765f8bc09776e4135023edbfec07
+>>>>>>> 19e65be798ff1433216c3b9c454a3ce7278f0b13
         </group>
     </open-files>
 </project-private>
