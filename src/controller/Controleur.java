@@ -439,6 +439,8 @@ public class Controleur implements Observer {
             this.assecherTuile(x, y);
             this.vueAventurier.actualiseTuiles();
         }
+        
+        this.vueAventurier.disableBoutons();
     }
 
     //Défausse automatique tant que le joueur a trop de cartes
