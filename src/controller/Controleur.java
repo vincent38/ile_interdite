@@ -1,27 +1,30 @@
 package controller;
 
-import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 import model.aventurier.Aventurier;
 import model.carte.Carte;
-import model.aventurier.Explorateur;
 import model.Grille;
 import model.Message;
-import model.aventurier.Ingenieur;
-import model.aventurier.Messager;
-import model.aventurier.Plongeur;
 import model.Tresor;
 import model.Tuile;
 import model.TypeTresor;
+import model.aventurier.Explorateur;
+import model.aventurier.Ingenieur;
+import model.aventurier.Messager;
+import model.aventurier.Navigateur;
+import model.aventurier.Pilote;
+import model.aventurier.Plongeur;
 import model.carte.CarteInondation;
 import model.carte.CartePiece;
 import model.carte.CarteTresor;
 import model.carte.DeckCartesInondation;
 import model.carte.DeckCartesTresor;
 import static util.Utils.*;
+import view.IHMselectionJoueur;
 import view.IHMBonne;
 
 
@@ -37,6 +40,7 @@ public class Controleur implements Observer {
     public static final int OPERATION_ASSECHER = 2;
     public static final int OPERATION_DONNER_CARTE = 3;
 
+    private ArrayList<String> specialisations = new ArrayList();
     private final ArrayList<Carte> cartes = new ArrayList<>();
     private final ArrayList<Aventurier> joueurs = new ArrayList<>();
     private final Grille grille;
@@ -49,7 +53,8 @@ public class Controleur implements Observer {
     private int cranMarqueurNiveau;
     private static final int NIVEAU_EAU_MAX = 10;
 
-    private final IHMBonne vueAventurier;
+    private final IHMselectionJoueur vueSelection;
+    private IHMBonne vueAventurier;
     private Aventurier avCourant;
     private int action;
     public static final int ACTION_NEXT_TOUR = 3;
@@ -69,25 +74,40 @@ public class Controleur implements Observer {
     public String pktnul; // Sert à afficher pourquoi on a perdu la partie
     
 
+    /*private final String NOMS_SPECIALISATIONS[] = {
+        "Ingenieur",
+        "Messager",
+        "Pilote",
+        "Plongeur",
+        "Navigateur",
+        "Explorateur"
+    };*/
+     
+    
+    private ArrayList<String> nomsJoueurs = new ArrayList<>(); 
+
     /**
      * Instancie un Controleur qui sert de classe principale. Gère la logique du
      * jeu, ainsi que les appels aux vues.
      */
     public Controleur() {
+        
+        this.vueSelection = new IHMselectionJoueur();
+        this.vueSelection.addObserver(this);
+        
+        
+        
         this.action = 0;
         //Initialisation de la grille
         this.grille = new Grille();
 
         //Création et placement des joueurs
-        joueurs.add(new Explorateur(grille.getTuile(SPAWN_EXPLORATEUR), "Jano"));
-        joueurs.add(new Messager(grille.getTuile(SPAWN_MESSAGER), "Jul"));
-        joueurs.add(new Ingenieur(grille.getTuile(SPAWN_INGENIEUR), "Vincent"));
-        joueurs.add(new Plongeur(grille.getTuile(SPAWN_PLONGEUR), "Clement"));
+        
         //joueurs.add(new Pilote(grille.getTuile(SPAWN_PILOTE), "Et mille"));
         //joueurs.add(new Navigateur(grille.getTuile(SPAWN_MESSAGER), "Henrie"));
 
         //Définition de l'aventurier courant
-        avCourant = joueurs.get(0);
+        
 
         //Définition des tuiles inondées et coulées en dur
         /*grille.setTuile(3, 0, Tuile.ETAT_TUILE_INONDEE);
@@ -111,9 +131,6 @@ public class Controleur implements Observer {
         grille.setTuile(2, 4, Tuile.ETAT_TUILE_COULEE);
 
         grille.setTuile(3, 5, Tuile.ETAT_TUILE_INONDEE);*/
-        
-        this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
-        this.vueAventurier.addObserver(this);
 
         //Définition du marqueur de niveau
         cranMarqueurNiveau = 0;
@@ -140,6 +157,10 @@ public class Controleur implements Observer {
             }
         }
 
+        
+        new Scanner(System.in).nextLine();
+
+
         //Tirage des cartes inondation de début de partie
         for (int i = 1; i <= 6; i++) {
             CarteInondation c = cartesInondation.tirerCarte();
@@ -151,6 +172,7 @@ public class Controleur implements Observer {
         }
         
         this.afficherTresorsRamassables();
+
 
     }
 
@@ -241,16 +263,20 @@ public class Controleur implements Observer {
             afficherInformation("Partie perdue : " + pktnul);
             vueAventurier.fermerFenetre();
         } else {
-            joueurSuivant();
-            avCourant.setPouvoirDispo(true);
-            //Si avCourant est sur une tuile inondée, on le déplace d'office
-            if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
-                vueAventurier.disableInteraction();
-                deplacementObligatoire = true;
-                this.operationEnCours = OPERATION_DEPLACEMENT;
-                this.traiterBoutonAller();
+            if (victoire()) {
+                afficherInformation("Bravo ! Vous avez réussi !");
+                vueAventurier.fermerFenetre();
+            } else {
+                joueurSuivant();
+                avCourant.setPouvoirDispo(true);
+                //Si avCourant est sur une tuile inondée, on le déplace d'office
+                if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+                    vueAventurier.disableInteraction();
+                    deplacementObligatoire = true;
+                    this.operationEnCours = OPERATION_DEPLACEMENT;
+                    this.traiterBoutonAller();
+                }
             }
-        //}
         }
     }
 
@@ -337,7 +363,6 @@ public class Controleur implements Observer {
     public void update(Observable o, Object arg) {
 
         Message m = (Message) arg;
-        vueAventurier.disableBoutons();
         switch (m.type) {
             case CLIC_BTN_ALLER:
                 this.traiterBoutonAller();
@@ -377,11 +402,18 @@ public class Controleur implements Observer {
                     this.traiterClicCase(m.x, m.y);
                 }
                 break;
+
+            case CLIC_COMMENCER:
+                this.lancerJeu();
+                break;
+
                 
             case CLIC_BTN_TRESOR:
+
                 this.traiterClicBoutonTresor();
                 this.afficherTresorsRamassables();
                 break;
+
         }
 
     }
@@ -445,25 +477,6 @@ public class Controleur implements Observer {
         }
     }
 
-    /**
-     * Retourne vrai si : - l'héliport est coulé - les deux tuiles d'une même
-     * relique est inondée sans qu'un joueur ait déjà récupéré la relique - une
-     * tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se
-     * déplacer - le niveau de l'eau arrive au max
-     */
-    private boolean gameOver() {
-        if (heliportMort()
-                || pierreSacreeMort()
-                || statueZephyrMort()
-                || cristalArdentMort()
-                || caliceOndeMort()
-                || aventurierMort()
-                || eauMax()) {
-            return true;
-        }
-        return false;
-    }
-
     private void traiterAssechement() {
         ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
         for (Tuile t : tuilesAssechables) {
@@ -507,6 +520,25 @@ public class Controleur implements Observer {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
 
+    }
+    
+    /**
+     * Retourne vrai si : - l'héliport est coulé - les deux tuiles d'une même
+     * relique est inondée sans qu'un joueur ait déjà récupéré la relique - une
+     * tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se
+     * déplacer - le niveau de l'eau arrive au max
+     */
+    private boolean gameOver() {
+        if (//heliportMort()
+            //    || pierreSacreeMort()
+            //    || statueZephyrMort()
+            //    || cristalArdentMort()
+            //    || caliceOndeMort()
+            //    || aventurierMort()
+            /*    ||*/ eauMax()) {
+            return true;
+        }
+        return false;
     }
 
     private boolean heliportMort() {
@@ -600,7 +632,7 @@ public class Controleur implements Observer {
     }
 
     private boolean eauMax() {
-        if (cranMarqueurNiveau == NIVEAU_EAU_MAX) {
+        if (cranMarqueurNiveau >= NIVEAU_EAU_MAX) {
             if (pktnul == null) {
                 pktnul = "L'île a été submergée";
             } else {
@@ -610,6 +642,44 @@ public class Controleur implements Observer {
         } else {
             return false;
         }
+    }
+    
+    private boolean victoire() {
+        if (   pierreSacreeObtenue()
+            && cristalArdentObtenu()
+            && statueZephyrObtenue()
+            && caliceOndeObtenu()
+            && quatreAventuriersSurHeliport()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean pierreSacreeObtenue() {
+        return true;
+    }
+    
+    private boolean cristalArdentObtenu() {
+        return true;
+    }
+    
+    private boolean statueZephyrObtenue() {
+        return true;
+    }
+    
+    private boolean caliceOndeObtenu() {
+        return true;
+    }
+    
+    private boolean quatreAventuriersSurHeliport() {
+        boolean b = true;
+        for (Aventurier aventurier : joueurs) {
+            if (aventurier.getTuile().getNom() != "Heliport") {
+                b = false;
+            }
+        }
+        return b;
     }
     
     private void getTresorFromTuile(){
@@ -661,6 +731,7 @@ public class Controleur implements Observer {
         destinataire.ajouterCarte(carteADonner);
     }
 
+
     private void traiterClicBoutonTresor() {
         this.addTresorsObtenus(avCourant.getTuile().getTresor());
         this.vueAventurier.afficherTresor(avCourant.getTuile().getTresor());
@@ -687,6 +758,79 @@ public class Controleur implements Observer {
             }
         }
     }
+    private void lancerJeu() {
+        nomsJoueurs = vueSelection.getNomsJoueurs();
+        for (int i = 0; i < nomsJoueurs.size(); i++){
+            joueurs.add(specialisationAleatoire(nomsJoueurs.get(i)));
+        }
+        
+        avCourant = joueurs.get(0);
+        this.vueAventurier = new IHMBonne(joueurs.get(0), 3, grille, joueurs);
+        this.vueAventurier.addObserver(this);
+        
+        vueSelection.fermerFenetre();
+        vueAventurier.disableBoutons();
+        tirerCarteDebut();
+    }
 
+    private void tirerCarteDebut() {
+        //Tirage des cartes inondation de début de partie
+        for (int i = 1; i <= 6; i++) {
+            CarteInondation c = cartesInondation.tirerCarte();
+            System.out.println("Carte tirée : " + c.getTuileConcernee());
+            Tuile t = grille.getTuile(c.getTuileConcernee());
+            t.mouillerTuile();
+            vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
+            cartesInondation.defausserCarte(c);
+        }
+    }
+
+    private Aventurier specialisationAleatoire(String nom) {
+        Aventurier aventurier = null;
+        String nomAve;
+        
+        specialisations.add("ingenieur");
+        specialisations.add("naviguateur");
+        specialisations.add("pilote");
+        specialisations.add("explorateur");
+        specialisations.add("plongeur");
+        specialisations.add("messager");
+        
+        for (int i = 0; i < nomsJoueurs.size(); i++){
+            shuffleSpe();
+            nomAve = specialisations.get(0);
+            specialisations.remove(0);
+            
+            
+            if (nomAve.equals("ingenieur")){
+                aventurier = new Ingenieur(grille.getTuile(SPAWN_INGENIEUR), nom);
+            }
+            else if (nomAve.equals("naviguateur")){
+                aventurier = new Navigateur(grille.getTuile(SPAWN_NAVIGATEUR), nom);
+            }
+            else if (nomAve.equals("pilote")){
+                aventurier = new Pilote(grille.getTuile(SPAWN_PILOTE), nom);
+            }
+            else if (nomAve.equals("explorateur")){
+                aventurier = new Explorateur(grille.getTuile(SPAWN_EXPLORATEUR), nom);
+            }
+            else if (nomAve.equals("plongeur")){
+                aventurier = new Plongeur(grille.getTuile(SPAWN_PLONGEUR), nom);
+            }
+            else if (nomAve.equals("messager")){
+                aventurier = new Messager(grille.getTuile(SPAWN_MESSAGER), nom);
+            }  
+            
+        }
+        
+        return aventurier;
+    }
+
+    private void shuffleSpe() {
     
+        Collections.shuffle(specialisations);
+        Collections.shuffle(specialisations);
+        Collections.shuffle(specialisations);
+    }
+
 }
