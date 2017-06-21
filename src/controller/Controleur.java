@@ -237,16 +237,20 @@ public class Controleur implements Observer {
             afficherInformation("Partie perdue : " + pktnul);
             vueAventurier.fermerFenetre();
         } else {
-            joueurSuivant();
-            avCourant.setPouvoirDispo(true);
-            //Si avCourant est sur une tuile inondée, on le déplace d'office
-            if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
-                vueAventurier.disableInteraction();
-                deplacementObligatoire = true;
-                this.operationEnCours = OPERATION_DEPLACEMENT;
-                this.traiterBoutonAller();
+            if (victoire()) {
+                afficherInformation("Bravo ! Vous avez réussi ! Mais vous êtes quand même des gros nuls ! :D");
+                vueAventurier.fermerFenetre();
+            } else {
+                joueurSuivant();
+                avCourant.setPouvoirDispo(true);
+                //Si avCourant est sur une tuile inondée, on le déplace d'office
+                if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+                    vueAventurier.disableInteraction();
+                    deplacementObligatoire = true;
+                    this.operationEnCours = OPERATION_DEPLACEMENT;
+                    this.traiterBoutonAller();
+                }
             }
-        //}
         }
     }
 
@@ -611,23 +615,29 @@ public class Controleur implements Observer {
     }
     
     private boolean pierreSacreeObtenue() {
-        return false;
+        return true;
     }
     
     private boolean cristalArdentObtenu() {
-        return false;
+        return true;
     }
     
     private boolean statueZephyrObtenue() {
-        return false;
+        return true;
     }
     
     private boolean caliceOndeObtenu() {
-        return false;
+        return true;
     }
     
     private boolean quatreAventuriersSurHeliport() {
-        return false;
+        boolean b = true;
+        for (Aventurier aventurier : joueurs) {
+            if (aventurier.getTuile().getNom() != "Heliport") {
+                b = false;
+            }
+        }
+        return b;
     }
     
     private void getTresorFromTuile(){
