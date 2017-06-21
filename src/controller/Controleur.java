@@ -351,7 +351,7 @@ public class Controleur implements Observer {
             case CLIC_BTN_DONNER_CARTE:
                 //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 this.operationEnCours = OPERATION_DONNER_CARTE;
-                this.InitDonCarte();
+                this.initDonCarte();
                 this.afficherTresorsRamassables();
                 break;
                 
@@ -689,7 +689,7 @@ public class Controleur implements Observer {
         }
     }
 
-    private void InitDonCarte() {
+    private void initDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
         ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
         ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
