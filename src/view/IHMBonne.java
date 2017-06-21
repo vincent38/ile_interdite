@@ -155,6 +155,6 @@ public class IHMBonne extends Observable{
     }
 
     public void afficherCartes(ArrayList<CarteTresor> cartes) {
-        //this.fenetre.afficherCartes
+        this.fenetre.afficherCartes(cartes);
     }
 }

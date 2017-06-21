@@ -9,9 +9,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
@@ -25,6 +29,9 @@ import model.Tresor;
 import model.Tuile;
 import model.TypeTresor;
 import model.aventurier.Aventurier;
+import model.carte.CarteBonus;
+import model.carte.CartePiece;
+import model.carte.CarteTresor;
 
 /**
  *
@@ -42,6 +49,7 @@ public class Fenetre extends JFrame{
     private JPanel joueurPane;
     private JPanel niveauEauPane;
     private JPanel cartesEtTresorsPane;
+    private JPanel paneCartes;
     private JPanel paneWest;
     
     private JPanel[][] cases;
@@ -113,8 +121,11 @@ public class Fenetre extends JFrame{
     
     public void afficherJoueurPane() {
         nomJoueur.setText(joueur.getNom());
+        nomJoueur.setForeground(joueur.getColor());
         classeJoueur.setText(joueur.getType());
+        classeJoueur.setForeground(joueur.getColor());
         nbAct.setText("" + nbActRestantes);
+        nbAct.setForeground(joueur.getColor());
     }
 
     void afficherAventuriers(Grille g) {
@@ -142,11 +153,15 @@ public class Fenetre extends JFrame{
 
     void setNbAct(int i) {
         this.nbAct.setText(""+i);
+        
     }
 
     void setAventurier(Aventurier av) {
         this.nomJoueur.setText(av.getNom());
         this.classeJoueur.setText(av.getType());
+        nomJoueur.setForeground(av.getColor());
+        classeJoueur.setForeground(av.getColor());
+        nbAct.setForeground(av.getColor());
     }
 
     void enable(int x, int y) {
@@ -394,11 +409,15 @@ public class Fenetre extends JFrame{
     }
 
     private void initCartesEtTResorsPane() {
-        this.cartesEtTresorsPane = new JPanel(new GridLayout(2,1));
+        this.cartesEtTresorsPane = new JPanel(new BorderLayout());
         this.paneWest.add(cartesEtTresorsPane, BorderLayout.CENTER);
         this.paneTresors = new JPanel(new GridLayout(2,2));
-        this.cartesEtTresorsPane.add(paneTresors);
-        this.cartesEtTresorsPane.add(new JLabel("Affichage de la main"));
+        
+        this.paneCartes = new JPanel(new GridLayout(1,5));
+        this.cartesEtTresorsPane.add(paneTresors, BorderLayout.NORTH);
+        this.cartesEtTresorsPane.add(paneCartes, BorderLayout.SOUTH);
+        
+        
         
         //debug graphique
         //this.cartesEtTresorsPane.setBackground(Color.red);
@@ -522,5 +541,41 @@ public class Fenetre extends JFrame{
         this.boutonPierre.setEnabled(false);
         this.boutonZephyr.setEnabled(false);
     }
+
+    void afficherCartes(ArrayList<CarteTresor> cartes) {
+        Image i = new ImageIcon(getClass().getResource("/images/Pierre.png")).getImage();
+        JButton j;
+        for (CarteTresor c : cartes){
+            if(c.getTypeCarte().equals("tresor")){
+                CartePiece d = (CartePiece) c;
+                i = new ImageIcon(getClass().getResource("/images/" + d.getNomTresor() + ".png")).getImage();
+            }else if(c.getTypeCarte().equals("action_speciale")){
+                CarteBonus d = (CarteBonus) c;
+                i = new ImageIcon(getClass().getResource("/images/" + d.getPouvoir() + ".png")).getImage();
+            }//else if(c.getTypeCarte().equals){
+            
+            
+            
+            
+            
+            
+            
+            i = scaleImage(i, 100, 200);
+            j = new JButton(new ImageIcon(i));
+            
+            this.paneCartes.add(j);
+        }
+    }
     
+    public static Image scaleImage(Image source, int width, int height) {
+    BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g = (Graphics2D) img.getGraphics();
+    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+    g.drawImage(source, 0, 0, width, height, null);
+    g.dispose();
+    return img;
+    }
+    
+  
+
 }

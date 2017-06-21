@@ -109,10 +109,10 @@ public class FenetreJoueur extends JFrame{
         panelSouth.add(commencer);
             
         commencer.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            traiterClicCommencer();
-        }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                traiterClicCommencer();
+            }
         });
         
     }
