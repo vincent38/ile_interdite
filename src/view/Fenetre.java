@@ -104,7 +104,7 @@ public class Fenetre extends JFrame{
     }
     
     public void traiterClicAutreAction(){
-        ihm.traiterClicAutreAction();
+        ihm.traiterClicDonCarte();
     }
     
     public void traiterClicFinTour(){
