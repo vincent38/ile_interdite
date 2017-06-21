@@ -153,4 +153,8 @@ public class IHMBonne extends Observable{
     public void disableTresors() {
         this.fenetre.disableTresors();
     }
+
+    public void afficherCartes(ArrayList<CarteTresor> cartes) {
+        //this.fenetre.afficherCartes
+    }
 }
