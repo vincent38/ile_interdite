@@ -598,6 +598,38 @@ public class Controleur implements Observer {
         }
     }
     
+    private boolean victoire() {
+        if (   pierreSacreeObtenue()
+            && cristalArdentObtenu()
+            && statueZephyrObtenue()
+            && caliceOndeObtenu()
+            && quatreAventuriersSurHeliport()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean pierreSacreeObtenue() {
+        return false;
+    }
+    
+    private boolean cristalArdentObtenu() {
+        return false;
+    }
+    
+    private boolean statueZephyrObtenue() {
+        return false;
+    }
+    
+    private boolean caliceOndeObtenu() {
+        return false;
+    }
+    
+    private boolean quatreAventuriersSurHeliport() {
+        return false;
+    }
+    
     private void getTresorFromTuile(){
         //On teste la tuile en cours du joueur : trésor présent ?
         if (avCourant.getTuile().getTresor() != null) {
