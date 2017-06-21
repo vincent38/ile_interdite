@@ -11,7 +11,8 @@ public class Grille {
      * Stocke les noms des tuiles du jeu
      */
     
-    private String[] NOMS_TUILES = {"Le Pont des Abimes",
+    private String[] NOMS_TUILES = {
+        "Le Pont des Abimes",
         "La Porte de Bronze",
         "La Caverne des Ombres",
         "La Porte de Fer",
@@ -36,9 +37,10 @@ public class Grille {
         "La Tour du Guet",
         "Le Jardin des Murmures"};
     
-    private ArrayList<String> remainingNames;
+    //private ArrayList<String> remainingNames;
 
     public ArrayList<Tuile> tuiles = new ArrayList<>();
+    public ArrayList<String> nomsTuilesRandom = new ArrayList<>();
 
     /**
      * Constructeur génère la grille, associe à chaque tuile un nom de la liste
@@ -72,8 +74,10 @@ public class Grille {
 
         //Définition nom des tuiles
         
-        for (int i = 0; i < tuiles.size(); i++) {
-            tuiles.get(i).setNom(NOMS_TUILES[i]);
+        shuffleTuiles(nomsTuilesRandom);
+        
+        for (int i = 0; i < nomsTuilesRandom.size(); i++) {
+            tuiles.get(i).setNom(nomsTuilesRandom.get(i));
         }
         
         //Ajout des trésors aux tuiles
@@ -133,6 +137,24 @@ public class Grille {
             System.out.println(s);
         }
     }*/
+    
+    private void shuffleTuiles(ArrayList<String> tuiles) {
+        ArrayList<String> nomsTuilesInitial = new ArrayList<>();
+        tuiles.clear();
+        int j;
+        // Transpose le tableau dans un arrayList
+        for(int i = 0; i < 24; i++) {
+            nomsTuilesInitial.add(NOMS_TUILES[i]);
+        }
+        for(int i = 0; i < 24; i++) {
+            // On génère un nb aléatoire en fonction du nb de tuiles restantes à placer
+            j = 1 + (int)(Math.random() * (24-i)) -1;
+            // On ajoute une tuile aléatoire dans Tuiles Finales
+            tuiles.add(nomsTuilesInitial.get(j));
+            // On la supprime de Tuiles Initiales
+            nomsTuilesInitial.remove(nomsTuilesInitial.get(j));
+        }
+    }
     
     /**
      * Retourne les tuiles adjacentes à tuileC
