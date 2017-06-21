@@ -6,6 +6,8 @@
 package view;
 
 import java.util.Observable;
+import model.Message;
+import model.TypeMessage;
 
 /**
  *
@@ -16,5 +18,25 @@ public class IHMDonCarte extends Observable {
     
     public IHMDonCarte() {
         fenetre = new FenetreDonCarte(this);
+    }
+
+    public void traiterClicAnnuler() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_ANNULER_DON_CARTE));
+        this.clearChanged();
+    }
+
+    public void traiterClicValider() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_VALIDER_DON_CARTE));
+        this.clearChanged();
+    }
+    
+    public void afficherFenetre() {
+        fenetre.afficherFenetre();
+    }
+
+    public void cacherFenetre() {
+        fenetre.dispose();
     }
 }
