@@ -3,7 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/IHMBonne.java</file>
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/util/Utils.java</file>
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/util/Parameters.java</file>
@@ -12,14 +11,7 @@
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/Fenetre.java</file>
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/model/Grille.java</file>
             <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/controller/Controleur.java</file>
-=======
-            <file>file:/users/info/etu-s2/aubriotv/Documents/ile_interdite/ile_interdite/src/view/Fenetre.java</file>
-            <file>file:/users/info/etu-s2/aubriotv/Documents/ile_interdite/ile_interdite/src/model/aventurier/Plongeur.java</file>
-            <file>file:/users/info/etu-s2/aubriotv/Documents/ile_interdite/ile_interdite/src/view/IHMBonne.java</file>
-            <file>file:/users/info/etu-s2/aubriotv/Documents/ile_interdite/ile_interdite/src/model/Grille.java</file>
-            <file>file:/users/info/etu-s2/aubriotv/Documents/ile_interdite/ile_interdite/src/controller/Controleur.java</file>
-            <file>file:/users/info/etu-s2/aubriotv/Documents/ile_interdite/ile_interdite/src/model/Tuile.java</file>
->>>>>>> 26894293c7df46be9027bd5d1052301f95c5775a
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/model/aventurier/Navigateur.java</file>
         </group>
     </open-files>
 </project-private>
