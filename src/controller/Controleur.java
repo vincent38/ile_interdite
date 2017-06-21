@@ -431,25 +431,6 @@ public class Controleur implements Observer {
         }
     }
 
-    /**
-     * Retourne vrai si : - l'héliport est coulé - les deux tuiles d'une même
-     * relique est inondée sans qu'un joueur ait déjà récupéré la relique - une
-     * tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se
-     * déplacer - le niveau de l'eau arrive au max
-     */
-    private boolean gameOver() {
-        if (heliportMort()
-                || pierreSacreeMort()
-                || statueZephyrMort()
-                || cristalArdentMort()
-                || caliceOndeMort()
-                || aventurierMort()
-                || eauMax()) {
-            return true;
-        }
-        return false;
-    }
-
     private void traiterAssechement() {
         ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
         for (Tuile t : tuilesAssechables) {
@@ -493,6 +474,25 @@ public class Controleur implements Observer {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
 
+    }
+    
+    /**
+     * Retourne vrai si : - l'héliport est coulé - les deux tuiles d'une même
+     * relique est inondée sans qu'un joueur ait déjà récupéré la relique - une
+     * tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se
+     * déplacer - le niveau de l'eau arrive au max
+     */
+    private boolean gameOver() {
+        if (heliportMort()
+                || pierreSacreeMort()
+                || statueZephyrMort()
+                || cristalArdentMort()
+                || caliceOndeMort()
+                || aventurierMort()
+                || eauMax()) {
+            return true;
+        }
+        return false;
     }
 
     private boolean heliportMort() {
