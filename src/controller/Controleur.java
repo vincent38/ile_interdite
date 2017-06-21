@@ -363,6 +363,13 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_BTN_VALIDER_DON_CARTE:
+                if (m.getAventurier() == null || m.getCarte() == null) {
+                    afficherInformation("Veuillez choisir un destinataire et une carte");
+                } else {
+                    this.traiterDonCarte(m.getAventurier(), m.getCarte());
+                    vueDonCarte.cacherFenetre();
+                    vueAventurier.enableInteraction();
+                }
                 break;
                 
             case CLIC_BTN_TERMINER_TOUR:
@@ -697,7 +704,8 @@ public class Controleur implements Observer {
     private void initDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
         ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
-        ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
+        aventuriersMemeTuile.remove(avCourant);
+        ArrayList<CartePiece> cartesPossedees = avCourant.getCartesPiecePossedees();
         CarteTresor carteADonner = null;
         Aventurier destinataire = null;
         if (aventuriersMemeTuile.size() == 0) {
@@ -705,12 +713,18 @@ public class Controleur implements Observer {
         } else {
             if (cartesPossedees.size() == 0) {
                 afficherInformation("Impossible : Vous ne possédez aucune carte.");
-            } else 
+            } else {
                 vueDonCarte = new IHMDonCarte(aventuriersMemeTuile, cartesPossedees);
                 this.vueDonCarte.addObserver(this);
                 vueAventurier.disableInteraction();
                 vueDonCarte.afficherFenetre();
+            }
         }
+    }
+
+    private void traiterDonCarte(Aventurier a, CartePiece c) {
+        avCourant.retirerCarte(c);
+        a.ajouterCarte(c);
     }
     
         

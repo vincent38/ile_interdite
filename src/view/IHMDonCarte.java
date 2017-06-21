@@ -10,6 +10,7 @@ import java.util.Observable;
 import model.Message;
 import model.TypeMessage;
 import model.aventurier.Aventurier;
+import model.carte.CartePiece;
 import model.carte.CarteTresor;
 
 /**
@@ -19,7 +20,7 @@ import model.carte.CarteTresor;
 public class IHMDonCarte extends Observable {
     private FenetreDonCarte fenetre;
     
-    public IHMDonCarte(ArrayList<Aventurier> aventuriers, ArrayList<CarteTresor> cartes) {
+    public IHMDonCarte(ArrayList<Aventurier> aventuriers, ArrayList<CartePiece> cartes) {
         fenetre = new FenetreDonCarte(this, aventuriers, cartes);
     }
 
@@ -29,9 +30,9 @@ public class IHMDonCarte extends Observable {
         this.clearChanged();
     }
 
-    public void traiterClicValider() {
+    public void traiterClicValider(Aventurier a, CartePiece c) {
         this.setChanged();
-        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_VALIDER_DON_CARTE));
+        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_VALIDER_DON_CARTE, a, c));
         this.clearChanged();
     }
     
