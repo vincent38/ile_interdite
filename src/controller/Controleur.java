@@ -487,13 +487,13 @@ public class Controleur implements Observer {
      * déplacer - le niveau de l'eau arrive au max
      */
     private boolean gameOver() {
-        if (heliportMort()
-                || pierreSacreeMort()
-                || statueZephyrMort()
-                || cristalArdentMort()
-                || caliceOndeMort()
-                || aventurierMort()
-                || eauMax()) {
+        if (//heliportMort()
+            //    || pierreSacreeMort()
+            //    || statueZephyrMort()
+            //    || cristalArdentMort()
+            //    || caliceOndeMort()
+            //    || aventurierMort()
+            /*    ||*/ eauMax()) {
             return true;
         }
         return false;
@@ -590,7 +590,7 @@ public class Controleur implements Observer {
     }
 
     private boolean eauMax() {
-        if (cranMarqueurNiveau == NIVEAU_EAU_MAX) {
+        if (cranMarqueurNiveau >= NIVEAU_EAU_MAX) {
             if (pktnul == null) {
                 pktnul = "L'île a été submergée";
             } else {
