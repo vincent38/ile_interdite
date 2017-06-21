@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.Grille;
@@ -26,6 +25,7 @@ import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHMselectionJoueur;
 import view.IHMBonne;
+import view.IHMDefausse;
 import view.IHMDonCarte;
 
 
@@ -53,6 +53,7 @@ public class Controleur implements Observer {
     private int cranMarqueurNiveau;
     private static final int NIVEAU_EAU_MAX = 10;
 
+    private IHMDefausse vueDefausse;
     private final IHMselectionJoueur vueSelection;
     private  IHMDonCarte vueDonCarte = new IHMDonCarte();
     private IHMBonne vueAventurier;
@@ -395,6 +396,7 @@ public class Controleur implements Observer {
                 this.traiterClicBoutonTresor();
                 this.afficherTresorsRamassables();
                 break;
+            case CLIC_BTN_VALIDER_DEFAUSSE:
 
         }
 
@@ -454,6 +456,8 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
+        vueDefausse = new IHMDefausse();
+        this.vueDefausse.addObserver(this);
         while (avCourant.getCartes().size() > 5) {
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
             cartesTresor.defausserCarte(c);
