@@ -28,6 +28,8 @@ public class FenetreDonCarte extends JFrame {
     private IHMDonCarte ihm;
     
     private JPanel mainpanel = new JPanel(new BorderLayout());
+    private JPanel panelNorth = new JPanel(new BorderLayout());
+    private JPanel panelCenter = new JPanel();
     private JPanel panelSouth = new JPanel(new GridLayout(1,4));
     
     private JButton boutonAnnuler = new JButton("Annuler");
@@ -42,13 +44,25 @@ public class FenetreDonCarte extends JFrame {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
         
+        panelNorth.add(new JLabel("Sélectionnez l'aventurier destinataire :"), BorderLayout.NORTH);
+        // Affichage aventuriers
+        panelNorth.add(new JLabel(" "), BorderLayout.SOUTH);
+        
+        panelCenter.add(new JLabel("Sélectionnez la carte à donner :"), BorderLayout.NORTH);
+        // Affichage des cartes
+        panelCenter.add(new JLabel(" "), BorderLayout.SOUTH);
+        
         panelSouth.add(boutonAnnuler);
         panelSouth.add(new JLabel(""));
         panelSouth.add(new JLabel(""));
         panelSouth.add(boutonValider);
         
+        mainpanel.add(panelNorth, BorderLayout.NORTH);
+        mainpanel.add(panelCenter, BorderLayout.CENTER);
         mainpanel.add(panelSouth, BorderLayout.SOUTH);
         this.add(mainpanel);
+        
+        
         
         boutonAnnuler.addActionListener(new ActionListener() {
             @Override

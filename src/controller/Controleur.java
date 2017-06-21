@@ -94,7 +94,6 @@ public class Controleur implements Observer {
     public Controleur() {
         this.vueSelection = new IHMselectionJoueur();
         this.vueSelection.addObserver(this);
-        this.vueDonCarte.addObserver(this);
         
         specialisations.add("ingenieur");
         specialisations.add("naviguateur");
@@ -695,10 +694,21 @@ public class Controleur implements Observer {
         ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
         CarteTresor carteADonner = null;
         Aventurier destinataire = null;
-        vueDonCarte = new IHMDonCarte(aventuriersMemeTuile, cartesPossedees);
-        vueAventurier.disableInteraction();
-        vueDonCarte.afficherFenetre();
+        if (aventuriersMemeTuile.size() == 0) {
+            afficherInformation("Impossible : Il n'y a aucun aventurier à côté de vous.");
+        } else {
+            if (cartesPossedees.size() == 0) {
+                afficherInformation("Impossible : Vous ne possédez aucune carte.");
+            } else 
+                vueDonCarte = new IHMDonCarte(aventuriersMemeTuile, cartesPossedees);
+                this.vueDonCarte.addObserver(this);
+                vueAventurier.disableInteraction();
+                vueDonCarte.afficherFenetre();
+        }
     }
+    
+        
+
 
 
     private void traiterClicBoutonTresor() {
