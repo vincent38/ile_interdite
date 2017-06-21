@@ -26,6 +26,7 @@ import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHMselectionJoueur;
 import view.IHMBonne;
+import view.IHMDonCarte;
 
 
 /*
@@ -53,6 +54,7 @@ public class Controleur implements Observer {
     private static final int NIVEAU_EAU_MAX = 10;
 
     private final IHMselectionJoueur vueSelection;
+    private  IHMDonCarte vueDonCarte = new IHMDonCarte();
     private IHMBonne vueAventurier;
     private Aventurier avCourant;
     private int action;
@@ -92,6 +94,7 @@ public class Controleur implements Observer {
     public Controleur() {
         this.vueSelection = new IHMselectionJoueur();
         this.vueSelection.addObserver(this);
+        this.vueDonCarte.addObserver(this);
         
         specialisations.add("ingenieur");
         specialisations.add("naviguateur");
@@ -345,20 +348,26 @@ public class Controleur implements Observer {
                 this.operationEnCours = OPERATION_ASSECHER;
                 break;
                 
-            case CLIC_BTN_AUTRE_ACTION:
-                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+            case CLIC_BTN_DONNER_CARTE:
+                //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                this.operationEnCours = OPERATION_DONNER_CARTE;
+                this.traiterDonnerCarte();
+                this.afficherTresorsRamassables();
+                break;
+                
+            case CLIC_BTN_ANNULER_DON_CARTE:
+                this.operationEnCours = OPERATION_AUCUNE;
+                vueDonCarte.cacherFenetre();
+                vueAventurier.enableInteraction();
+                break;
+                
+            case CLIC_BTN_VALIDER_DON_CARTE:
                 break;
                 
             case CLIC_BTN_TERMINER_TOUR:
                 this.operationEnCours = OPERATION_AUCUNE;
                 vueAventurier.disableBoutons();
                 this.finTour();
-                this.afficherTresorsRamassables();
-                break;
-                
-            case CLIC_BTN_DONNER_CARTE:
-                this.operationEnCours = OPERATION_DONNER_CARTE;
-                this.traiterDonnerCarte();
                 this.afficherTresorsRamassables();
                 break;
                 
@@ -686,9 +695,10 @@ public class Controleur implements Observer {
         ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
         CarteTresor carteADonner = null;
         Aventurier destinataire = null;
-        // Affichage fenêtre choix carte et destinataire
-        avCourant.retirerCarte(carteADonner);
-        destinataire.ajouterCarte(carteADonner);
+        vueAventurier.disableInteraction();
+        vueDonCarte.afficherFenetre();
+        //avCourant.retirerCarte(carteADonner);
+        //destinataire.ajouterCarte(carteADonner);
     }
 
 
