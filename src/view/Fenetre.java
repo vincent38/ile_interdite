@@ -50,7 +50,7 @@ public class Fenetre extends JFrame{
     
     private JButton boutonDeplacer;
     private JButton boutonAssecher;
-    private JButton boutonAutreAction;
+    private JButton boutonDonnerCarte;
     private JButton boutonFinTour;
     
     private JButton boutonCalice;
@@ -215,14 +215,14 @@ public class Fenetre extends JFrame{
     public void disableInteraction(){
         boutonDeplacer.setEnabled(false);
         boutonAssecher.setEnabled(false);
-        boutonAutreAction.setEnabled(false);
+        boutonDonnerCarte.setEnabled(false);
         boutonFinTour.setEnabled(false);
     }
     
     public void enableInteraction(){
         boutonDeplacer.setEnabled(true);
         boutonAssecher.setEnabled(true);
-        boutonAutreAction.setEnabled(true);
+        boutonDonnerCarte.setEnabled(true);
         boutonFinTour.setEnabled(true);
     }
 
@@ -332,12 +332,12 @@ public class Fenetre extends JFrame{
         choixActionPane.setLayout(new GridLayout(2,2));
         boutonDeplacer = new JButton("Se deplacer");
         boutonAssecher = new JButton("Assecher");
-        boutonAutreAction = new JButton("Autre action");
+        boutonDonnerCarte = new JButton("Donner une carte");
         boutonFinTour = new JButton("Fin de tour");
         
         choixActionPane.add(boutonDeplacer);
         choixActionPane.add(boutonAssecher);
-        choixActionPane.add(boutonAutreAction);
+        choixActionPane.add(boutonDonnerCarte);
         choixActionPane.add(boutonFinTour);
         
         boutonDeplacer.addActionListener(new ActionListener() {
@@ -354,7 +354,7 @@ public class Fenetre extends JFrame{
             }
         });
         
-        boutonAutreAction.addActionListener(new ActionListener() {
+        boutonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 traiterClicAutreAction();

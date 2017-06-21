@@ -26,6 +26,7 @@ import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHMselectionJoueur;
 import view.IHMBonne;
+import view.IHMDonCarte;
 
 
 /*
@@ -53,6 +54,7 @@ public class Controleur implements Observer {
     private static final int NIVEAU_EAU_MAX = 10;
 
     private final IHMselectionJoueur vueSelection;
+    private  IHMDonCarte vueDonCarte;
     private IHMBonne vueAventurier;
     private Aventurier avCourant;
     private int action;
@@ -381,20 +383,17 @@ public class Controleur implements Observer {
                 this.operationEnCours = OPERATION_ASSECHER;
                 break;
                 
-            case CLIC_BTN_AUTRE_ACTION:
-                afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+            case CLIC_BTN_DONNER_CARTE:
+                //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                this.operationEnCours = OPERATION_DONNER_CARTE;
+                this.traiterDonnerCarte();
+                this.afficherTresorsRamassables();
                 break;
                 
             case CLIC_BTN_TERMINER_TOUR:
                 this.operationEnCours = OPERATION_AUCUNE;
                 vueAventurier.disableBoutons();
                 this.finTour();
-                this.afficherTresorsRamassables();
-                break;
-                
-            case CLIC_BTN_DONNER_CARTE:
-                this.operationEnCours = OPERATION_DONNER_CARTE;
-                this.traiterDonnerCarte();
                 this.afficherTresorsRamassables();
                 break;
                 
@@ -720,9 +719,9 @@ public class Controleur implements Observer {
         ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
         CarteTresor carteADonner = null;
         Aventurier destinataire = null;
-        // Affichage fenêtre choix carte et destinataire
-        avCourant.retirerCarte(carteADonner);
-        destinataire.ajouterCarte(carteADonner);
+        vueDonCarte = new IHMDonCarte();
+        //avCourant.retirerCarte(carteADonner);
+        //destinataire.ajouterCarte(carteADonner);
     }
 
 

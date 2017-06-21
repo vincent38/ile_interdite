@@ -12,5 +12,9 @@ import java.util.Observable;
  * @author calixtee
  */
 public class IHMDonCarte extends Observable {
+    private FenetreDonCarte fenetre;
     
+    public IHMDonCarte() {
+        fenetre = new FenetreDonCarte(this);
+    }
 }
