@@ -29,6 +29,7 @@ import model.Tresor;
 import model.Tuile;
 import model.TypeTresor;
 import model.aventurier.Aventurier;
+import model.carte.CarteBonus;
 import model.carte.CartePiece;
 import model.carte.CarteTresor;
 
@@ -401,13 +402,13 @@ public class Fenetre extends JFrame{
     }
 
     private void initCartesEtTResorsPane() {
-        this.cartesEtTresorsPane = new JPanel(new GridLayout(2,1));
+        this.cartesEtTresorsPane = new JPanel(new BorderLayout());
         this.paneWest.add(cartesEtTresorsPane, BorderLayout.CENTER);
         this.paneTresors = new JPanel(new GridLayout(2,2));
         
         this.paneCartes = new JPanel(new GridLayout(1,5));
-        this.cartesEtTresorsPane.add(paneTresors);
-        this.cartesEtTresorsPane.add(paneCartes);
+        this.cartesEtTresorsPane.add(paneTresors, BorderLayout.NORTH);
+        this.cartesEtTresorsPane.add(paneCartes, BorderLayout.SOUTH);
         
         
         
@@ -535,15 +536,24 @@ public class Fenetre extends JFrame{
     }
 
     void afficherCartes(ArrayList<CarteTresor> cartes) {
-        Image i = new ImageIcon(getClass().getResource("/images/Pierre.png")).getImage();;
+        Image i = new ImageIcon(getClass().getResource("/images/Pierre.png")).getImage();
         JButton j;
         for (CarteTresor c : cartes){
             if(c.getTypeCarte().equals("tresor")){
                 CartePiece d = (CartePiece) c;
                 i = new ImageIcon(getClass().getResource("/images/" + d.getNomTresor() + ".png")).getImage();
-            }  
+            }else if(c.getTypeCarte().equals("action_speciale")){
+                CarteBonus d = (CarteBonus) c;
+                i = new ImageIcon(getClass().getResource("/images/" + d.getPouvoir() + ".png")).getImage();
+            }//else if(c.getTypeCarte().equals){
             
-            //i = scaleImage(i, 100, 200);
+            
+            
+            
+            
+            
+            
+            i = scaleImage(i, 100, 200);
             j = new JButton(new ImageIcon(i));
             
             this.paneCartes.add(j);
