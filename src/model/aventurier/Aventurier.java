@@ -207,10 +207,6 @@ public abstract class Aventurier {
         return buffer;
     }
     
-    /**
-     * Méthode inutilisée actuellement. Gardée en prévision.
-     */
-    
     
     
 }
