@@ -21,5 +21,6 @@ public enum TypeMessage {
     CLIC_BTN_TERMINER_TOUR,
     CLIC_BTN_DONNER_CARTE,
     CLIC_CASE,
-    CLIC_COMMENCER;
+    CLIC_COMMENCER,
+    CLIC_BTN_TRESOR;
 }

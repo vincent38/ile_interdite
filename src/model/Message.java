@@ -5,13 +5,18 @@
  */
 package model;
 
+import util.Utils;
+
 /**
  *
  * @author sangj
  */
 public class Message {
+
     public TypeMessage type;
     public int x, y;
+    public TypeTresor typeTresor;
+    
     public Message(TypeMessage type){
         this.type = type;
     }
@@ -20,5 +25,14 @@ public class Message {
         this.type = type;
         this.x = x; this.y = y;
         
+    }
+
+    public Message(TypeMessage typeMessage, Tresor tresor) {
+        
+    }
+
+    public Message(TypeMessage typeMessage, TypeTresor typeTresor) {
+        this.type = typeMessage;
+        this.typeTresor = typeTresor;
     }
 }

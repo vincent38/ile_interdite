@@ -154,8 +154,21 @@ public class Controleur implements Observer {
                 }
             }
         }
+
         
         new Scanner(System.in).nextLine();
+
+
+        //Tirage des cartes inondation de début de partie
+        for (int i = 1; i <= 6; i++) {
+            CarteInondation c = cartesInondation.tirerCarte();
+            System.out.println("Carte tirée : " + c.getTuileConcernee());
+            Tuile t = grille.getTuile(c.getTuileConcernee());
+            t.mouillerTuile();
+            vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
+            cartesInondation.defausserCarte(c);
+        }
+
 
     }
 
@@ -246,16 +259,20 @@ public class Controleur implements Observer {
             afficherInformation("Partie perdue : " + pktnul);
             vueAventurier.fermerFenetre();
         } else {
-            joueurSuivant();
-            avCourant.setPouvoirDispo(true);
-            //Si avCourant est sur une tuile inondée, on le déplace d'office
-            if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
-                vueAventurier.disableInteraction();
-                deplacementObligatoire = true;
-                this.operationEnCours = OPERATION_DEPLACEMENT;
-                this.traiterBoutonAller();
+            if (victoire()) {
+                afficherInformation("Bravo ! Vous avez réussi !");
+                vueAventurier.fermerFenetre();
+            } else {
+                joueurSuivant();
+                avCourant.setPouvoirDispo(true);
+                //Si avCourant est sur une tuile inondée, on le déplace d'office
+                if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
+                    vueAventurier.disableInteraction();
+                    deplacementObligatoire = true;
+                    this.operationEnCours = OPERATION_DEPLACEMENT;
+                    this.traiterBoutonAller();
+                }
             }
-        //}
         }
     }
 
@@ -326,6 +343,7 @@ public class Controleur implements Observer {
             if ("montee_eaux".equals(c.getTypeCarte())) {
                 //Actions montée des eaux
                 cranMarqueurNiveau++;
+                this.vueAventurier.setNiveau(cranMarqueurNiveau);
                 cartesInondation.shuffleDefausseCards();
                 cartesInondation.fusionDecks();
                 cartesTresor.defausserCarte(c);
@@ -346,30 +364,42 @@ public class Controleur implements Observer {
                 this.traiterBoutonAller();
                 this.operationEnCours = OPERATION_DEPLACEMENT;
                 break;
+                
             case CLIC_BTN_ASSECHER:
                 this.traiterAssechement();
                 //assecherTuile();
                 this.operationEnCours = OPERATION_ASSECHER;
                 break;
+                
             case CLIC_BTN_AUTRE_ACTION:
                 afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 break;
+                
             case CLIC_BTN_TERMINER_TOUR:
                 this.operationEnCours = OPERATION_AUCUNE;
                 vueAventurier.disableBoutons();
                 this.finTour();
                 break;
+                
             case CLIC_BTN_DONNER_CARTE:
                 this.operationEnCours = OPERATION_DONNER_CARTE;
                 this.traiterDonnerCarte();
                 break;
+                
             case CLIC_CASE:
                 this.traiterClicCase(m.x, m.y);
                 vueAventurier.enableInteraction();
                 break;
+
             case CLIC_COMMENCER:
                 this.lancerJeu();
                 break;
+
+                
+            case CLIC_BTN_TRESOR:
+                this.traiterClicBoutonTresor(m.typeTresor);
+                break;
+
         }
 
     }
@@ -433,25 +463,6 @@ public class Controleur implements Observer {
         }
     }
 
-    /**
-     * Retourne vrai si : - l'héliport est coulé - les deux tuiles d'une même
-     * relique est inondée sans qu'un joueur ait déjà récupéré la relique - une
-     * tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se
-     * déplacer - le niveau de l'eau arrive au max
-     */
-    private boolean gameOver() {
-        if (heliportMort()
-                || pierreSacreeMort()
-                || statueZephyrMort()
-                || cristalArdentMort()
-                || caliceOndeMort()
-                || aventurierMort()
-                || eauMax()) {
-            return true;
-        }
-        return false;
-    }
-
     private void traiterAssechement() {
         ArrayList<Tuile> tuilesAssechables = avCourant.getTuilesAssechables(this.grille);
         for (Tuile t : tuilesAssechables) {
@@ -495,6 +506,25 @@ public class Controleur implements Observer {
             afficherInformation("Il n'y a aucune tuile à assécher.");
         }
 
+    }
+    
+    /**
+     * Retourne vrai si : - l'héliport est coulé - les deux tuiles d'une même
+     * relique est inondée sans qu'un joueur ait déjà récupéré la relique - une
+     * tuile sombre alors qu'un joueur est dessus et qu'il ne peut pas se
+     * déplacer - le niveau de l'eau arrive au max
+     */
+    private boolean gameOver() {
+        if (heliportMort()
+                || pierreSacreeMort()
+                || statueZephyrMort()
+                || cristalArdentMort()
+                || caliceOndeMort()
+                || aventurierMort()
+                || eauMax()) {
+            return true;
+        }
+        return false;
     }
 
     private boolean heliportMort() {
@@ -600,6 +630,44 @@ public class Controleur implements Observer {
         }
     }
     
+    private boolean victoire() {
+        if (   pierreSacreeObtenue()
+            && cristalArdentObtenu()
+            && statueZephyrObtenue()
+            && caliceOndeObtenu()
+            && quatreAventuriersSurHeliport()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private boolean pierreSacreeObtenue() {
+        return true;
+    }
+    
+    private boolean cristalArdentObtenu() {
+        return true;
+    }
+    
+    private boolean statueZephyrObtenue() {
+        return true;
+    }
+    
+    private boolean caliceOndeObtenu() {
+        return true;
+    }
+    
+    private boolean quatreAventuriersSurHeliport() {
+        boolean b = true;
+        for (Aventurier aventurier : joueurs) {
+            if (aventurier.getTuile().getNom() != "Heliport") {
+                b = false;
+            }
+        }
+        return b;
+    }
+    
     private void getTresorFromTuile(){
         //On teste la tuile en cours du joueur : trésor présent ?
         if (avCourant.getTuile().getTresor() != null) {
@@ -629,7 +697,7 @@ public class Controleur implements Observer {
                     cartesTresor.defausserCarte(buffer.remove(j));
                 }
                 avCourant.getCartesPossedees().addAll(buffer);
-                avCourant.addTresorsObtenus(avCourant.getTuile().getTresor());
+                this.addTresorsObtenus(avCourant.getTuile().getTresor());
                 avCourant.getTuile().wipeTresor();
             } else {
                 avCourant.getCartesPossedees().addAll(buffer);
@@ -649,6 +717,7 @@ public class Controleur implements Observer {
         destinataire.ajouterCarte(carteADonner);
     }
 
+<<<<<<< HEAD
     private void lancerJeu() {
         nomsJoueurs = vueSelection.getNomsJoueurs();
         for (int i = 0; i < nomsJoueurs.size(); i++){
@@ -722,5 +791,22 @@ public class Controleur implements Observer {
         Collections.shuffle(specialisations);
         Collections.shuffle(specialisations);
         Collections.shuffle(specialisations);
+    }
+
+    private void traiterClicBoutonTresor(TypeTresor t) {
+        switch(t){
+            case caliceDeLOnde:
+                this.tresorsObtenus.add;
+                break;
+                
+            case cristalArdent:
+                break;
+                
+            case pierreSacree:
+                break;
+                
+            case statueDuZephyr:
+                break;
+        }
     }
 }
