@@ -717,7 +717,6 @@ public class Controleur implements Observer {
         destinataire.ajouterCarte(carteADonner);
     }
 
-<<<<<<< HEAD
     private void lancerJeu() {
         nomsJoueurs = vueSelection.getNomsJoueurs();
         for (int i = 0; i < nomsJoueurs.size(); i++){
