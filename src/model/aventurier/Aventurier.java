@@ -6,6 +6,7 @@ import model.carte.CarteTresor;
 import model.Grille;
 import model.Tresor;
 import model.Tuile;
+import model.carte.CartePiece;
 
 public abstract class Aventurier {
 
@@ -194,6 +195,16 @@ public abstract class Aventurier {
     
     public void retirerCarte(CarteTresor carteASupprimer) {
         this.cartes.remove(carteASupprimer);
+    }
+
+    public ArrayList<CartePiece> getCartesPiecePossedees() {
+        ArrayList<CartePiece> buffer = new ArrayList();
+        for(CarteTresor c : cartes) {
+            if (c.getTypeCarte().equals("tresor")){
+                buffer.add((CartePiece) c);
+            }
+        }
+        return buffer;
     }
     
     /**

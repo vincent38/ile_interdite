@@ -5,6 +5,8 @@
  */
 package model;
 
+import model.aventurier.Aventurier;
+import model.carte.CartePiece;
 import util.Utils;
 
 /**
@@ -17,6 +19,10 @@ public class Message {
     public int x, y;
     public TypeTresor typeTresor;
     
+    // Pour le don de carte
+    private Aventurier a;
+    private CartePiece c;
+    
     public Message(TypeMessage type){
         this.type = type;
     }
@@ -27,8 +33,22 @@ public class Message {
         
     }
 
-    public Message(TypeMessage typeMessage, Tresor tresor) {
+    /*public Message(TypeMessage typeMessage, Tresor tresor) {
         
+    }*/
+    
+    public Message(TypeMessage type, Aventurier a, CartePiece c) {
+        this.type = type;
+        this.a = a;
+        this.c = c;
+    }
+    
+    public Aventurier getAventurier() {
+        return a;
+    }
+    
+    public CartePiece getCarte() {
+        return c;
     }
 
 }
