@@ -45,12 +45,12 @@ public class FenetreDefausse extends JFrame{
         panelCenter = new JPanel(new GridLayout(cartes.size(), 2));
         
         
-        for (int i = 0; i < cartes.size(); i++){
+        /*for (int i = 0; i < cartes.size(); i++){
             JPanel panel = new JPanel();
             JLabel label = new JLabel(cartes.get(i).getTypeCarte());
             panelCenter.add(panel);
             panel.add(label);
-        }
+        }*/
         
         this.add(mainPanel);
         mainPanel.add(panelSouth, BorderLayout.SOUTH);

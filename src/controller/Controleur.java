@@ -466,7 +466,7 @@ public class Controleur implements Observer {
     private void defausse() {
         if (avCourant.getCartes().size() > 5) {
             System.out.println("Defausse");
-            vueDefausse = new IHMDefausse();
+            vueDefausse = new IHMDefausse(avCourant.cartes);
             this.vueDefausse.addObserver(this);
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
             cartesTresor.defausserCarte(c);
