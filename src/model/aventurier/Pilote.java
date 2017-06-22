@@ -40,8 +40,11 @@ public class Pilote extends Aventurier {
         
     @Override
     public ArrayList<Tuile> getDeplacementsPossibles(Grille g){
+        ArrayList<Tuile> deplacements = new ArrayList<>();
         if (pouvoirDispo){
-            return g.getToutesLesTuiles();
+            deplacements = g.getToutesLesTuiles();
+            deplacements.remove(this.getTuile());
+            return deplacements;
         }
         else
             return super.getDeplacementsPossibles(g);
