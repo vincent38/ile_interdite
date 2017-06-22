@@ -705,7 +705,7 @@ public class Controleur implements Observer {
 
     private void initDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
-        ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
+        ArrayList<Aventurier> aventuriersMemeTuile = avCourant.getAventuriersDonPossible(joueurs);
         System.out.println("SIZE"+aventuriersMemeTuile.size());
         aventuriersMemeTuile.remove(avCourant);
         ArrayList<CartePiece> cartesPossedees = avCourant.getCartesPiecePossedees();
