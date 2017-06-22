@@ -157,9 +157,16 @@ public class Controleur implements Observer {
         Message m = (Message) arg;
         switch (m.type) {
             case CLIC_BTN_ALLER:
-                if(action < ACTION_NEXT_TOUR){
-                this.traiterBoutonAller();
-                this.operationEnCours = OPERATION_DEPLACEMENT;
+                if(avCourant.getType().equals("Navigateur")) {
+                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR){
+                        this.traiterBoutonAller();
+                        this.operationEnCours = OPERATION_DEPLACEMENT;
+                    }
+                } else {
+                    if(action < ACTION_NEXT_TOUR){
+                        this.traiterBoutonAller();
+                        this.operationEnCours = OPERATION_DEPLACEMENT;
+                    }
                 }
                 
                 break;
@@ -171,11 +178,19 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_BTN_DONNER_CARTE:
-                if(action < ACTION_NEXT_TOUR){
-                //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
-                this.operationEnCours = OPERATION_DONNER_CARTE;
-                this.initDonCarte();
-                this.afficherTresorsRamassables();
+                if(avCourant.getType().equals("Navigateur")) {
+                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR){
+                        this.operationEnCours = OPERATION_DONNER_CARTE;
+                        this.initDonCarte();
+                        this.afficherTresorsRamassables();
+                    }
+                } else {
+                    if(action < ACTION_NEXT_TOUR){
+                        //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                        this.operationEnCours = OPERATION_DONNER_CARTE;
+                        this.initDonCarte();
+                        this.afficherTresorsRamassables();
+                    }
                 }
                 break;
                 
@@ -224,10 +239,16 @@ public class Controleur implements Observer {
 
                 
             case CLIC_BTN_TRESOR:
-                if(action < ACTION_NEXT_TOUR){
-
-                this.traiterClicBoutonTresor();
-                this.afficherTresorsRamassables();
+                if(avCourant.getType().equals("Navigateur")) {
+                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR) {
+                        this.traiterClicBoutonTresor();
+                        this.afficherTresorsRamassables();
+                    }
+                } else {
+                    if(action < ACTION_NEXT_TOUR){
+                        this.traiterClicBoutonTresor();
+                        this.afficherTresorsRamassables();
+                    }
                 }
                 break;
             case CLIC_BTN_VALIDER_DEFAUSSE:
@@ -238,14 +259,22 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_HELICOPTERE:
-                if(action < ACTION_NEXT_TOUR){
-                this.traiterClicHelicoptere();
+                if(avCourant.getType().equals("Navigateur")) {
+                    this.traiterClicHelicoptere();
+                } else {
+                    if(action < ACTION_NEXT_TOUR){
+                        this.traiterClicHelicoptere();
+                    }
                 }
                 break;
                 
             case CLIC_SAC_DE_SABLE:
-                if(action < ACTION_NEXT_TOUR){
-                this.traiterClicSacDeSable();
+                if(avCourant.getType().equals("Navigateur")) {
+                    this.traiterClicSacDeSable();
+                } else {
+                    if(action < ACTION_NEXT_TOUR){
+                        this.traiterClicSacDeSable();
+                    }
                 }
                 break;
 
@@ -519,13 +548,17 @@ public class Controleur implements Observer {
     }
 
     private void traiterClicCase(int x, int y) {
-        if (operationEnCours == OPERATION_DEPLACEMENT && this.action < ACTION_NEXT_TOUR) {
+        if (operationEnCours == OPERATION_DEPLACEMENT && 
+            ((this.action < ACTION_NEXT_TOUR && ! avCourant.getType().equals("Navigateur"))
+             || (this.action < ACTION_NEXT_TOUR_NAVIGATEUR && avCourant.getType().equals("Navigateur")))){
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             if (deplacementObligatoire == false) {
             } else {
                 deplacementObligatoire = false;
             }
-        } else if (operationEnCours == OPERATION_ASSECHER && (this.action < ACTION_NEXT_TOUR)||(this.doubleAssechement)) {
+        } else if (operationEnCours == OPERATION_ASSECHER && 
+           ((this.action < ACTION_NEXT_TOUR && ! avCourant.getType().equals("Navigateur"))
+             || (this.action < ACTION_NEXT_TOUR_NAVIGATEUR && avCourant.getType().equals("Navigateur")))||(this.doubleAssechement)) {
             this.assecherTuile(x, y);
             this.vueAventurier.actualiseTuiles();
         } else if (operationEnCours == OPERATION_HELICOPTERE){
