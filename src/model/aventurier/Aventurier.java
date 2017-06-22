@@ -253,6 +253,10 @@ public abstract class Aventurier {
             }
         }
     }
+
+    public boolean isPouvoirDispo() {
+        return pouvoirDispo;
+    }
     
     
 }
