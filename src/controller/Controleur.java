@@ -240,9 +240,14 @@ public class Controleur implements Observer {
                 break;
 
         }
-        
-        if(this.action >= ACTION_NEXT_TOUR){
-            this.finTour();
+        if(avCourant.getType().equals("Navigateur")){
+            if(this.action >= ACTION_NEXT_TOUR_NAVIGATEUR){
+                this.finTour();
+            } 
+        } else { 
+            if(this.action >= ACTION_NEXT_TOUR){
+                this.finTour();
+            }
         }
         
 
@@ -253,12 +258,16 @@ public class Controleur implements Observer {
      * d'actions maximal, la fonction joueurSuivant est appelée
      */
     public void ajouterAction() {
-        //action += 1;
+        action += 1;
         System.out.println(doubleAssechement);
         if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
             finTour();
         }
-        this.vueAventurier.setNbAct(ACTION_NEXT_TOUR - action);
+        if(avCourant.getType().equals("Navigateur")) {
+            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR_NAVIGATEUR - action);
+        } else {
+            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR - action);
+        }
     }
 
     /**
@@ -379,7 +388,11 @@ public class Controleur implements Observer {
         }
         this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
-        this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
+        if(avCourant.getType().equals("Navigateur")) {
+            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR_NAVIGATEUR);
+        } else {
+            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
+        }
         defausse();
 
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
