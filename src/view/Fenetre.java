@@ -497,24 +497,29 @@ public class Fenetre extends JFrame{
 
     void afficherTresor(Tresor tresor) {
         JLabel img = null;
+        Image i = null;
         switch(tresor.getTypeTresor()){
             case caliceDeLOnde:
-                img = new JLabel(new ImageIcon(getClass().getResource("/images/calice.png")));
+                i = new ImageIcon(getClass().getResource("/images/calice.png")).getImage();
+                i = scaleImage(i, 52, 82);
+                img = new JLabel(new ImageIcon(i));
                 
                 break;
             case cristalArdent:
-                img = new JLabel(new ImageIcon(getClass().getResource("/images/cristal.png")));
-                this.paneTresors.add(img);
-                this.content.repaint();
+                i = new ImageIcon(getClass().getResource("/images/cristal.png")).getImage();
+                i = scaleImage(i, 52, 82);
+                img = new JLabel(new ImageIcon(i));
                 break;
             case pierreSacree:
-                img = new JLabel(new ImageIcon(getClass().getResource("/images/pierre.png")));
-                this.paneTresors.add(img);
-                this.content.repaint();
+                i = new ImageIcon(getClass().getResource("/images/pierre.png")).getImage();
+                i = scaleImage(i, 52, 82);
+                img = new JLabel(new ImageIcon(i));
                 break;
             case statueDuZephyr:
-                img = new JLabel(new ImageIcon(getClass().getResource("/images/zephyr.png")));
-               
+                i = new ImageIcon(getClass().getResource("/images/zephyr.png")).getImage();
+                i = scaleImage(i, 52, 82);
+                img = new JLabel(new ImageIcon(i));
+                break;
         }
         this.paneTresors.add(img);
         this.content.invalidate();

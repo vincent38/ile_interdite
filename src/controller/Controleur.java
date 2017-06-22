@@ -157,8 +157,10 @@ public class Controleur implements Observer {
         Message m = (Message) arg;
         switch (m.type) {
             case CLIC_BTN_ALLER:
+                if(action < ACTION_NEXT_TOUR){
                 this.traiterBoutonAller();
                 this.operationEnCours = OPERATION_DEPLACEMENT;
+                }
                 
                 break;
                 
@@ -169,10 +171,12 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_BTN_DONNER_CARTE:
+                if(action < ACTION_NEXT_TOUR){
                 //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 this.operationEnCours = OPERATION_DONNER_CARTE;
                 this.initDonCarte();
                 this.afficherTresorsRamassables();
+                }
                 break;
                 
             case CLIC_BTN_ANNULER_DON_CARTE:
@@ -220,9 +224,11 @@ public class Controleur implements Observer {
 
                 
             case CLIC_BTN_TRESOR:
+                if(action < ACTION_NEXT_TOUR){
 
                 this.traiterClicBoutonTresor();
                 this.afficherTresorsRamassables();
+                }
                 break;
             case CLIC_BTN_VALIDER_DEFAUSSE:
                 this.defausse(m.carte);
@@ -232,16 +238,20 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_HELICOPTERE:
+                if(action < ACTION_NEXT_TOUR){
                 this.traiterClicHelicoptere();
+                }
                 break;
                 
             case CLIC_SAC_DE_SABLE:
+                if(action < ACTION_NEXT_TOUR){
                 this.traiterClicSacDeSable();
+                }
                 break;
 
         }
         
-        if(this.action >= ACTION_NEXT_TOUR){
+        if(this.action >= ACTION_NEXT_TOUR && !(this.doubleAssechement && avCourant.getTuilesAssechables(grille).size() > 0)){
             this.finTour();
         }
         this.updateVueAventurier();
@@ -254,7 +264,7 @@ public class Controleur implements Observer {
      * d'actions maximal, la fonction joueurSuivant est appelée
      */
     public void ajouterAction() {
-        //action += 1;
+        action += 1;
         System.out.println(doubleAssechement);
         if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
             finTour();
@@ -481,13 +491,13 @@ public class Controleur implements Observer {
     }
 
     private void traiterClicCase(int x, int y) {
-        if (operationEnCours == OPERATION_DEPLACEMENT) {
+        if (operationEnCours == OPERATION_DEPLACEMENT && this.action < ACTION_NEXT_TOUR) {
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             if (deplacementObligatoire == false) {
             } else {
                 deplacementObligatoire = false;
             }
-        } else if (operationEnCours == OPERATION_ASSECHER) {
+        } else if (operationEnCours == OPERATION_ASSECHER && (this.action < ACTION_NEXT_TOUR)||(this.doubleAssechement)) {
             this.assecherTuile(x, y);
             this.vueAventurier.actualiseTuiles();
         } else if (operationEnCours == OPERATION_HELICOPTERE){
@@ -502,7 +512,7 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        while (avCourant.getCartesPossedees().size() > 5) {
+        if (avCourant.getCartesPossedees().size() > 5) {
             this.afficherCartes();
             System.out.println("Defausse");
             vueDefausse = new IHMDefausse(avCourant.cartes);
