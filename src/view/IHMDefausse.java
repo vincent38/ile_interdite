@@ -5,9 +5,11 @@
  */
 package view;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import model.Message;
 import model.TypeMessage;
+import model.carte.CarteTresor;
 
 /**
  *
@@ -16,11 +18,16 @@ import model.TypeMessage;
 public class IHMDefausse extends Observable{
     
     private FenetreDefausse fd;
+    private ArrayList<CarteTresor> cartes;
+
+    public IHMDefausse() {
+    }
     
-    public IHMDefausse(){
+    public IHMDefausse(ArrayList<CarteTresor> cartes){
         
-        fd = new FenetreDefausse(this);
+        fd = new FenetreDefausse(this, cartes);
         fd.visible();
+        this.cartes = cartes;
         
     }
 
@@ -28,6 +35,10 @@ public class IHMDefausse extends Observable{
         this.setChanged();
         this.notifyObservers(new Message(TypeMessage.CLIC_BTN_VALIDER_DEFAUSSE));
         this.clearChanged();
+    }
+    
+    public void fermerFenetre(){
+        fd.dispose();
     }
     
 }

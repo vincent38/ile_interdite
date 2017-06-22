@@ -404,6 +404,7 @@ public class Controleur implements Observer {
                 this.afficherTresorsRamassables();
                 break;
             case CLIC_BTN_VALIDER_DEFAUSSE:
+                vueDefausse.fermerFenetre();
 
         }
 
@@ -463,9 +464,10 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        vueDefausse = new IHMDefausse();
-        this.vueDefausse.addObserver(this);
-        while (avCourant.getCartes().size() > 5) {
+        if (avCourant.getCartes().size() > 5) {
+            System.out.println("Defausse");
+            vueDefausse = new IHMDefausse(avCourant.cartes);
+            this.vueDefausse.addObserver(this);
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
@@ -797,14 +799,14 @@ public class Controleur implements Observer {
         
         //System.out.println(vueAventurier);
         //Tirage des cartes inondation de début de partie
-        for (int j = 1; j <= 6; j++) {
+        /*for (int j = 1; j <= 6; j++) {
             CarteInondation c = cartesInondation.tirerCarte();
             System.out.println("Carte tirée : " + c.getTuileConcernee());
             Tuile t = grille.getTuile(c.getTuileConcernee());
             t.mouillerTuile();
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
-        }
+        }*/
         
         
         
@@ -812,6 +814,10 @@ public class Controleur implements Observer {
         
         this.afficherTresorsRamassables();
     }
+    
+    /**
+     * tire et innonde les tuiles de début de partie
+     */
 
     private void tirerCarteDebut() {
         //Tirage des cartes inondation de début de partie
