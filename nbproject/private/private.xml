@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/model/carte/CarteTresor.java</file>
             <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/view/IHMselectionJoueur.java</file>
             <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/view/IHMBonne.java</file>
@@ -11,6 +12,16 @@
             <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/controller/Controleur.java</file>
             <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/model/carte/CarteMonteeDesEaux.java</file>
             <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/model/carte/CartePiece.java</file>
+=======
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/IHMDefausse.java</file>
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/model/TypeMessage.java</file>
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/main/Main.java</file>
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/Fenetre.java</file>
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/FenetreDefausse.java</file>
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/controller/Controleur.java</file>
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/FenetreJoueur.java</file>
+            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/IHMselectionJoueur.java</file>
+>>>>>>> 8ae3efb27ac43959d0863f4e6f6cf02e5d807c91
         </group>
     </open-files>
 </project-private>

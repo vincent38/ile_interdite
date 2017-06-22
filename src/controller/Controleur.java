@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Scanner;
 import model.aventurier.Aventurier;
 import model.carte.Carte;
 import model.Grille;
@@ -26,6 +25,7 @@ import model.carte.DeckCartesTresor;
 import static util.Utils.*;
 import view.IHMselectionJoueur;
 import view.IHMBonne;
+import view.IHMDefausse;
 import view.IHMDonCarte;
 
 
@@ -53,6 +53,7 @@ public class Controleur implements Observer {
     private int cranMarqueurNiveau;
     private static final int NIVEAU_EAU_MAX = 10;
 
+    private IHMDefausse vueDefausse;
     private final IHMselectionJoueur vueSelection;
     private  IHMDonCarte vueDonCarte;
     private IHMBonne vueAventurier;
@@ -94,7 +95,6 @@ public class Controleur implements Observer {
     public Controleur() {
         this.vueSelection = new IHMselectionJoueur();
         this.vueSelection.addObserver(this);
-        this.vueDonCarte.addObserver(this);
         
         specialisations.add("ingenieur");
         specialisations.add("naviguateur");
@@ -363,6 +363,13 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_BTN_VALIDER_DON_CARTE:
+                if (m.getAventurier() == null || m.getCarte() == null) {
+                    afficherInformation("Veuillez choisir un destinataire et une carte");
+                } else {
+                    this.traiterDonCarte(m.getAventurier(), m.getCarte());
+                    vueDonCarte.cacherFenetre();
+                    vueAventurier.enableInteraction();
+                }
                 break;
                 
             case CLIC_BTN_TERMINER_TOUR:
@@ -396,6 +403,8 @@ public class Controleur implements Observer {
                 this.traiterClicBoutonTresor();
                 this.afficherTresorsRamassables();
                 break;
+            case CLIC_BTN_VALIDER_DEFAUSSE:
+                vueDefausse.fermerFenetre();
 
         }
 
@@ -455,7 +464,10 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        while (avCourant.getCartes().size() > 5) {
+        if (avCourant.getCartes().size() > 5) {
+            System.out.println("Defausse");
+            vueDefausse = new IHMDefausse();
+            this.vueDefausse.addObserver(this);
             CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
@@ -693,13 +705,31 @@ public class Controleur implements Observer {
     private void initDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
         ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
-        ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
+        aventuriersMemeTuile.remove(avCourant);
+        ArrayList<CartePiece> cartesPossedees = avCourant.getCartesPiecePossedees();
         CarteTresor carteADonner = null;
         Aventurier destinataire = null;
-        vueDonCarte = new IHMDonCarte(aventuriersMemeTuile, cartesPossedees);
-        vueAventurier.disableInteraction();
-        vueDonCarte.afficherFenetre();
+        if (aventuriersMemeTuile.size() == 0) {
+            afficherInformation("Impossible : Il n'y a aucun aventurier à côté de vous.");
+        } else {
+            if (cartesPossedees.size() == 0) {
+                afficherInformation("Impossible : Vous ne possédez aucune carte.");
+            } else {
+                vueDonCarte = new IHMDonCarte(aventuriersMemeTuile, cartesPossedees);
+                this.vueDonCarte.addObserver(this);
+                vueAventurier.disableInteraction();
+                vueDonCarte.afficherFenetre();
+            }
+        }
     }
+
+    private void traiterDonCarte(Aventurier a, CartePiece c) {
+        avCourant.retirerCarte(c);
+        a.ajouterCarte(c);
+    }
+    
+        
+
 
 
     private void traiterClicBoutonTresor() {
@@ -769,14 +799,14 @@ public class Controleur implements Observer {
         
         //System.out.println(vueAventurier);
         //Tirage des cartes inondation de début de partie
-        for (int j = 1; j <= 6; j++) {
+        /*for (int j = 1; j <= 6; j++) {
             CarteInondation c = cartesInondation.tirerCarte();
             System.out.println("Carte tirée : " + c.getTuileConcernee());
             Tuile t = grille.getTuile(c.getTuileConcernee());
             t.mouillerTuile();
             vueAventurier.setEtatTuile(t.getEtatTuile(), t.getX(), t.getY());
             cartesInondation.defausserCarte(c);
-        }
+        }*/
         
         
         
@@ -784,6 +814,10 @@ public class Controleur implements Observer {
         
         this.afficherTresorsRamassables();
     }
+    
+    /**
+     * tire et innonde les tuiles de début de partie
+     */
 
     private void tirerCarteDebut() {
         //Tirage des cartes inondation de début de partie
