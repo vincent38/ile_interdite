@@ -6,6 +6,7 @@ import model.carte.CarteTresor;
 import model.Grille;
 import model.Tresor;
 import model.Tuile;
+import model.TypeTresor;
 import model.carte.CartePiece;
 
 public abstract class Aventurier {
@@ -181,6 +182,17 @@ public abstract class Aventurier {
     public ArrayList<CarteTresor> getCartesPossedees() {
         return cartes;
     }
+    
+    public ArrayList<CartePiece> getCartesPiecesPossedees() {
+        ArrayList<CarteTresor> cartesPossedees = this.getCartesPossedees();
+        ArrayList<CartePiece> r = new ArrayList<>();
+        for (CarteTresor c : cartesPossedees) {
+            if (c.getTypeCarte().equals("tresor")) {
+                r.add((CartePiece) c);
+            }
+        }
+        return r;
+    }
 
     public void setPouvoirDispo(boolean b) {
         this.pouvoirDispo = true;
@@ -214,6 +226,16 @@ public abstract class Aventurier {
         r = this.tuileCourante.getAventuriers();
         r.remove(this);
         return r;
+    }
+
+    public void rm4cartesPieces(TypeTresor typeTresor) {
+        int compteur = 4;
+        for (CartePiece c : this.getCartesPiecePossedees()) {
+            if (c.getTypeTresor().equals(typeTresor) && compteur > 0) {
+                this.retirerCarte(c);
+                compteur--;
+            }
+        }
     }
     
     

@@ -668,7 +668,7 @@ public class Controleur implements Observer {
     private void getTresorFromTuile(){
         //On teste la tuile en cours du joueur : trésor présent ?
         if (avCourant.getTuile().getTresor() != null) {
-            TypeTresor typeTresorTuile = avCourant.getTuile().getTresor().typeTresor;
+            TypeTresor typeTresorTuile = avCourant.getTuile().getTresor().getTypeTresor();
             //Trésor présent, on vérifie que le joueur aie assez de cartes
             ArrayList<CarteTresor> buffer = new ArrayList<>();
             //On parcourt ses cartes
@@ -715,7 +715,7 @@ public class Controleur implements Observer {
             afficherInformation("Impossible : Il n'y a aucun aventurier à côté de vous.");
         } else {
             if (cartesPossedees.size() == 0) {
-                afficherInformation("Impossible : Vous ne possédez aucune carte.");
+                afficherInformation("Impossible : Vous ne pouvez donner aucune carte.");
             } else {
                 vueDonCarte = new IHMDonCarte(aventuriersMemeTuile, cartesPossedees);
                 this.vueDonCarte.addObserver(this);
@@ -736,10 +736,21 @@ public class Controleur implements Observer {
 
     private void traiterClicBoutonTresor() {
         Tresor tresor = avCourant.getTuile().getTresor();
-        ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
-        this.addTresorsObtenus(avCourant.getTuile().getTresor());
-        this.vueAventurier.afficherTresor(avCourant.getTuile().getTresor());
-        this.avCourant.getTuile().tresor = null;
+        ArrayList<CartePiece> cartesPossedees = avCourant.getCartesPiecesPossedees();
+        int nbCartesPieces = 0;
+        for (CartePiece c : cartesPossedees) {
+            if (c.getTypeTresor().equals(tresor.getTypeTresor())) {
+                nbCartesPieces++;
+            }
+        }
+        if (nbCartesPieces >= 4) {
+            this.addTresorsObtenus(avCourant.getTuile().getTresor());
+            this.vueAventurier.afficherTresor(avCourant.getTuile().getTresor());
+            this.avCourant.getTuile().tresor = null;
+            this.avCourant.rm4cartesPieces(tresor.getTypeTresor());
+        } else {
+            afficherInformation("Vous n'avez pas assez de cartes pour récupérer ce trésor.");
+        }
     }
 
     private void addTresorsObtenus(Tresor tresor) {
@@ -753,12 +764,12 @@ public class Controleur implements Observer {
         this.vueAventurier.disableTresors();
         if(t != null){
             for(Tresor trO : this.tresorsObtenus){
-                if (t.typeTresor == trO.typeTresor){
+                if (t.getTypeTresor() == trO.getTypeTresor()){
                     tRamasse = true;
                 }
             }
             if(!tRamasse){
-                this.vueAventurier.enable(t.typeTresor);
+                this.vueAventurier.enable(t.getTypeTresor());
             }
         }
     }

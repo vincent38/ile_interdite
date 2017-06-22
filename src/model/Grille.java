@@ -85,25 +85,25 @@ public class Grille {
             if (t.getNom().equals("Le Temple de La Lune")
                 || t.getNom().equals("Le Temple du Soleil")) {
                 Tresor tr = new Tresor();
-                tr.typeTresor = TypeTresor.pierreSacree;
+                tr.setTypeTresor(TypeTresor.pierreSacree);
                 t.setTresor(tr);
             }
             if (t.getNom().equals("Le Jardin des Murmures")
                 || t.getNom().equals("Le Jardin des Hurlements")) {
                 Tresor tr = new Tresor();
-                tr.typeTresor = TypeTresor.statueDuZephyr;
+                tr.setTypeTresor(TypeTresor.statueDuZephyr);
                 t.setTresor(tr);
             }
             if (t.getNom().equals("La Caverne du Brasier")
                 || t.getNom().equals("La Caverne des Ombres")) {
                 Tresor tr = new Tresor();
-                tr.typeTresor = TypeTresor.cristalArdent;
+                tr.setTypeTresor(TypeTresor.cristalArdent);
                 t.setTresor(tr);
             }
             if (t.getNom().equals("Le Palais de Corail")
                 || t.getNom().equals("Le Palais des Marees")) {
                 Tresor tr = new Tresor();
-                tr.typeTresor = TypeTresor.caliceDeLOnde;
+                tr.setTypeTresor(TypeTresor.caliceDeLOnde);
                 t.setTresor(tr);
             }
             
