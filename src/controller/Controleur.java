@@ -228,6 +228,7 @@ public class Controleur implements Observer {
                 this.defausse(m.carte);
                 vueDefausse.fermerFenetre();
                 vueAventurier.enableInteraction();
+                this.defausse(); 
                 break;
                 
             case CLIC_HELICOPTERE:
@@ -252,7 +253,7 @@ public class Controleur implements Observer {
      * d'actions maximal, la fonction joueurSuivant est appelée
      */
     public void ajouterAction() {
-        action += 1;
+        //action += 1;
         System.out.println(doubleAssechement);
         if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
             finTour();
