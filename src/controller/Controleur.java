@@ -241,7 +241,7 @@ public class Controleur implements Observer {
             } else {
                 joueurSuivant();
                 avCourant.setPouvoirDispo(true);
-                this.vueAventurier.actualiserCartes(avCourant.getCartesPossedees());
+                this.vueAventurier.afficherCartes(avCourant.getCartesPossedees());
                 //Si avCourant est sur une tuile inondée, on le déplace d'office
                 if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
                     vueAventurier.disableInteraction();
@@ -369,7 +369,7 @@ public class Controleur implements Observer {
                     this.traiterDonCarte(m.getAventurier(), m.getCarte());
                     vueDonCarte.cacherFenetre();
                     vueAventurier.enableInteraction();
-                    vueAventurier.actualiserCartes(avCourant.getCartesPossedees());
+                    vueAventurier.afficherCartes(avCourant.getCartesPossedees());
                 }
                 break;
                 
@@ -378,6 +378,7 @@ public class Controleur implements Observer {
                 vueAventurier.disableBoutons();
                 this.finTour();
                 this.afficherTresorsRamassables();
+                
                 break;
                 
             case CLIC_CASE:
@@ -468,6 +469,7 @@ public class Controleur implements Observer {
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
         if (avCourant.getCartesPossedees().size() > 5) {
+            this.afficherCartes();
             System.out.println("Defausse");
             vueDefausse = new IHMDefausse(avCourant.cartes);
             this.vueDefausse.addObserver(this);
@@ -475,8 +477,6 @@ public class Controleur implements Observer {
             this.vueAventurier.disableInteraction();
             //CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
             //cartesTresor.defausserCarte(c);
-            CarteTresor c = avCourant.cartes.remove(avCourant.getCartesPossedees().size() - 1);
-            cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
         }
     }
@@ -910,7 +910,7 @@ public class Controleur implements Observer {
     }
 
     private void afficherCartes() {
-        this.vueAventurier.actualiserCartes(avCourant.getCartesPossedees());
+        this.vueAventurier.afficherCartes(avCourant.getCartesPossedees());
     }
 
     private void defausse(CarteTresor carte) {
