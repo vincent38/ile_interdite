@@ -3,28 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/model/carte/DeckCartesInondation.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/view/FenetreDonCarte.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/model/carte/CartePiece.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/view/FenetreJoueur.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/view/IHMselectionJoueur.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/model/carte/DeckCartesTresor.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/model/Observateur.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/model/TypeMessage.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/util/Utils.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/view/IHM.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/model/aventurier/Aventurier.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/model/Tuile.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/view/IHMBonne.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/model/Message.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/view/Fenetre.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/controller/Controleur.java</file>
-            <file>file:/users/info/etu-s2/calixtee/Projet%20Ile%20Interdite/git/ile_interdite/src/view/IHMDonCarte.java</file>
-            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/IHMDefausse.java</file>
-            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/model/TypeMessage.java</file>
-            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/main/Main.java</file>
-            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/Fenetre.java</file>
-            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/FenetreDefausse.java</file>
-            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/controller/Controleur.java</file>
-            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/FenetreJoueur.java</file>
-            <file>file:/users/info/etu-s2/baeijsj/Projet-L'isle%20interdite/ile_interdite/src/view/IHMselectionJoueur.java</file>
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/model/aventurier/Aventurier.java</file>
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/view/IHMBonne.java</file>
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/view/Fenetre.java</file>
+            <file>file:/users/info/etu-s2/sangj/lisleInterditeTW/ile_interdite/src/controller/Controleur.java</file>
+        </group>
+    </open-files>
+</project-private>

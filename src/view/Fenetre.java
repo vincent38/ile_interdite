@@ -613,7 +613,7 @@ public class Fenetre extends JFrame{
     }
     
     public void traiterClicSacDeSable(){
-        
+        this.ihm.traiterClicSacDeSable();
     }
     
   
