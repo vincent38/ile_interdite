@@ -155,26 +155,13 @@ public class Controleur implements Observer {
         Message m = (Message) arg;
         switch (m.type) {
             case CLIC_BTN_ALLER:
-<<<<<<< HEAD
                 if(action < avCourant.getActionMax()){
-                this.traiterBoutonAller();
-                this.operationEnCours = OPERATION_DEPLACEMENT;
-=======
-                if(avCourant.getType().equals("Navigateur")) {
-                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR){
-                        this.traiterBoutonAller();
-                        this.operationEnCours = OPERATION_DEPLACEMENT;
-                    }
-                } else {
-                    if(action < ACTION_NEXT_TOUR){
-                        this.traiterBoutonAller();
-                        this.operationEnCours = OPERATION_DEPLACEMENT;
-                    }
->>>>>>> cd473b05e230fc7fcaf6cc7a4567019db7d4520b
+                    this.traiterBoutonAller();
+                    this.operationEnCours = OPERATION_DEPLACEMENT;
                 }
+
                 
                 break;
-                
             case CLIC_BTN_ASSECHER:
                 this.traiterAssechement();
                 //assecherTuile();
@@ -182,27 +169,20 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_BTN_DONNER_CARTE:
-<<<<<<< HEAD
-                if(action < avCourant.getActionMax()){
+
+            if(action < avCourant.getActionMax()){
                 //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
                 this.operationEnCours = OPERATION_DONNER_CARTE;
                 this.initDonCarte();
                 this.afficherTresorsRamassables();
-=======
-                if(avCourant.getType().equals("Navigateur")) {
-                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR){
-                        this.operationEnCours = OPERATION_DONNER_CARTE;
-                        this.initDonCarte();
-                        this.afficherTresorsRamassables();
-                    }
-                } else {
-                    if(action < ACTION_NEXT_TOUR){
-                        //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
-                        this.operationEnCours = OPERATION_DONNER_CARTE;
-                        this.initDonCarte();
-                        this.afficherTresorsRamassables();
-                    }
->>>>>>> cd473b05e230fc7fcaf6cc7a4567019db7d4520b
+
+                if(action < avCourant.getActionMax()){
+                    //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                    this.operationEnCours = OPERATION_DONNER_CARTE;
+                    this.initDonCarte();
+                    this.afficherTresorsRamassables();
+                }
+
                 }
                 break;
                 
@@ -251,23 +231,14 @@ public class Controleur implements Observer {
 
                 
             case CLIC_BTN_TRESOR:
-<<<<<<< HEAD
                 if(action < avCourant.getActionMax()){
 
-                this.traiterClicBoutonTresor();
-                this.afficherTresorsRamassables();
-=======
-                if(avCourant.getType().equals("Navigateur")) {
-                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR) {
+                    this.traiterClicBoutonTresor();
+                    this.afficherTresorsRamassables();
+                    if(action < avCourant.getActionMax()){
                         this.traiterClicBoutonTresor();
                         this.afficherTresorsRamassables();
                     }
-                } else {
-                    if(action < ACTION_NEXT_TOUR){
-                        this.traiterClicBoutonTresor();
-                        this.afficherTresorsRamassables();
-                    }
->>>>>>> cd473b05e230fc7fcaf6cc7a4567019db7d4520b
                 }
                 break;
             case CLIC_BTN_VALIDER_DEFAUSSE:
@@ -278,34 +249,37 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_HELICOPTERE:
-<<<<<<< HEAD
+
+            
                 if(action < avCourant.getActionMax()){
                 this.traiterClicHelicoptere();
-=======
+
                 if(avCourant.getType().equals("Navigateur")) {
                     this.traiterClicHelicoptere();
                 } else {
-                    if(action < ACTION_NEXT_TOUR){
+                    if(action < avCourant.getActionMax()){
                         this.traiterClicHelicoptere();
                     }
->>>>>>> cd473b05e230fc7fcaf6cc7a4567019db7d4520b
+
+                }
                 }
                 break;
                 
             case CLIC_SAC_DE_SABLE:
-<<<<<<< HEAD
-                if(action < avCourant.getActionMax()){
+
+            if(action < avCourant.getActionMax()){
                 this.traiterClicSacDeSable();
-=======
+
                 if(avCourant.getType().equals("Navigateur")) {
                     this.traiterClicSacDeSable();
                 } else {
-                    if(action < ACTION_NEXT_TOUR){
+                    if(action < avCourant.getActionMax()){
                         this.traiterClicSacDeSable();
                     }
->>>>>>> cd473b05e230fc7fcaf6cc7a4567019db7d4520b
+
                 }
                 break;
+                }
 
         }
         
@@ -548,26 +522,24 @@ public class Controleur implements Observer {
     }
 
     private void traiterClicCase(int x, int y) {
-<<<<<<< HEAD
+
         if (operationEnCours == OPERATION_DEPLACEMENT && this.action < avCourant.getActionMax()) {
-=======
-        if (operationEnCours == OPERATION_DEPLACEMENT && 
-            ((this.action < ACTION_NEXT_TOUR && ! avCourant.getType().equals("Navigateur"))
-             || (this.action < ACTION_NEXT_TOUR_NAVIGATEUR && avCourant.getType().equals("Navigateur")))){
->>>>>>> cd473b05e230fc7fcaf6cc7a4567019db7d4520b
-            this.deplacerAventurierCourant(grille.getTuile(x, y));
+
+            if (operationEnCours == OPERATION_DEPLACEMENT && 
+            (this.action < avCourant.getActionMax())){
+
+                this.deplacerAventurierCourant(grille.getTuile(x, y));
             if (deplacementObligatoire == false) {
             } else {
                 deplacementObligatoire = false;
             }
-<<<<<<< HEAD
-        } else if (operationEnCours == OPERATION_ASSECHER && (this.action < avCourant.getActionMax())||(this.doubleAssechement)) {
-=======
-        } else if (operationEnCours == OPERATION_ASSECHER && 
-           ((this.action < ACTION_NEXT_TOUR && ! avCourant.getType().equals("Navigateur"))
-             || (this.action < ACTION_NEXT_TOUR_NAVIGATEUR && avCourant.getType().equals("Navigateur")))||(this.doubleAssechement)) {
->>>>>>> cd473b05e230fc7fcaf6cc7a4567019db7d4520b
-            this.assecherTuile(x, y);
+
+            } else if (operationEnCours == OPERATION_ASSECHER && (this.action < avCourant.getActionMax())||(this.doubleAssechement)) {
+
+            } else if (operationEnCours == OPERATION_ASSECHER && 
+           (this.action < avCourant.getActionMax())) {
+
+                this.assecherTuile(x, y);
             this.vueAventurier.actualiseTuiles();
         } else if (operationEnCours == OPERATION_HELICOPTERE){
             this.deplacerAventurierCourantGratuitement(grille.getTuile(x, y));
@@ -578,6 +550,7 @@ public class Controleur implements Observer {
         }
         
         this.vueAventurier.disableBoutons();
+    }
     }
 
     //Défausse automatique tant que le joueur a trop de cartes
