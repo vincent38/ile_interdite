@@ -42,6 +42,7 @@ public class Controleur implements Observer {
     public static final int OPERATION_ASSECHER = 2;
     public static final int OPERATION_DONNER_CARTE = 3;
     public static final int OPERATION_HELICOPTERE = 4;
+    public static final int OPERATION_SAC = 5;
 
     private ArrayList<String> specialisations = new ArrayList();
     private final ArrayList<Carte> cartes = new ArrayList<>();
@@ -426,6 +427,11 @@ public class Controleur implements Observer {
                 
             case CLIC_HELICOPTERE:
                 this.traiterClicHelicoptere();
+                break;
+                
+            case CLIC_SAC_DE_SABLE:
+                this.traiterClicSacDeSable();
+                break;
 
         }
         
@@ -482,6 +488,8 @@ public class Controleur implements Observer {
         } else if (operationEnCours == OPERATION_HELICOPTERE){
             this.deplacerAventurierCourantGratuitement(grille.getTuile(x, y));
             this.removeCarteHelico();
+        }else if (operationEnCours == OPERATION_SAC){
+            this.assecherTuileGratuitement(x, y);
         }
         
         this.vueAventurier.disableBoutons();
@@ -967,6 +975,25 @@ public class Controleur implements Observer {
     
     private boolean renvoieFaux() {
         return false;
+    }
+
+    private void traiterClicSacDeSable() {
+        for(int x = 0; x < 6; x++){
+            for(int y = 0; y < 6; y++){
+                if(this.grille.getTuile(x,y) != null 
+                        && this.grille.getTuile(x, y).getEtatTuile() == Tuile.ETAT_TUILE_INONDEE){
+                    this.vueAventurier.enable(x, y);
+                }
+            }
+        }
+        this.operationEnCours = OPERATION_SAC;
+    }
+
+    private void assecherTuileGratuitement(int x, int y) {
+        grille.getTuile(x, y).setAssechee();
+        
+        vueAventurier.actualiseTuiles();
+        this.operationEnCours = OPERATION_AUCUNE;
     }
 
 }

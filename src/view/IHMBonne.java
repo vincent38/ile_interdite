@@ -163,4 +163,9 @@ public class IHMBonne extends Observable{
         this.notifyObservers(new Message(TypeMessage.CLIC_HELICOPTERE));
         this.clearChanged();
     }
+
+    void traiterClicSacDeSable() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_SAC_DE_SABLE));
+    }
 }
