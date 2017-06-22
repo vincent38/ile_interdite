@@ -62,8 +62,6 @@ public class Controleur implements Observer {
     private IHMBonne vueAventurier;
     private Aventurier avCourant;
     private int action;
-    public static final int ACTION_NEXT_TOUR = 3;
-    public static final int ACTION_NEXT_TOUR_NAVIGATEUR = 4;
     private boolean doubleAssechement = false;
 
     private static final String SPAWN_EXPLORATEUR = "La Porte de Cuivre";
@@ -157,16 +155,9 @@ public class Controleur implements Observer {
         Message m = (Message) arg;
         switch (m.type) {
             case CLIC_BTN_ALLER:
-                if(avCourant.getType().equals("Navigateur")) {
-                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR){
-                        this.traiterBoutonAller();
-                        this.operationEnCours = OPERATION_DEPLACEMENT;
-                    }
-                } else {
-                    if(action < ACTION_NEXT_TOUR){
-                        this.traiterBoutonAller();
-                        this.operationEnCours = OPERATION_DEPLACEMENT;
-                    }
+                if(action < avCourant.getActionsMax()){
+                    this.traiterBoutonAller();
+                    this.operationEnCours = OPERATION_DEPLACEMENT;
                 }
                 
                 break;
@@ -178,19 +169,11 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_BTN_DONNER_CARTE:
-                if(avCourant.getType().equals("Navigateur")) {
-                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR){
-                        this.operationEnCours = OPERATION_DONNER_CARTE;
-                        this.initDonCarte();
-                        this.afficherTresorsRamassables();
-                    }
-                } else {
-                    if(action < ACTION_NEXT_TOUR){
-                        //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
-                        this.operationEnCours = OPERATION_DONNER_CARTE;
-                        this.initDonCarte();
-                        this.afficherTresorsRamassables();
-                    }
+                if(action < avCourant.getActionsMax()){
+                    //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                    this.operationEnCours = OPERATION_DONNER_CARTE;
+                    this.initDonCarte();
+                    this.afficherTresorsRamassables();
                 }
                 break;
                 
@@ -239,18 +222,12 @@ public class Controleur implements Observer {
 
                 
             case CLIC_BTN_TRESOR:
-                if(avCourant.getType().equals("Navigateur")) {
-                    if(action < ACTION_NEXT_TOUR_NAVIGATEUR) {
-                        this.traiterClicBoutonTresor();
-                        this.afficherTresorsRamassables();
-                    }
-                } else {
-                    if(action < ACTION_NEXT_TOUR){
-                        this.traiterClicBoutonTresor();
-                        this.afficherTresorsRamassables();
-                    }
+                if(action < avCourant.getActionsMax()){
+                    this.traiterClicBoutonTresor();
+                    this.afficherTresorsRamassables();
                 }
                 break;
+                
             case CLIC_BTN_VALIDER_DEFAUSSE:
                 this.defausse(m.carte);
                 vueDefausse.fermerFenetre();
@@ -259,46 +236,31 @@ public class Controleur implements Observer {
                 break;
                 
             case CLIC_HELICOPTERE:
-                if(avCourant.getType().equals("Navigateur")) {
+                if(action < avCourant.getActionsMax()){
                     this.traiterClicHelicoptere();
-                } else {
-                    if(action < ACTION_NEXT_TOUR){
-                        this.traiterClicHelicoptere();
-                    }
                 }
                 break;
                 
             case CLIC_SAC_DE_SABLE:
-                if(avCourant.getType().equals("Navigateur")) {
+                if(action < avCourant.getActionsMax()){
                     this.traiterClicSacDeSable();
-                } else {
-                    if(action < ACTION_NEXT_TOUR){
-                        this.traiterClicSacDeSable();
-                    }
                 }
                 break;
 
-        }
+            }
         
         
-        if(this.action >= ACTION_NEXT_TOUR && !(this.doubleAssechement && avCourant.getTuilesAssechables(grille).size() > 0)){
+            if(this.action >= avCourant.getActionsMax() && 
+              !(this.doubleAssechement && avCourant.getTuilesAssechables(grille).size() > 0)){
             this.finTour();
-            
-        if(avCourant.getType().equals("Navigateur")){
-            if(this.action >= ACTION_NEXT_TOUR_NAVIGATEUR){
-                this.finTour();
-            } 
-        } else { 
-            if(this.action >= ACTION_NEXT_TOUR){
+            if(this.action >= avCourant.getActionsMax()){
                 this.finTour();
             }
-            
-        }
-        this.updateVueAventurier();
-        
+            this.updateVueAventurier();
 
-    }
-    }
+
+            }
+        }
 
     /**
      * Ajoute une action utilisée au joueur courant Si il atteint le nombre
@@ -307,22 +269,11 @@ public class Controleur implements Observer {
     public void ajouterAction() {
         action += 1;
         System.out.println(doubleAssechement);
-        if (avCourant.getType().equals("Navigateur")) {
-            if (action >= ACTION_NEXT_TOUR_NAVIGATEUR) {
-                finTour();
-            }
-        } else {
-            if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
-                finTour();
-            }    
+        if (action >= avCourant.getActionsMax() && !doubleAssechement) {
+            finTour();
         }
-        
-        if(avCourant.getType().equals("Navigateur")) {
-            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR_NAVIGATEUR - action);
-        } else {
-            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR - action);
+        this.vueAventurier.setNbAct(avCourant.getActionsMax() - action);
         }
-    }
 
     /**
      * Retourne le nombre d'actions effectuées par l'utilisateur.
@@ -331,15 +282,6 @@ public class Controleur implements Observer {
      */
     public int getAction() {
         return action;
-    }
-
-    /**
-     * Retourne le nombre d'actions par tour
-     *
-     * @return ACTION_NEXT_TOUR
-     */
-    public static int getACTION_NEXT_TOUR() {
-        return ACTION_NEXT_TOUR;
     }
 
     /**
@@ -442,11 +384,7 @@ public class Controleur implements Observer {
         }
         this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
-        if(avCourant.getType().equals("Navigateur")) {
-            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR_NAVIGATEUR);
-        } else {
-            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
-        }
+        this.vueAventurier.setNbAct(avCourant.getActionsMax()-action);
         System.out.println(avCourant.getType());
         defausse();
 
@@ -549,16 +487,14 @@ public class Controleur implements Observer {
 
     private void traiterClicCase(int x, int y) {
         if (operationEnCours == OPERATION_DEPLACEMENT && 
-            ((this.action < ACTION_NEXT_TOUR && ! avCourant.getType().equals("Navigateur"))
-             || (this.action < ACTION_NEXT_TOUR_NAVIGATEUR && avCourant.getType().equals("Navigateur")))){
+            ((this.action < avCourant.getActionsMax()))) {
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             if (deplacementObligatoire == false) {
             } else {
                 deplacementObligatoire = false;
             }
         } else if (operationEnCours == OPERATION_ASSECHER && 
-           ((this.action < ACTION_NEXT_TOUR && ! avCourant.getType().equals("Navigateur"))
-             || (this.action < ACTION_NEXT_TOUR_NAVIGATEUR && avCourant.getType().equals("Navigateur")))||(this.doubleAssechement)) {
+           ((this.action < avCourant.getActionsMax()))) {
             this.assecherTuile(x, y);
             this.vueAventurier.actualiseTuiles();
         } else if (operationEnCours == OPERATION_HELICOPTERE){
@@ -566,6 +502,7 @@ public class Controleur implements Observer {
             this.removeCarteHelico();
         }else if (operationEnCours == OPERATION_SAC){
             this.assecherTuileGratuitement(x, y);
+            this.removeCarteSacsDeSable();
         }
         
         this.vueAventurier.disableBoutons();
@@ -613,7 +550,7 @@ public class Controleur implements Observer {
                         //Deuxième
                         afficherInformation("Vous avez asséché deux tuiles pour 1 action.");
                         doubleAssechement = false;
-                        if (action >= ACTION_NEXT_TOUR) {
+                        if (action >= avCourant.getActionsMax()) {
                             finTour();
                         }
                     }
@@ -837,6 +774,7 @@ public class Controleur implements Observer {
     private void traiterDonCarte(Aventurier a, CartePiece c) {
         avCourant.retirerCarte(c);
         a.ajouterCarte(c);
+        ajouterAction();
     }
     
         
@@ -1075,6 +1013,19 @@ public class Controleur implements Observer {
         this.vueAventurier.actualiseTuiles();
         this.vueAventurier.afficherCartes(avCourant.getCartes());
         
+    }
+
+    private void removeCarteSacsDeSable() {
+        for(CarteTresor c : avCourant.getCartes()){
+            if(c.getTypeCarte().equals("action_speciale")){
+                CarteBonus d = (CarteBonus) c;
+                if (d.getPouvoir().equals("SacsDeSable")){
+                    avCourant.getCartes().remove(c);
+                    break;
+                }
+            }
+        }
+        this.vueAventurier.afficherCartes(avCourant.getCartes());
     }
 
 }

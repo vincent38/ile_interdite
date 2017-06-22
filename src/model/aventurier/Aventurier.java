@@ -258,6 +258,9 @@ public abstract class Aventurier {
         return pouvoirDispo;
     }
     
+    public int getActionsMax() {
+        return 3;
+    }
     
 }
 
