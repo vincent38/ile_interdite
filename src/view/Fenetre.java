@@ -111,7 +111,7 @@ public class Fenetre extends JFrame{
         ihm.traiterClicAssecher();
     }
     
-    public void traiterClicAutreAction(){
+    public void traiterClicDonCarte(){
         ihm.traiterClicDonCarte();
     }
     
@@ -372,7 +372,7 @@ public class Fenetre extends JFrame{
         boutonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                traiterClicAutreAction();
+                traiterClicDonCarte();
             }
         });
         
