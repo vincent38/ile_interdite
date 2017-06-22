@@ -227,7 +227,7 @@ public abstract class Aventurier {
     public ArrayList<Aventurier> getAventuriersDonPossible(ArrayList<Aventurier> aventuriers) {
     // On passe l'arrayList en paramètres uniquement pour la classe Messager qui Override cette méthode
         ArrayList<Aventurier> r = new ArrayList();
-        r = this.tuileCourante.getAventuriers();
+        r = (ArrayList<Aventurier>) this.tuileCourante.getAventuriers().clone();
         r.remove(this);
         return r;
     }

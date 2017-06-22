@@ -47,6 +47,8 @@ public class Messager extends Aventurier {
     
     @Override
     public ArrayList<Aventurier> getAventuriersDonPossible(ArrayList<Aventurier> aventuriers) {
-        return aventuriers;
+        ArrayList<Aventurier> r = (ArrayList<Aventurier>) aventuriers.clone();
+        r.remove(this);
+        return r;
     }
 }
