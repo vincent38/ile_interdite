@@ -20,6 +20,7 @@ import javax.swing.JRadioButton;
 import model.Message;
 import model.TypeMessage;
 import model.carte.Carte;
+import model.carte.CarteBonus;
 import model.carte.CartePiece;
 import model.carte.CarteTresor;
 
@@ -100,12 +101,22 @@ public class FenetreDefausse extends JFrame{
     }
 
     private void addCarte(CarteTresor c) {
+        JRadioButton j;
         if (c.getTypeCarte().equals("tresor")){
             CartePiece d = (CartePiece) c;
-            JRadioButton j = new JRadioButton(d.getNomTresor());
-            this.boutonsCartes.add(j);
-            this.grpBoutonsCartes.add(j);
-            this.panelCenter.add(j);
+            j = new JRadioButton(d.getNomTresor());
+        }else{
+            CarteBonus d = (CarteBonus) c;
+            if (d.getPouvoir().equals("SacsDeSable")){
+                j = new JRadioButton("Sacs de sable");
+            }else{
+                j = new JRadioButton(d.getPouvoir());
+            }
         }
+        
+        
+        this.boutonsCartes.add(j);
+        this.grpBoutonsCartes.add(j);
+        this.panelCenter.add(j);
     }
 }
