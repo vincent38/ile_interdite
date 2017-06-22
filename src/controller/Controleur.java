@@ -964,5 +964,9 @@ public class Controleur implements Observer {
         }
         this.vueAventurier.afficherCartes(avCourant.getCartes());
     }
+    
+    private boolean renvoieFaux() {
+        return false;
+    }
 
 }
