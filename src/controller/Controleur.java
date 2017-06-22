@@ -241,7 +241,7 @@ public class Controleur implements Observer {
             } else {
                 joueurSuivant();
                 avCourant.setPouvoirDispo(true);
-                this.vueAventurier.actualiserCartes(avCourant.getCartes());
+                this.vueAventurier.actualiserCartes(avCourant.getCartesPossedees());
                 //Si avCourant est sur une tuile inondée, on le déplace d'office
                 if (avCourant.tuileCourante.getEtatTuile() == Tuile.ETAT_TUILE_COULEE) {
                     vueAventurier.disableInteraction();
@@ -369,7 +369,7 @@ public class Controleur implements Observer {
                     this.traiterDonCarte(m.getAventurier(), m.getCarte());
                     vueDonCarte.cacherFenetre();
                     vueAventurier.enableInteraction();
-                    vueAventurier.actualiserCartes(avCourant.getCartes());
+                    vueAventurier.actualiserCartes(avCourant.getCartesPossedees());
                 }
                 break;
                 
@@ -465,11 +465,11 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        if (avCourant.getCartes().size() > 5) {
+        if (avCourant.getCartesPossedees().size() > 5) {
             System.out.println("Defausse");
             vueDefausse = new IHMDefausse(avCourant.cartes);
             this.vueDefausse.addObserver(this);
-            CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
+            CarteTresor c = avCourant.cartes.remove(avCourant.getCartesPossedees().size() - 1);
             cartesTresor.defausserCarte(c);
             System.out.println("Défaussé : une carte");
         }
@@ -735,6 +735,8 @@ public class Controleur implements Observer {
 
 
     private void traiterClicBoutonTresor() {
+        Tresor tresor = avCourant.getTuile().getTresor();
+        ArrayList<CarteTresor> cartesPossedees = avCourant.getCartesPossedees();
         this.addTresorsObtenus(avCourant.getTuile().getTresor());
         this.vueAventurier.afficherTresor(avCourant.getTuile().getTresor());
         this.avCourant.getTuile().tresor = null;
@@ -891,7 +893,7 @@ public class Controleur implements Observer {
     }
 
     private void afficherCartes() {
-        this.vueAventurier.actualiserCartes(avCourant.getCartes());
+        this.vueAventurier.actualiserCartes(avCourant.getCartesPossedees());
     }
 
 }

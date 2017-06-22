@@ -124,9 +124,9 @@ public abstract class Aventurier {
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
 
-    public ArrayList<CarteTresor> getCartes() {
-        return cartes;
-    }
+    //public ArrayList<CarteTresor> getCartes() {
+    //    return cartes;
+   // }
     
     public int countCartes() {
         return cartes.size();
