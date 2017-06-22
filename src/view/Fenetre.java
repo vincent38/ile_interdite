@@ -493,7 +493,7 @@ public class Fenetre extends JFrame{
 
     void afficherTresor(Tresor tresor) {
         JLabel img = null;
-        switch(tresor.typeTresor){
+        switch(tresor.getTypeTresor()){
             case caliceDeLOnde:
                 img = new JLabel(new ImageIcon(getClass().getResource("/images/calice.png")));
                 
