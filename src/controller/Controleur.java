@@ -261,9 +261,16 @@ public class Controleur implements Observer {
     public void ajouterAction() {
         action += 1;
         System.out.println(doubleAssechement);
-        if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
-            finTour();
+        if (avCourant.getType().equals("Navigateur")) {
+            if (action >= ACTION_NEXT_TOUR_NAVIGATEUR) {
+                finTour();
+            }
+        } else {
+            if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
+                finTour();
+            }    
         }
+        
         if(avCourant.getType().equals("Navigateur")) {
             this.vueAventurier.setNbAct(ACTION_NEXT_TOUR_NAVIGATEUR - action);
         } else {
@@ -394,6 +401,7 @@ public class Controleur implements Observer {
         } else {
             this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
         }
+        System.out.println(avCourant.getType());
         defausse();
 
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
