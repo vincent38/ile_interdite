@@ -418,7 +418,7 @@ public class Fenetre extends JFrame{
         this.paneWest.add(cartesEtTresorsPane, BorderLayout.CENTER);
         this.paneTresors = new JPanel(new GridLayout(2,2));
         
-        this.paneCartes = new JPanel(new GridLayout(1,5));
+        this.paneCartes = new JPanel(new GridLayout(2,3));
         this.cartesEtTresorsPane.add(paneTresors, BorderLayout.NORTH);
         this.cartesEtTresorsPane.add(paneCartes, BorderLayout.SOUTH);
         
