@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import static util.Utils.afficherInformation;
 
 /**
  *
@@ -48,8 +49,7 @@ public class FenetreJoueur extends JFrame{
         this.setAlwaysOnTop(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        
-        noms = new ArrayList();        
+              
         mainPanel = new JPanel(new BorderLayout());
         panelCenter = new JPanel(new GridLayout(4, 2));
         panelSouth = new JPanel();
@@ -118,27 +118,32 @@ public class FenetreJoueur extends JFrame{
     }
     
     public void traiterClicCommencer(){
-        sj.traiterClicCommencer();
+        if(getNomsJoueurs().size() >= 2) {
+            sj.traiterClicCommencer();
+        } else {
+            afficherInformation("Deux joueurs sont requis au minimum pour jouer !");
+        }
     }
     
     public ArrayList<String> getNomsJoueurs(){
+        ArrayList<String> r = new ArrayList<>();
         if (!tj1.getText().isEmpty()){
-            noms.add(tj1.getText());
+            r.add(tj1.getText());
             System.out.println(tj1.getText());
         }
         if (!tj2.getText().isEmpty()){
-            noms.add(tj2.getText());
+            r.add(tj2.getText());
             System.out.println(tj2.getText());
         }
         if (!tj3.getText().isEmpty()){
-            noms.add(tj3.getText());
+            r.add(tj3.getText());
             System.out.println(tj3.getText());
         }
         if (!tj4.getText().isEmpty()){
-            noms.add(tj4.getText());
+            r.add(tj4.getText());
             System.out.println(tj2.getText());
         }
-        return noms;
+        return r;
     }
 
     void visible() {

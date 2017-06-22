@@ -228,6 +228,7 @@ public class Controleur implements Observer {
                 this.defausse(m.carte);
                 vueDefausse.fermerFenetre();
                 vueAventurier.enableInteraction();
+                this.defausse(); 
                 break;
                 
             case CLIC_HELICOPTERE:
