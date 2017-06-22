@@ -150,13 +150,109 @@ public class Controleur implements Observer {
 
 
     }
+    
+    @Override
+    public void update(Observable o, Object arg) {
+
+        Message m = (Message) arg;
+        switch (m.type) {
+            case CLIC_BTN_ALLER:
+                this.traiterBoutonAller();
+                this.operationEnCours = OPERATION_DEPLACEMENT;
+                
+                break;
+                
+            case CLIC_BTN_ASSECHER:
+                this.traiterAssechement();
+                //assecherTuile();
+                this.operationEnCours = OPERATION_ASSECHER;
+                break;
+                
+            case CLIC_BTN_DONNER_CARTE:
+                //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
+                this.operationEnCours = OPERATION_DONNER_CARTE;
+                this.initDonCarte();
+                this.afficherTresorsRamassables();
+                break;
+                
+            case CLIC_BTN_ANNULER_DON_CARTE:
+                this.operationEnCours = OPERATION_AUCUNE;
+                vueDonCarte.cacherFenetre();
+                vueAventurier.enableInteraction();
+                break;
+                
+            case CLIC_BTN_VALIDER_DON_CARTE:
+                if (m.getAventurier() == null || m.getCarte() == null) {
+                    afficherInformation("Veuillez choisir un destinataire et une carte");
+                } else {
+                    this.traiterDonCarte(m.getAventurier(), m.getCarte());
+                    vueDonCarte.cacherFenetre();
+                    vueAventurier.enableInteraction();
+                    vueAventurier.afficherCartes(avCourant.getCartesPossedees());
+                }
+                break;
+                
+            case CLIC_BTN_TERMINER_TOUR:
+                this.operationEnCours = OPERATION_AUCUNE;
+                vueAventurier.disableBoutons();
+                this.finTour();
+                this.afficherTresorsRamassables();
+                
+                break;
+                
+            case CLIC_CASE:
+                if(this.operationEnCours == OPERATION_DEPLACEMENT){
+                    this.traiterClicCase(m.x, m.y);
+                    vueAventurier.enableInteraction();
+                    this.afficherTresorsRamassables();
+                }else{
+                    this.traiterClicCase(m.x, m.y);
+                }
+                if (victoire()) {
+                    afficherInformation("Bravo ! Vous avez réussi !");
+                    vueAventurier.fermerFenetre();
+                }
+                break;
+
+            case CLIC_COMMENCER:
+                this.lancerJeu();
+                break;
+
+                
+            case CLIC_BTN_TRESOR:
+
+                this.traiterClicBoutonTresor();
+                this.afficherTresorsRamassables();
+                break;
+            case CLIC_BTN_VALIDER_DEFAUSSE:
+                this.defausse(m.carte);
+                vueDefausse.fermerFenetre();
+                vueAventurier.enableInteraction();
+                break;
+                
+            case CLIC_HELICOPTERE:
+                this.traiterClicHelicoptere();
+                break;
+                
+            case CLIC_SAC_DE_SABLE:
+                this.traiterClicSacDeSable();
+                break;
+
+        }
+        
+        if(this.action >= ACTION_NEXT_TOUR){
+            this.finTour();
+        }
+        
+
+    }
 
     /**
      * Ajoute une action utilisée au joueur courant Si il atteint le nombre
      * d'actions maximal, la fonction joueurSuivant est appelée
      */
     public void ajouterAction() {
-        //action += 1;
+        action += 1;
         System.out.println(doubleAssechement);
         if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
             finTour();
@@ -346,98 +442,6 @@ public class Controleur implements Observer {
             }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
-        Message m = (Message) arg;
-        switch (m.type) {
-            case CLIC_BTN_ALLER:
-                this.traiterBoutonAller();
-                this.operationEnCours = OPERATION_DEPLACEMENT;
-                
-                break;
-                
-            case CLIC_BTN_ASSECHER:
-                this.traiterAssechement();
-                //assecherTuile();
-                this.operationEnCours = OPERATION_ASSECHER;
-                break;
-                
-            case CLIC_BTN_DONNER_CARTE:
-                //afficherInformation("Cette fonctionnalité est en chantier ! Merci de revenir plus tard.");
-                this.operationEnCours = OPERATION_DONNER_CARTE;
-                this.initDonCarte();
-                this.afficherTresorsRamassables();
-                break;
-                
-            case CLIC_BTN_ANNULER_DON_CARTE:
-                this.operationEnCours = OPERATION_AUCUNE;
-                vueDonCarte.cacherFenetre();
-                vueAventurier.enableInteraction();
-                break;
-                
-            case CLIC_BTN_VALIDER_DON_CARTE:
-                if (m.getAventurier() == null || m.getCarte() == null) {
-                    afficherInformation("Veuillez choisir un destinataire et une carte");
-                } else {
-                    this.traiterDonCarte(m.getAventurier(), m.getCarte());
-                    vueDonCarte.cacherFenetre();
-                    vueAventurier.enableInteraction();
-                    vueAventurier.afficherCartes(avCourant.getCartesPossedees());
-                }
-                break;
-                
-            case CLIC_BTN_TERMINER_TOUR:
-                this.operationEnCours = OPERATION_AUCUNE;
-                vueAventurier.disableBoutons();
-                this.finTour();
-                this.afficherTresorsRamassables();
-                
-                break;
-                
-            case CLIC_CASE:
-                if(this.operationEnCours == OPERATION_DEPLACEMENT){
-                    this.traiterClicCase(m.x, m.y);
-                    vueAventurier.enableInteraction();
-                    this.afficherTresorsRamassables();
-                }else{
-                    this.traiterClicCase(m.x, m.y);
-                }
-                if (victoire()) {
-                    afficherInformation("Bravo ! Vous avez réussi !");
-                    vueAventurier.fermerFenetre();
-                }
-                break;
-
-            case CLIC_COMMENCER:
-                this.lancerJeu();
-                break;
-
-                
-            case CLIC_BTN_TRESOR:
-
-                this.traiterClicBoutonTresor();
-                this.afficherTresorsRamassables();
-                break;
-            case CLIC_BTN_VALIDER_DEFAUSSE:
-                this.defausse(m.carte);
-                vueDefausse.fermerFenetre();
-                vueAventurier.enableInteraction();
-                break;
-                
-            case CLIC_HELICOPTERE:
-                this.traiterClicHelicoptere();
-                break;
-                
-            case CLIC_SAC_DE_SABLE:
-                this.traiterClicSacDeSable();
-                break;
-
-        }
-        
-
-    }
-
     private void tirerCartesInondation() {
         int nbCartes = nbCartesInondation();
         for (int i = 1; i <= nbCartes; i++) {
@@ -478,7 +482,6 @@ public class Controleur implements Observer {
         if (operationEnCours == OPERATION_DEPLACEMENT) {
             this.deplacerAventurierCourant(grille.getTuile(x, y));
             if (deplacementObligatoire == false) {
-                this.ajouterAction();
             } else {
                 deplacementObligatoire = false;
             }
@@ -741,8 +744,6 @@ public class Controleur implements Observer {
     private void initDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
         ArrayList<Aventurier> aventuriersMemeTuile = avCourant.getAventuriersDonPossible(joueurs);
-        System.out.println("SIZE"+aventuriersMemeTuile.size());
-        aventuriersMemeTuile.remove(avCourant);
         ArrayList<CartePiece> cartesPossedees = avCourant.getCartesPiecePossedees();
         CarteTresor carteADonner;
         Aventurier destinataire;
@@ -971,6 +972,10 @@ public class Controleur implements Observer {
             }
         }
         this.vueAventurier.afficherCartes(avCourant.getCartes());
+    }
+    
+    private boolean renvoieFaux() {
+        return false;
     }
 
     private void traiterClicSacDeSable() {

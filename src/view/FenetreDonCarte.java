@@ -58,7 +58,7 @@ public class FenetreDonCarte extends JFrame {
         this.setResizable(false);
         
         this.aventuriers = aventuriers;
-        this.cartes = cartes;
+        this.cartes = cartes; 
         
         panelCenterAv.add(new JLabel("Sélectionnez l'aventurier destinataire :"), BorderLayout.NORTH);
         // Affichage aventuriers
