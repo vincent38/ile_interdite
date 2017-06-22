@@ -228,10 +228,9 @@ public abstract class Aventurier {
         return r;
     }
 
-<<<<<<< HEAD
     public ArrayList<CarteTresor> getCartes() {
         return this.cartes;
-=======
+    }
     public void rm4cartesPieces(TypeTresor typeTresor) {
         int compteur = 4;
         for (CartePiece c : this.getCartesPiecePossedees()) {
@@ -240,7 +239,6 @@ public abstract class Aventurier {
                 compteur--;
             }
         }
->>>>>>> f5e4b6877b83b3940b197ccf60be1afa97a8bc28
     }
     
     
