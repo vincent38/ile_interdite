@@ -125,7 +125,7 @@ public class Fenetre extends JFrame{
         nomJoueur.setForeground(joueur.getColor());
         classeJoueur.setText(joueur.getType());
         classeJoueur.setForeground(joueur.getColor());
-        nbAct.setText("" + nbActRestantes);
+        nbAct.setText("" + 3);
         nbAct.setForeground(joueur.getColor());
     }
 
@@ -277,6 +277,10 @@ public class Fenetre extends JFrame{
             boutonsCases[i][0] = new JButton();
             boutonsCases[i][5] = new JButton();
             
+            /*ImageIcon i = new ImageIcon(getClass().getResource(name))
+            
+            boutonsCases[i][0].add(this)*/
+            
             conteneursAventuriers[i][0] = new JPanel();
             conteneursAventuriers[i][5] = new JPanel();
         }
@@ -414,7 +418,7 @@ public class Fenetre extends JFrame{
         this.paneWest.add(cartesEtTresorsPane, BorderLayout.CENTER);
         this.paneTresors = new JPanel(new GridLayout(2,2));
         
-        this.paneCartes = new JPanel(new GridLayout(1,5));
+        this.paneCartes = new JPanel(new GridLayout(2,3));
         this.cartesEtTresorsPane.add(paneTresors, BorderLayout.NORTH);
         this.cartesEtTresorsPane.add(paneCartes, BorderLayout.SOUTH);
         

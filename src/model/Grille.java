@@ -11,7 +11,7 @@ public class Grille {
      * Stocke les noms des tuiles du jeu
      */
     
-    private String[] NOMS_TUILES = {
+    public static final String[] NOMS_TUILES = {
         "Le Pont des Abimes",
         "La Porte de Bronze",
         "La Caverne des Ombres",
@@ -46,6 +46,7 @@ public class Grille {
      * Constructeur génère la grille, associe à chaque tuile un nom de la liste
      */
     public Grille() {
+        
         //remainingTuilesNames();
         
         //Définition de la grille
@@ -437,6 +438,10 @@ public class Grille {
         }
         return r;
     }
+
+    
+    
+    
 
 
 }

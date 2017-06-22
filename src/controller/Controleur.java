@@ -249,6 +249,7 @@ public class Controleur implements Observer {
                 this.finTour();
             }
         }
+        this.updateVueAventurier();
         
 
     }
@@ -514,7 +515,7 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        if (avCourant.getCartesPossedees().size() > 5) {
+        while (avCourant.getCartesPossedees().size() > 5) {
             this.afficherCartes();
             System.out.println("Defausse");
             vueDefausse = new IHMDefausse(avCourant.cartes);
@@ -1009,6 +1010,13 @@ public class Controleur implements Observer {
         
         vueAventurier.actualiseTuiles();
         this.operationEnCours = OPERATION_AUCUNE;
+    }
+
+    private void updateVueAventurier() {
+        this.vueAventurier.actualiseAventuriers();
+        this.vueAventurier.actualiseTuiles();
+        this.vueAventurier.afficherCartes(avCourant.getCartes());
+        
     }
 
 }
