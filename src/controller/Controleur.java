@@ -17,6 +17,7 @@ import model.aventurier.Messager;
 import model.aventurier.Navigateur;
 import model.aventurier.Pilote;
 import model.aventurier.Plongeur;
+import model.carte.CarteBonus;
 import model.carte.CarteInondation;
 import model.carte.CartePiece;
 import model.carte.CarteTresor;
@@ -40,6 +41,8 @@ public class Controleur implements Observer {
     public static final int OPERATION_DEPLACEMENT = 1;
     public static final int OPERATION_ASSECHER = 2;
     public static final int OPERATION_DONNER_CARTE = 3;
+    public static final int OPERATION_HELICOPTERE = 4;
+    public static final int OPERATION_SAC = 5;
 
     private ArrayList<String> specialisations = new ArrayList();
     private final ArrayList<Carte> cartes = new ArrayList<>();
@@ -220,7 +223,20 @@ public class Controleur implements Observer {
         this.vueAventurier.actualiseAventuriers();
         this.vueAventurier.disableBoutons();
         this.operationEnCours = OPERATION_AUCUNE;
-        //this.ajouterAction();
+        this.ajouterAction();
+    }
+    
+    public void deplacerAventurierCourantGratuitement(Tuile nvTuile){
+        if(avCourant.isPouvoirDispo()){
+            avCourant.deplacement(nvTuile, this.grille);
+            avCourant.setPouvoirDispo(true);
+        }else{
+            avCourant.deplacement(nvTuile, this.grille);
+        }
+        
+        this.vueAventurier.actualiseAventuriers();
+        this.vueAventurier.disableBoutons();
+        this.operationEnCours = OPERATION_AUCUNE;
     }
 
     /**
@@ -315,7 +331,6 @@ public class Controleur implements Observer {
 
     //Tirer 2 cartes trésor à la fin du tour
     private void tirerCartesTresor() {
-        for (int i = 1; i <= 2; i++) {
             CarteTresor c = cartesTresor.tirerCarte();
             if ("montee_eaux".equals(c.getTypeCarte())) {
                 //Actions montée des eaux
@@ -329,7 +344,6 @@ public class Controleur implements Observer {
                 //Ajout de la carte au deck du joueur
                 avCourant.ajouterCarte(c);
             }
-        }
     }
 
     @Override
@@ -409,8 +423,18 @@ public class Controleur implements Observer {
                 this.defausse(m.carte);
                 vueDefausse.fermerFenetre();
                 vueAventurier.enableInteraction();
+                break;
+                
+            case CLIC_HELICOPTERE:
+                this.traiterClicHelicoptere();
+                break;
+                
+            case CLIC_SAC_DE_SABLE:
+                this.traiterClicSacDeSable();
+                break;
 
         }
+        
 
     }
 
@@ -461,6 +485,11 @@ public class Controleur implements Observer {
         } else if (operationEnCours == OPERATION_ASSECHER) {
             this.assecherTuile(x, y);
             this.vueAventurier.actualiseTuiles();
+        } else if (operationEnCours == OPERATION_HELICOPTERE){
+            this.deplacerAventurierCourantGratuitement(grille.getTuile(x, y));
+            this.removeCarteHelico();
+        }else if (operationEnCours == OPERATION_SAC){
+            this.assecherTuileGratuitement(x, y);
         }
         
         this.vueAventurier.disableBoutons();
@@ -671,7 +700,7 @@ public class Controleur implements Observer {
         return b;
     }
     
-    private void getTresorFromTuile(){
+    /*private void getTresorFromTuile(){
         //On teste la tuile en cours du joueur : trésor présent ?
         if (avCourant.getTuile().getTresor() != null) {
             TypeTresor typeTresorTuile = avCourant.getTuile().getTresor().getTypeTresor();
@@ -707,7 +736,7 @@ public class Controleur implements Observer {
                 System.out.println("Lol nope");
             }
         }
-    }
+    }*/
 
     private void initDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
@@ -917,6 +946,54 @@ public class Controleur implements Observer {
             avCourant.getCartes().remove(carte);
             cartesTresor.defausserCarte(carte);
             this.afficherCartes();
+    }
+
+    private void traiterClicHelicoptere() {
+        for(int x = 0; x < 6; x++){
+            for(int y = 0; y < 6; y++){
+                if(this.grille.getTuile(x,y) != null 
+                        && this.grille.getTuile(x, y).getEtatTuile() != Tuile.ETAT_TUILE_COULEE){
+                    this.vueAventurier.enable(x, y);
+                }
+            }
+        }
+        this.operationEnCours = OPERATION_HELICOPTERE;
+    }
+
+    private void removeCarteHelico() {
+        for(CarteTresor c : avCourant.getCartes()){
+            if(c.getTypeCarte().equals("action_speciale")){
+                CarteBonus d = (CarteBonus) c;
+                if (d.getPouvoir().equals("Helicoptere")){
+                    avCourant.getCartes().remove(c);
+                    break;
+                }
+            }
+        }
+        this.vueAventurier.afficherCartes(avCourant.getCartes());
+    }
+    
+    private boolean renvoieFaux() {
+        return false;
+    }
+
+    private void traiterClicSacDeSable() {
+        for(int x = 0; x < 6; x++){
+            for(int y = 0; y < 6; y++){
+                if(this.grille.getTuile(x,y) != null 
+                        && this.grille.getTuile(x, y).getEtatTuile() == Tuile.ETAT_TUILE_INONDEE){
+                    this.vueAventurier.enable(x, y);
+                }
+            }
+        }
+        this.operationEnCours = OPERATION_SAC;
+    }
+
+    private void assecherTuileGratuitement(int x, int y) {
+        grille.getTuile(x, y).setAssechee();
+        
+        vueAventurier.actualiseTuiles();
+        this.operationEnCours = OPERATION_AUCUNE;
     }
 
 }

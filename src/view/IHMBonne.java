@@ -157,4 +157,15 @@ public class IHMBonne extends Observable{
     public void afficherCartes(ArrayList<CarteTresor> cartes) {
         this.fenetre.afficherCartes(cartes);
     }
+
+    void traiterClicHelicoptere() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_HELICOPTERE));
+        this.clearChanged();
+    }
+
+    void traiterClicSacDeSable() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_SAC_DE_SABLE));
+    }
 }
