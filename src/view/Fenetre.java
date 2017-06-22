@@ -125,7 +125,7 @@ public class Fenetre extends JFrame{
         nomJoueur.setForeground(joueur.getColor());
         classeJoueur.setText(joueur.getType());
         classeJoueur.setForeground(joueur.getColor());
-        nbAct.setText("" + nbActRestantes);
+        nbAct.setText("" + 3);
         nbAct.setForeground(joueur.getColor());
     }
 
@@ -276,6 +276,10 @@ public class Fenetre extends JFrame{
             
             boutonsCases[i][0] = new JButton();
             boutonsCases[i][5] = new JButton();
+            
+            /*ImageIcon i = new ImageIcon(getClass().getResource(name))
+            
+            boutonsCases[i][0].add(this)*/
             
             conteneursAventuriers[i][0] = new JPanel();
             conteneursAventuriers[i][5] = new JPanel();

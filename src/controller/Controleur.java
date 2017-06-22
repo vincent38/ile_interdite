@@ -243,6 +243,7 @@ public class Controleur implements Observer {
         if(this.action >= ACTION_NEXT_TOUR){
             this.finTour();
         }
+        this.updateVueAventurier();
         
 
     }
@@ -252,7 +253,7 @@ public class Controleur implements Observer {
      * d'actions maximal, la fonction joueurSuivant est appelée
      */
     public void ajouterAction() {
-        action += 1;
+        //action += 1;
         System.out.println(doubleAssechement);
         if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
             finTour();
@@ -500,7 +501,7 @@ public class Controleur implements Observer {
 
     //Défausse automatique tant que le joueur a trop de cartes
     private void defausse() {
-        if (avCourant.getCartesPossedees().size() > 5) {
+        while (avCourant.getCartesPossedees().size() > 5) {
             this.afficherCartes();
             System.out.println("Defausse");
             vueDefausse = new IHMDefausse(avCourant.cartes);
@@ -995,6 +996,13 @@ public class Controleur implements Observer {
         
         vueAventurier.actualiseTuiles();
         this.operationEnCours = OPERATION_AUCUNE;
+    }
+
+    private void updateVueAventurier() {
+        this.vueAventurier.actualiseAventuriers();
+        this.vueAventurier.actualiseTuiles();
+        this.vueAventurier.afficherCartes(avCourant.getCartes());
+        
     }
 
 }
