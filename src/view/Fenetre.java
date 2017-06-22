@@ -112,7 +112,7 @@ public class Fenetre extends JFrame{
         ihm.traiterClicAssecher();
     }
     
-    public void traiterClicAutreAction(){
+    public void traiterClicDonCarte(){
         ihm.traiterClicDonCarte();
     }
     
@@ -373,7 +373,7 @@ public class Fenetre extends JFrame{
         boutonDonnerCarte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                traiterClicAutreAction();
+                traiterClicDonCarte();
             }
         });
         
@@ -546,6 +546,12 @@ public class Fenetre extends JFrame{
     void afficherCartes(ArrayList<CarteTresor> cartes) {
         Image i = new ImageIcon(getClass().getResource("/images/Pierre.png")).getImage();
         JButton j;
+        
+        this.content.invalidate();
+        this.paneCartes.invalidate();
+        this.paneCartes.revalidate();
+        this.content.revalidate();
+        
         this.paneCartes.removeAll();
         for (CarteTresor c : cartes){
             if(c.getTypeCarte().equals("tresor")){

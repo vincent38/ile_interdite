@@ -2,6 +2,7 @@ package model.aventurier;
 
 import model.aventurier.Aventurier;
 import java.awt.Color;
+import java.util.ArrayList;
 import model.Tuile;
 import util.Utils;
 
@@ -42,5 +43,10 @@ public class Messager extends Aventurier {
     @Override
     public Color getFontColor(){
         return Color.BLACK;
+    }
+    
+    @Override
+    public ArrayList<Aventurier> getAventuriersDonPossible(ArrayList<Aventurier> aventuriers) {
+        return aventuriers;
     }
 }

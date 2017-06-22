@@ -37,6 +37,7 @@ public abstract class Aventurier {
 
     public Aventurier(Tuile tuile, String nom){
         this.tuileCourante = tuile;
+        this.tuileCourante.addAventurier(this);
         this.nom = nom;
         setType("Aventurier");
     }
@@ -123,9 +124,9 @@ public abstract class Aventurier {
      * Méthode inutilisée actuellement. Gardée en prévision.
      */
 
-    public ArrayList<CarteTresor> getCartes() {
-        return cartes;
-    }
+    //public ArrayList<CarteTresor> getCartes() {
+    //    return cartes;
+   // }
     
     public int countCartes() {
         return cartes.size();
@@ -207,6 +208,17 @@ public abstract class Aventurier {
         return buffer;
     }
     
+    public ArrayList<Aventurier> getAventuriersDonPossible(ArrayList<Aventurier> aventuriers) {
+    // On passe l'arrayList en paramètres uniquement pour la classe Messager qui Override cette méthode
+        ArrayList<Aventurier> r = new ArrayList();
+        r = this.tuileCourante.getAventuriers();
+        r.remove(this);
+        return r;
+    }
+
+    public ArrayList<CarteTresor> getCartes() {
+        return this.cartes;
+    }
     
     
 }
