@@ -369,6 +369,7 @@ public class Controleur implements Observer {
                     this.traiterDonCarte(m.getAventurier(), m.getCarte());
                     vueDonCarte.cacherFenetre();
                     vueAventurier.enableInteraction();
+                    vueAventurier.actualiserCartes(avCourant.getCartes());
                 }
                 break;
                 
@@ -705,10 +706,11 @@ public class Controleur implements Observer {
     private void initDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
         ArrayList<Aventurier> aventuriersMemeTuile = tuileCourante.getAventuriers();
+        System.out.println("SIZE"+aventuriersMemeTuile.size());
         aventuriersMemeTuile.remove(avCourant);
         ArrayList<CartePiece> cartesPossedees = avCourant.getCartesPiecePossedees();
-        CarteTresor carteADonner = null;
-        Aventurier destinataire = null;
+        CarteTresor carteADonner;
+        Aventurier destinataire;
         if (aventuriersMemeTuile.size() == 0) {
             afficherInformation("Impossible : Il n'y a aucun aventurier à côté de vous.");
         } else {
@@ -762,7 +764,6 @@ public class Controleur implements Observer {
         nomsJoueurs = vueSelection.getNomsJoueurs();
         for (int i = 0; i < nomsJoueurs.size(); i++){
             joueurs.add(specialisationAleatoire(nomsJoueurs.get(i)));
-
             //System.out.println(nomsJoueurs.get(i));
         }
 

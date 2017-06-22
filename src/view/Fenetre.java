@@ -545,6 +545,12 @@ public class Fenetre extends JFrame{
     void afficherCartes(ArrayList<CarteTresor> cartes) {
         Image i = new ImageIcon(getClass().getResource("/images/Pierre.png")).getImage();
         JButton j;
+        
+        this.content.invalidate();
+        this.paneCartes.invalidate();
+        this.paneCartes.revalidate();
+        this.content.revalidate();
+        
         this.paneCartes.removeAll();
         for (CarteTresor c : cartes){
             if(c.getTypeCarte().equals("tresor")){

@@ -37,6 +37,7 @@ public abstract class Aventurier {
 
     public Aventurier(Tuile tuile, String nom){
         this.tuileCourante = tuile;
+        this.tuileCourante.addAventurier(this);
         this.nom = nom;
         setType("Aventurier");
     }
