@@ -671,7 +671,7 @@ public class Controleur implements Observer {
         return b;
     }
     
-    private void getTresorFromTuile(){
+    /*private void getTresorFromTuile(){
         //On teste la tuile en cours du joueur : trésor présent ?
         if (avCourant.getTuile().getTresor() != null) {
             TypeTresor typeTresorTuile = avCourant.getTuile().getTresor().getTypeTresor();
@@ -707,7 +707,7 @@ public class Controleur implements Observer {
                 System.out.println("Lol nope");
             }
         }
-    }
+    }*/
 
     private void initDonCarte() {
         Tuile tuileCourante = avCourant.getTuile();
