@@ -404,7 +404,9 @@ public class Controleur implements Observer {
                 this.afficherTresorsRamassables();
                 break;
             case CLIC_BTN_VALIDER_DEFAUSSE:
+                this.defausse(m.carte);
                 vueDefausse.fermerFenetre();
+                vueAventurier.enableInteraction();
 
         }
 
@@ -468,9 +470,10 @@ public class Controleur implements Observer {
             System.out.println("Defausse");
             vueDefausse = new IHMDefausse(avCourant.cartes);
             this.vueDefausse.addObserver(this);
-            CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
-            cartesTresor.defausserCarte(c);
-            System.out.println("Défaussé : une carte");
+            this.vueAventurier.disableBoutons();
+            this.vueAventurier.disableInteraction();
+            //CarteTresor c = avCourant.cartes.remove(avCourant.getCartes().size() - 1);
+            //cartesTresor.defausserCarte(c);
         }
     }
 
@@ -526,7 +529,7 @@ public class Controleur implements Observer {
      * déplacer - le niveau de l'eau arrive au max
      */
     private boolean gameOver() {
-        if (heliportMort()
+        /*if (heliportMort()
                 || pierreSacreeMort()
                 || statueZephyrMort()
                 || cristalArdentMort()
@@ -534,7 +537,7 @@ public class Controleur implements Observer {
                 || aventurierMort()
                 || eauMax()) {
             return true;
-        }
+        }*/
         return false;
     }
 
@@ -891,6 +894,12 @@ public class Controleur implements Observer {
 
     private void afficherCartes() {
         this.vueAventurier.actualiserCartes(avCourant.getCartes());
+    }
+
+    private void defausse(CarteTresor carte) {
+            avCourant.getCartes().remove(carte);
+            cartesTresor.defausserCarte(carte);
+            this.afficherCartes();
     }
 
 }

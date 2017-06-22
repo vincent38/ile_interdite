@@ -31,14 +31,14 @@ public class IHMDefausse extends Observable{
         
     }
 
-    void traiterCliqueValider() {
-        this.setChanged();
-        this.notifyObservers(new Message(TypeMessage.CLIC_BTN_VALIDER_DEFAUSSE));
-        this.clearChanged();
-    }
-    
     public void fermerFenetre(){
         fd.dispose();
+    }
+
+    void traiterMessage(Message message) {
+        this.setChanged();
+        this.notifyObservers(message);
+        this.clearChanged();
     }
     
 }

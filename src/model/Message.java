@@ -7,6 +7,7 @@ package model;
 
 import model.aventurier.Aventurier;
 import model.carte.CartePiece;
+import model.carte.CarteTresor;
 import util.Utils;
 
 /**
@@ -22,6 +23,7 @@ public class Message {
     // Pour le don de carte
     private Aventurier a;
     private CartePiece c;
+    public CarteTresor carte;
     
     public Message(TypeMessage type){
         this.type = type;
@@ -41,6 +43,11 @@ public class Message {
         this.type = type;
         this.a = a;
         this.c = c;
+    }
+
+    public Message(TypeMessage type, CarteTresor carte) {
+        this.type = type;
+        this.carte = carte;
     }
     
     public Aventurier getAventurier() {

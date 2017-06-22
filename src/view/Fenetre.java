@@ -94,6 +94,7 @@ public class Fenetre extends JFrame{
         this.afficherJoueurPane();
         this.afficherNiveauPane();
         this.initPaneWest();
+        this.setAlwaysOnTop(true);
         
         this.setVisible(true);
     }
