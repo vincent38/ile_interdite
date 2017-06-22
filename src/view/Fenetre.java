@@ -547,10 +547,7 @@ public class Fenetre extends JFrame{
         Image i = new ImageIcon(getClass().getResource("/images/Pierre.png")).getImage();
         JButton j;
         
-        this.content.invalidate();
-        this.paneCartes.invalidate();
-        this.paneCartes.revalidate();
-        this.content.revalidate();
+        
         
         this.paneCartes.removeAll();
         for (CarteTresor c : cartes){
@@ -574,7 +571,31 @@ public class Fenetre extends JFrame{
                 j = new JButton(new ImageIcon(i));
             
                 this.paneCartes.add(j);
+                
+                if (c.getTypeCarte().equals("action_speciale")){
+                    CarteBonus d = (CarteBonus) c;
+                    if (d.getPouvoir().equals("Helicoptere")){
+                        j.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                traiterClicHelicoptere();
+                            }
+                        });
+                    }else{
+                        j.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                traiterClicSacDeSable();
+                            }
+                        });
+                    }
+                }
             }
+            
+        this.content.invalidate();
+        this.paneCartes.invalidate();
+        this.paneCartes.revalidate();
+        this.content.revalidate();
         }
     }
     
@@ -585,6 +606,14 @@ public class Fenetre extends JFrame{
     g.drawImage(source, 0, 0, width, height, null);
     g.dispose();
     return img;
+    }
+    
+    public void traiterClicHelicoptere(){
+        this.ihm.traiterClicHelicoptere();
+    }
+    
+    public void traiterClicSacDeSable(){
+        
     }
     
   

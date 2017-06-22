@@ -93,7 +93,7 @@ public class FenetreDefausse extends JFrame{
     }
     
     private void traiterCliValider() {
-        for(int i = 0; i < this.boutonsCartes.size(); i++){
+        for(int i = 0; i < this.cartes.size(); i++){
             if(this.boutonsCartes.get(i).isSelected()){
                 this.ihm.traiterMessage(new Message(TypeMessage.CLIC_BTN_VALIDER_DEFAUSSE, this.cartes.get(i)));
             }

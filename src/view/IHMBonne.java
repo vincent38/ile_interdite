@@ -154,7 +154,13 @@ public class IHMBonne extends Observable{
         this.fenetre.disableTresors();
     }
 
-    public void actualiserCartes(ArrayList<CarteTresor> cartes) {
+    public void afficherCartes(ArrayList<CarteTresor> cartes) {
         this.fenetre.afficherCartes(cartes);
+    }
+
+    void traiterClicHelicoptere() {
+        this.setChanged();
+        this.notifyObservers(new Message(TypeMessage.CLIC_HELICOPTERE));
+        this.clearChanged();
     }
 }

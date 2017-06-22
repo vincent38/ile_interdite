@@ -206,6 +206,10 @@ public abstract class Aventurier {
         tresorsObtenus.add(tresorObtenu);
     }
     
+    public void retirerCarte(int carteASupprimer) {
+        this.cartes.remove(carteASupprimer);
+    }
+    
     public void retirerCarte(CarteTresor carteASupprimer) {
         this.cartes.remove(carteASupprimer);
     }
@@ -233,12 +237,25 @@ public abstract class Aventurier {
     }
     public void rm4cartesPieces(TypeTresor typeTresor) {
         int compteur = 4;
-        for (CartePiece c : this.getCartesPiecePossedees()) {
+        /*for (CartePiece c : this.getCartesPiecePossedees()) {
             if (c.getTypeTresor().equals(typeTresor) && compteur > 0) {
                 this.retirerCarte(c);
                 compteur--;
             }
+        }*/
+        for (int i = 0; i < this.cartes.size(); i++) {
+            if ("tresor".equals(this.cartes.get(i).getTypeCarte())){
+                CartePiece c = (CartePiece) this.cartes.get(i);
+                if (c.getTypeTresor().equals(typeTresor) && compteur > 0) {
+                    this.retirerCarte(i);
+                    compteur--;
+                }
+            }
         }
+    }
+
+    public boolean isPouvoirDispo() {
+        return pouvoirDispo;
     }
     
     
