@@ -918,5 +918,4 @@ public class Controleur implements Observer {
             cartesTresor.defausserCarte(carte);
             this.afficherCartes();
     }
-
 }
