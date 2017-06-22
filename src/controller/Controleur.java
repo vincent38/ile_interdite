@@ -251,12 +251,24 @@ public class Controleur implements Observer {
 
         }
         
+        
         if(this.action >= ACTION_NEXT_TOUR && !(this.doubleAssechement && avCourant.getTuilesAssechables(grille).size() > 0)){
             this.finTour();
+            
+        if(avCourant.getType().equals("Navigateur")){
+            if(this.action >= ACTION_NEXT_TOUR_NAVIGATEUR){
+                this.finTour();
+            } 
+        } else { 
+            if(this.action >= ACTION_NEXT_TOUR){
+                this.finTour();
+            }
+            
         }
         this.updateVueAventurier();
         
 
+    }
     }
 
     /**
@@ -266,10 +278,21 @@ public class Controleur implements Observer {
     public void ajouterAction() {
         action += 1;
         System.out.println(doubleAssechement);
-        if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
-            finTour();
+        if (avCourant.getType().equals("Navigateur")) {
+            if (action >= ACTION_NEXT_TOUR_NAVIGATEUR) {
+                finTour();
+            }
+        } else {
+            if (action >= ACTION_NEXT_TOUR && !doubleAssechement) {
+                finTour();
+            }    
         }
-        this.vueAventurier.setNbAct(ACTION_NEXT_TOUR - action);
+        
+        if(avCourant.getType().equals("Navigateur")) {
+            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR_NAVIGATEUR - action);
+        } else {
+            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR - action);
+        }
     }
 
     /**
@@ -390,7 +413,12 @@ public class Controleur implements Observer {
         }
         this.vueAventurier.setAventurier(avCourant);
         this.action = 0;
-        this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
+        if(avCourant.getType().equals("Navigateur")) {
+            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR_NAVIGATEUR);
+        } else {
+            this.vueAventurier.setNbAct(ACTION_NEXT_TOUR-action);
+        }
+        System.out.println(avCourant.getType());
         defausse();
 
         //this.vueAventurier.setWindowTitle(avCourant.getNom());
