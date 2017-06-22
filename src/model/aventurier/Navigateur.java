@@ -48,5 +48,10 @@ public class Navigateur extends Aventurier {
         return Color.BLACK;
     }
     
+    @Override
+    public int getActionMax(){
+        return 4;
+    }
+    
     
 }

@@ -18,6 +18,7 @@ public abstract class Aventurier {
         private String nom;
         protected boolean pouvoirDispo = true;
         private String type;
+        protected int actionMax;
 
     
      /**
@@ -27,6 +28,7 @@ public abstract class Aventurier {
     public Aventurier(String nom) {
         this.nom = nom;
         setType("Aventurier");
+        this.actionMax = 3;
     }
 
         /**
@@ -257,6 +259,11 @@ public abstract class Aventurier {
     public boolean isPouvoirDispo() {
         return pouvoirDispo;
     }
+    
+    public int getActionMax(){
+        return 3;
+    }
+    
     
     
 }

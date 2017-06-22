@@ -260,6 +260,7 @@ public class Fenetre extends JFrame{
         content.setLayout(new BorderLayout());
         
         casesPane = new JPanel();
+        
         casesPane.setLayout(new GridLayout(6,6));
         content.add(casesPane, BorderLayout.CENTER);
         
@@ -303,6 +304,7 @@ public class Fenetre extends JFrame{
             
             conteneursAventuriers[i][2] = new JPanel();
             conteneursAventuriers[i][3] = new JPanel();
+            
         }
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 6; j++){
